@@ -670,38 +670,39 @@
                     this.currentImageURL = null;
                 }
             }
-            
+
+
             showImage(index) {
                 if (this.imageFiles.length === 0) return;
 
                 const file = this.imageFiles[index];
+                const newURL = URL.createObjectURL(file);
 
-                // 释放之前的URL
-                this.releaseCurrentImage();
+                // ✅ 先设置过渡
+                this.imgElement.onload = () => {
+                    this.imgElement.style.opacity = '1';
+                };
+                this.imgElement.style.opacity = '0.5';
+                this.imgElement.src = newURL;
 
-                // 新建对象URL
-                this.currentImageURL = URL.createObjectURL(file);
+                // ✅ 然后延迟释放旧 URL（防止上一帧还没完全替换就被释放）
+                const oldURL = this.currentImageURL;
+                this.currentImageURL = newURL;
+                if (oldURL) {
+                    setTimeout(() => URL.revokeObjectURL(oldURL), 2000);
+                }
 
-                // 🌟 直接更新同一个img的src，不清空displayArea
-                this.imgElement.style.opacity = '0'; // 淡出
-                setTimeout(() => {
-                    this.imgElement.src = this.currentImageURL;
-                    this.imgElement.onload = () => {
-                        this.imgElement.style.opacity = '1'; // 淡入
-                    };
-                }, 50);
-
+                // ✅ 更新帧数显示
                 this.currentFrameEl.textContent = `${index + 1} / ${this.imageFiles.length}`;
 
-                // 更新文件列表高亮
+                // ✅ 更新文件列表高亮
                 const fileItems = this.fileList.getElementsByClassName('file-item');
                 for (let i = 0; i < fileItems.length; i++) {
                     fileItems[i].classList.toggle('current-frame', i === index);
                 }
             }
 
-            
-            
+    
             updateStatus(status) {
                 this.playStatusEl.textContent = 
                     status === 'playing' ? '播放中' : 
