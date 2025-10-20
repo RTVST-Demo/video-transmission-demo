@@ -578,7 +578,19 @@
                 this.updateTotalFrames();
                 this.showImage(0);
                 this.updateStatus('stopped');
+                // 预加载所有图片
+                this.preloadAllImages();
             }
+
+            preloadAllImages() {
+                this.preloadedImages = [];
+                this.imageFiles.forEach((file, index) => {
+                    const img = new Image();
+                    img.src = URL.createObjectURL(file);
+                    this.preloadedImages[index] = img;
+                });
+            }
+            
             
             // 提取文件名中的数字
             extractNumber(filename) {
@@ -675,27 +687,13 @@
             showImage(index) {
                 if (this.imageFiles.length === 0) return;
 
-                const file = this.imageFiles[index];
-                const newURL = URL.createObjectURL(file);
-
-                // ✅ 先设置过渡
-                this.imgElement.onload = () => {
-                    this.imgElement.style.opacity = '1';
-                };
-                this.imgElement.style.opacity = '0.5';
-                this.imgElement.src = newURL;
-
-                // ✅ 然后延迟释放旧 URL（防止上一帧还没完全替换就被释放）
-                const oldURL = this.currentImageURL;
-                this.currentImageURL = newURL;
-                if (oldURL) {
-                    setTimeout(() => URL.revokeObjectURL(oldURL), 2000);
+                // 直接使用预加载的图片，立即显示
+                if (this.preloadedImages && this.preloadedImages[index]) {
+                    this.imgElement.src = this.preloadedImages[index].src;
                 }
 
-                // ✅ 更新帧数显示
                 this.currentFrameEl.textContent = `${index + 1} / ${this.imageFiles.length}`;
 
-                // ✅ 更新文件列表高亮
                 const fileItems = this.fileList.getElementsByClassName('file-item');
                 for (let i = 0; i < fileItems.length; i++) {
                     fileItems[i].classList.toggle('current-frame', i === index);
