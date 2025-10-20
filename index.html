@@ -472,7 +472,8 @@
                 this.initializeElements();
                 this.bindEvents();
             }
-            
+
+            // 在 initializeElements() 中，添加一个img元素一次性插入
             initializeElements() {
                 this.uploadArea = document.getElementById(`uploadArea${this.panelId}`);
                 this.fileInput = document.getElementById(`fileInput${this.panelId}`);
@@ -480,13 +481,24 @@
                 this.displayArea = document.getElementById(`displayArea${this.panelId}`);
                 this.intervalInput = document.getElementById(`intervalInput${this.panelId}`);
                 this.fileList = document.getElementById(`fileList${this.panelId}`);
-                
+    
                 this.currentFrameEl = document.getElementById(`currentFrame${this.panelId}`);
                 this.totalFramesEl = document.getElementById(`totalFrames${this.panelId}`);
                 this.fpsInfoEl = document.getElementById(`fpsInfo${this.panelId}`);
                 this.playStatusEl = document.getElementById(`playStatus${this.panelId}`);
                 this.statusIndicator = document.getElementById(`status${this.panelId}`);
+    
+                // 🌟 在这里添加一个img对象（只创建一次）
+                this.imgElement = document.createElement('img');
+                this.imgElement.style.maxWidth = '100%';
+                this.imgElement.style.maxHeight = '100%';
+                this.imgElement.style.objectFit = 'contain';
+                this.imgElement.style.transition = 'opacity 0.2s ease-in-out';
+                this.imgElement.style.opacity = '0';
+                this.displayArea.innerHTML = '';
+                this.displayArea.appendChild(this.imgElement);
             }
+
             
             bindEvents() {
                 this.uploadArea.addEventListener('click', () => this.fileInput.click());
@@ -661,43 +673,34 @@
             
             showImage(index) {
                 if (this.imageFiles.length === 0) return;
-                
+
                 const file = this.imageFiles[index];
-                
-                // 释放之前的图片URL
+
+                // 释放之前的URL
                 this.releaseCurrentImage();
-                
-                // 创建新的图片URL
+
+                // 新建对象URL
                 this.currentImageURL = URL.createObjectURL(file);
-                
-                // 创建图片元素
-                const img = document.createElement('img');
-                img.src = this.currentImageURL;
-                img.alt = `Frame ${index + 1}`;
-                img.style.opacity = '0';
-                img.style.transition = 'opacity 0.2s ease-in-out';
-                
-                // 清空显示区域并添加新图片
-                this.displayArea.innerHTML = '';
-                this.displayArea.appendChild(img);
-                
-                // 强制重排，然后设置透明度为1实现淡入效果
+
+                // 🌟 直接更新同一个img的src，不清空displayArea
+                this.imgElement.style.opacity = '0'; // 淡出
                 setTimeout(() => {
-                    img.style.opacity = '1';
-                }, 10);
-                
+                    this.imgElement.src = this.currentImageURL;
+                    this.imgElement.onload = () => {
+                        this.imgElement.style.opacity = '1'; // 淡入
+                    };
+                }, 50);
+
                 this.currentFrameEl.textContent = `${index + 1} / ${this.imageFiles.length}`;
-                
+
                 // 更新文件列表高亮
                 const fileItems = this.fileList.getElementsByClassName('file-item');
                 for (let i = 0; i < fileItems.length; i++) {
-                    if (i === index) {
-                        fileItems[i].classList.add('current-frame');
-                    } else {
-                        fileItems[i].classList.remove('current-frame');
-                    }
+                    fileItems[i].classList.toggle('current-frame', i === index);
                 }
             }
+
+            
             
             updateStatus(status) {
                 this.playStatusEl.textContent = 
