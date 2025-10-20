@@ -170,7 +170,6 @@
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
-            transition: opacity 0.2s ease-in-out;
         }
         
         .controls {
@@ -306,7 +305,7 @@
             <!-- H.265 + LDPC -->
             <div class="video-panel">
                 <div class="panel-header">
-                    <h3 class="panel-title"><i class="fas fa-film"></i> 视频序列 1</h3>
+                    <h3 class="panel-title"><i class="fas fa-film"></i> H.265 + LDPC</h3>
                     <span class="status-indicator status-stopped" id="status1"></span>
                 </div>
                 
@@ -356,7 +355,7 @@
             <!-- DeepJSCC -->
             <div class="video-panel">
                 <div class="panel-header">
-                    <h3 class="panel-title"><i class="fas fa-film"></i> 视频序列 2</h3>
+                    <h3 class="panel-title"><i class="fas fa-film"></i> DeepJSCC</h3>
                     <span class="status-indicator status-stopped" id="status2"></span>
                 </div>
                 
@@ -406,7 +405,7 @@
             <!-- RTVST -->
             <div class="video-panel">
                 <div class="panel-header">
-                    <h3 class="panel-title"><i class="fas fa-film"></i> 视频序列 3</h3>
+                    <h3 class="panel-title"><i class="fas fa-film"></i> RTVST</h3>
                     <span class="status-indicator status-stopped" id="status3"></span>
                 </div>
                 
@@ -467,13 +466,12 @@
                 this.currentIndex = 0;
                 this.playInterval = null;
                 this.isPlaying = false;
-                this.currentImageURL = null; // 存储当前图片的URL
+                this.preloadedImages = [];
                 
                 this.initializeElements();
                 this.bindEvents();
             }
 
-            // 在 initializeElements() 中，添加一个img元素一次性插入
             initializeElements() {
                 this.uploadArea = document.getElementById(`uploadArea${this.panelId}`);
                 this.fileInput = document.getElementById(`fileInput${this.panelId}`);
@@ -488,17 +486,17 @@
                 this.playStatusEl = document.getElementById(`playStatus${this.panelId}`);
                 this.statusIndicator = document.getElementById(`status${this.panelId}`);
     
-                // 🌟 在这里添加一个img对象（只创建一次）
+                // 创建img对象（只创建一次）
                 this.imgElement = document.createElement('img');
                 this.imgElement.style.maxWidth = '100%';
                 this.imgElement.style.maxHeight = '100%';
                 this.imgElement.style.objectFit = 'contain';
-                this.imgElement.style.transition = 'opacity 0.2s ease-in-out';
-                this.imgElement.style.opacity = '0';
+                this.imgElement.alt = '视频帧';
+                
+                // 清空并添加img元素
                 this.displayArea.innerHTML = '';
                 this.displayArea.appendChild(this.imgElement);
             }
-
             
             bindEvents() {
                 this.uploadArea.addEventListener('click', () => this.fileInput.click());
@@ -539,8 +537,8 @@
             }
             
             handleFiles(files) {
-                // 释放之前的图片URL
-                this.releaseCurrentImage();
+                // 释放之前的预加载图片
+                this.releasePreloadedImages();
                 
                 this.imageFiles = Array.from(files).filter(file => 
                     file.type.startsWith('image/')
@@ -576,21 +574,36 @@
                 
                 this.updateFileList();
                 this.updateTotalFrames();
-                this.showImage(0);
-                this.updateStatus('stopped');
                 // 预加载所有图片
                 this.preloadAllImages();
+                this.updateStatus('stopped');
             }
 
             preloadAllImages() {
                 this.preloadedImages = [];
                 this.imageFiles.forEach((file, index) => {
                     const img = new Image();
+                    img.onload = () => {
+                        // 如果是第一张图片，显示它
+                        if (index === 0) {
+                            this.showImage(0);
+                        }
+                    };
                     img.src = URL.createObjectURL(file);
                     this.preloadedImages[index] = img;
                 });
             }
             
+            releasePreloadedImages() {
+                if (this.preloadedImages && this.preloadedImages.length > 0) {
+                    this.preloadedImages.forEach(img => {
+                        if (img.src) {
+                            URL.revokeObjectURL(img.src);
+                        }
+                    });
+                }
+                this.preloadedImages = [];
+            }
             
             // 提取文件名中的数字
             extractNumber(filename) {
@@ -652,13 +665,19 @@
             
             reset() {
                 this.stop();
-                this.releaseCurrentImage();
+                this.releasePreloadedImages();
                 this.imageFiles = [];
-                this.fileList.innerHTML = '<p style="text-align: center; opacity: 0.7;">图片列表将显示在这里</p>';
+                
+                // 重置显示区域
+                this.imgElement.src = '';
+                this.imgElement.style.display = 'none';
                 this.displayArea.innerHTML = '<p style="text-align: center; opacity: 0.7;">等待上传图片序列</p>';
+                
+                this.fileList.innerHTML = '<p style="text-align: center; opacity: 0.7;">图片列表将显示在这里</p>';
                 this.updateTotalFrames();
                 this.currentFrameEl.textContent = '-';
                 this.fpsInfoEl.textContent = '0 FPS';
+                this.updateStatus('stopped');
             }
             
             updateInterval() {
@@ -675,21 +694,13 @@
                 this.fpsInfoEl.textContent = `${fps} FPS`;
             }
             
-            // 释放当前图片URL
-            releaseCurrentImage() {
-                if (this.currentImageURL) {
-                    URL.revokeObjectURL(this.currentImageURL);
-                    this.currentImageURL = null;
-                }
-            }
-
-
             showImage(index) {
                 if (this.imageFiles.length === 0) return;
 
                 // 直接使用预加载的图片，立即显示
                 if (this.preloadedImages && this.preloadedImages[index]) {
                     this.imgElement.src = this.preloadedImages[index].src;
+                    this.imgElement.style.display = 'block';
                 }
 
                 this.currentFrameEl.textContent = `${index + 1} / ${this.imageFiles.length}`;
@@ -699,7 +710,6 @@
                     fileItems[i].classList.toggle('current-frame', i === index);
                 }
             }
-
     
             updateStatus(status) {
                 this.playStatusEl.textContent = 
