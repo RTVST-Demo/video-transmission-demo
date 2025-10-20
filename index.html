@@ -170,6 +170,7 @@
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
+            transition: opacity 0.2s ease-in-out;
         }
         
         .controls {
@@ -466,6 +467,7 @@
                 this.currentIndex = 0;
                 this.playInterval = null;
                 this.isPlaying = false;
+                this.currentImageURL = null; // 存储当前图片的URL
                 
                 this.initializeElements();
                 this.bindEvents();
@@ -525,6 +527,9 @@
             }
             
             handleFiles(files) {
+                // 释放之前的图片URL
+                this.releaseCurrentImage();
+                
                 this.imageFiles = Array.from(files).filter(file => 
                     file.type.startsWith('image/')
                 );
@@ -623,6 +628,7 @@
             
             reset() {
                 this.stop();
+                this.releaseCurrentImage();
                 this.imageFiles = [];
                 this.fileList.innerHTML = '<p style="text-align: center; opacity: 0.7;">图片列表将显示在这里</p>';
                 this.displayArea.innerHTML = '<p style="text-align: center; opacity: 0.7;">等待上传图片序列</p>';
@@ -645,13 +651,41 @@
                 this.fpsInfoEl.textContent = `${fps} FPS`;
             }
             
+            // 释放当前图片URL
+            releaseCurrentImage() {
+                if (this.currentImageURL) {
+                    URL.revokeObjectURL(this.currentImageURL);
+                    this.currentImageURL = null;
+                }
+            }
+            
             showImage(index) {
                 if (this.imageFiles.length === 0) return;
                 
                 const file = this.imageFiles[index];
-                const imageURL = URL.createObjectURL(file);
                 
-                this.displayArea.innerHTML = `<img src="${imageURL}" alt="Frame ${index + 1}">`;
+                // 释放之前的图片URL
+                this.releaseCurrentImage();
+                
+                // 创建新的图片URL
+                this.currentImageURL = URL.createObjectURL(file);
+                
+                // 创建图片元素
+                const img = document.createElement('img');
+                img.src = this.currentImageURL;
+                img.alt = `Frame ${index + 1}`;
+                img.style.opacity = '0';
+                img.style.transition = 'opacity 0.2s ease-in-out';
+                
+                // 清空显示区域并添加新图片
+                this.displayArea.innerHTML = '';
+                this.displayArea.appendChild(img);
+                
+                // 强制重排，然后设置透明度为1实现淡入效果
+                setTimeout(() => {
+                    img.style.opacity = '1';
+                }, 10);
+                
                 this.currentFrameEl.textContent = `${index + 1} / ${this.imageFiles.length}`;
                 
                 // 更新文件列表高亮
