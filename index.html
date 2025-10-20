@@ -534,12 +534,40 @@
                     return;
                 }
                 
-                // 按文件名排序
-                this.imageFiles.sort((a, b) => a.name.localeCompare(b.name));
+                // 按文件名中的数字大小排序
+                this.imageFiles.sort((a, b) => {
+                    // 提取文件名中的数字
+                    const numA = this.extractNumber(a.name);
+                    const numB = this.extractNumber(b.name);
+                    
+                    // 如果两个文件都有数字，按数字大小排序
+                    if (numA !== null && numB !== null) {
+                        return numA - numB;
+                    }
+                    
+                    // 如果只有一个文件有数字，有数字的排在前面
+                    if (numA !== null && numB === null) {
+                        return -1;
+                    }
+                    if (numA === null && numB !== null) {
+                        return 1;
+                    }
+                    
+                    // 如果两个文件都没有数字，按文件名排序
+                    return a.name.localeCompare(b.name);
+                });
+                
                 this.updateFileList();
                 this.updateTotalFrames();
                 this.showImage(0);
                 this.updateStatus('stopped');
+            }
+            
+            // 提取文件名中的数字
+            extractNumber(filename) {
+                // 匹配文件名中的数字部分
+                const match = filename.match(/\d+/);
+                return match ? parseInt(match[0]) : null;
             }
             
             updateFileList() {
