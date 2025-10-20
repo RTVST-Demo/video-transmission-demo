@@ -65,6 +65,8 @@
             border-radius: 15px;
             padding: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
         }
         
         .panel-header {
@@ -94,7 +96,8 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
-            margin-bottom: 15px;
+            margin-top: auto; /* 将上传区域推到面板底部 */
+            order: 999; /* 确保上传区域在最后 */
         }
         
         .upload-area:hover {
@@ -309,18 +312,9 @@
                     <span class="status-indicator status-stopped" id="status1"></span>
                 </div>
                 
-                <div class="upload-area" id="uploadArea1">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <p>点击上传图片序列</p>
-                    <button class="btn" id="uploadBtn1">
-                        <i class="fas fa-file-image"></i> 选择图片
-                    </button>
-                    <input type="file" id="fileInput1" accept="image/*" multiple style="display: none;">
-                </div>
-                
                 <div class="interval-control">
                     <label>帧间隔:</label>
-                    <input type="number" id="intervalInput1" value="50" min="1" max="1000">
+                    <input type="number" id="intervalInput1" value="174" min="1" max="1000" readonly>
                     <span>ms</span>
                 </div>
                 
@@ -350,6 +344,16 @@
                 <div class="file-list" id="fileList1">
                     <p style="text-align: center; opacity: 0.7;">图片列表将显示在这里</p>
                 </div>
+                
+                <!-- 上传区域移到面板底部 -->
+                <div class="upload-area" id="uploadArea1">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>点击上传图片序列</p>
+                    <button class="btn" id="uploadBtn1">
+                        <i class="fas fa-file-image"></i> 选择图片
+                    </button>
+                    <input type="file" id="fileInput1" accept="image/*" multiple style="display: none;">
+                </div>
             </div>
             
             <!-- DeepJSCC -->
@@ -359,18 +363,9 @@
                     <span class="status-indicator status-stopped" id="status2"></span>
                 </div>
                 
-                <div class="upload-area" id="uploadArea2">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <p>点击上传图片序列</p>
-                    <button class="btn" id="uploadBtn2">
-                        <i class="fas fa-file-image"></i> 选择图片
-                    </button>
-                    <input type="file" id="fileInput2" accept="image/*" multiple style="display: none;">
-                </div>
-                
                 <div class="interval-control">
                     <label>帧间隔:</label>
-                    <input type="number" id="intervalInput2" value="100" min="1" max="1000">
+                    <input type="number" id="intervalInput2" value="268" min="1" max="1000" readonly>
                     <span>ms</span>
                 </div>
                 
@@ -400,6 +395,16 @@
                 <div class="file-list" id="fileList2">
                     <p style="text-align: center; opacity: 0.7;">图片列表将显示在这里</p>
                 </div>
+                
+                <!-- 上传区域移到面板底部 -->
+                <div class="upload-area" id="uploadArea2">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>点击上传图片序列</p>
+                    <button class="btn" id="uploadBtn2">
+                        <i class="fas fa-file-image"></i> 选择图片
+                    </button>
+                    <input type="file" id="fileInput2" accept="image/*" multiple style="display: none;">
+                </div>
             </div>
             
             <!-- RTVST -->
@@ -409,18 +414,9 @@
                     <span class="status-indicator status-stopped" id="status3"></span>
                 </div>
                 
-                <div class="upload-area" id="uploadArea3">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <p>点击上传图片序列</p>
-                    <button class="btn" id="uploadBtn3">
-                        <i class="fas fa-file-image"></i> 选择图片
-                    </button>
-                    <input type="file" id="fileInput3" accept="image/*" multiple style="display: none;">
-                </div>
-                
                 <div class="interval-control">
                     <label>帧间隔:</label>
-                    <input type="number" id="intervalInput3" value="200" min="1" max="1000">
+                    <input type="number" id="intervalInput3" value="38" min="1" max="1000" readonly>
                     <span>ms</span>
                 </div>
                 
@@ -449,6 +445,16 @@
                 
                 <div class="file-list" id="fileList3">
                     <p style="text-align: center; opacity: 0.7;">图片列表将显示在这里</p>
+                </div>
+                
+                <!-- 上传区域移到面板底部 -->
+                <div class="upload-area" id="uploadArea3">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>点击上传图片序列</p>
+                    <button class="btn" id="uploadBtn3">
+                        <i class="fas fa-file-image"></i> 选择图片
+                    </button>
+                    <input type="file" id="fileInput3" accept="image/*" multiple style="display: none;">
                 </div>
             </div>
         </div>
@@ -511,7 +517,8 @@
                     }
                 });
                 
-                this.intervalInput.addEventListener('change', () => this.updateInterval());
+                // 移除intervalInput的事件监听，因为现在是只读的
+                // this.intervalInput.addEventListener('change', () => this.updateInterval());
                 
                 // 拖放功能
                 this.uploadArea.addEventListener('dragover', (e) => {
@@ -681,6 +688,7 @@
             }
             
             updateInterval() {
+                // 现在不需要这个功能，因为间隔是固定的
                 const interval = parseInt(this.intervalInput.value);
                 if (this.isPlaying) {
                     this.pause();
