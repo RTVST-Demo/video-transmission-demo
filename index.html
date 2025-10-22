@@ -19,9 +19,7 @@
             padding: 20px;
         }
         
-        .interval-control {
-            display: none;
-        }
+        
         
         .container {
             max-width: 1400px;
@@ -201,6 +199,10 @@
             background: rgba(255, 255, 255, 0.1);
             color: white;
         }
+
+        .interval-control {
+            display: none;
+        }
         
         .info-panel {
             background: rgba(0, 0, 0, 0.2);
@@ -256,6 +258,38 @@
         .status-stopped {
             background: #f44336;
         }
+
+
+        .info-display-row {
+            display: flex;
+            justify-content: space-around; /* 两端均匀分布 */
+            align-items: center;
+            border: 2px solid #ccc; /* 边框 */
+            border-radius: 8px; /* 圆角 */
+            padding: 10px 0;
+            margin: 10px 0;
+            background-color: #f9f9f9; /* 背景浅灰色，可选 */
+        }
+
+        .info-display-item {
+            text-align: center;
+            padding: 5px 15px;
+        }
+
+        .info-label {
+            font-weight: bold;
+            font-size: 18px; /* 标签字体大一些 */
+            color: #333;
+            margin-right: 5px;
+        }
+
+        .info-value {
+            font-size: 20px; /* 数值更大 */
+            color: #007acc; /* 蓝色字体，可换 */
+            font-weight: 600;
+        }
+
+
         
         @keyframes pulse {
             0% { opacity: 1; }
