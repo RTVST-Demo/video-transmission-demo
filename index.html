@@ -303,6 +303,18 @@
                 </button>
             </div>
         </div>
+
+        <!-- 新增的信息显示行 -->
+        <div class="info-display-row">
+            <div class="info-display-item">
+                <span class="info-label">SNR:</span>
+                <span class="info-value" id="snrDisplay">8 dB</span>
+            </div>
+            <div class="info-display-item">
+                <span class="info-label">CBR:</span>
+                <span class="info-value" id="cbrDisplay">0.012</span>
+            </div>
+         </div>
         
         <div class="video-container">
             <!-- H.265 + LDPC -->
@@ -313,8 +325,7 @@
                 </div>
                 
                 <div class="interval-control">
-                    <label>帧间隔:</label>
-                    <input type="number" id="intervalInput1" value="90" min="1" max="1000" readonly>
+                    <span id="intervalDisplay">25</span>
                     <span>ms</span>
                 </div>
                 
@@ -364,8 +375,7 @@
                 </div>
                 
                 <div class="interval-control">
-                    <label>帧间隔:</label>
-                    <input type="number" id="intervalInput2" value="268" min="1" max="1000" readonly>
+                    <span id="intervalDisplay">268</span>
                     <span>ms</span>
                 </div>
                 
@@ -415,8 +425,7 @@
                 </div>
                 
                 <div class="interval-control">
-                    <label>帧间隔:</label>
-                    <input type="number" id="intervalInput3" value="38" min="1" max="1000" readonly>
+                    <span id="intervalDisplay">25</span>
                     <span>ms</span>
                 </div>
                 
