@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>多视频序列同步播放器</title>
+    <title>多视频序列同步播放器 - 简化GitHub版本</title>
     <style>
         * {
             margin: 0;
@@ -89,23 +89,23 @@
             color: #fdbb2d;
         }
         
-        .upload-area {
-            border: 2px dashed rgba(255, 255, 255, 0.3);
+        .github-load-area {
+            border: 2px solid rgba(255, 255, 255, 0.3);
             border-radius: 10px;
             padding: 25px 15px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
-            margin-top: auto; /* 将上传区域推到面板底部 */
-            order: 999; /* 确保上传区域在最后 */
+            margin-top: auto;
+            order: 999;
         }
         
-        .upload-area:hover {
+        .github-load-area:hover {
             border-color: #fdbb2d;
             background: rgba(253, 187, 45, 0.1);
         }
         
-        .upload-area i {
+        .github-load-area i {
             font-size: 2rem;
             margin-bottom: 10px;
             color: #fdbb2d;
@@ -259,13 +259,13 @@
 
         .info-display-row {
             display: flex;
-            justify-content: space-around; /* 两端均匀分布 */
+            justify-content: space-around;
             align-items: center;
-            border: 2px solid #ccc; /* 边框 */
-            border-radius: 8px; /* 圆角 */
+            border: 2px solid #ccc;
+            border-radius: 8px;
             padding: 10px 0;
             margin: 10px 0;
-            background-color: #f9f9f9; /* 背景浅灰色，可选 */
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
         .info-display-item {
@@ -275,14 +275,14 @@
 
         .info-label {
             font-weight: bold;
-            font-size: 18px; /* 标签字体大一些 */
-            color: #333;
+            font-size: 18px;
+            color: #fff;
             margin-right: 5px;
         }
 
         .info-value {
-            font-size: 20px; /* 数值更大 */
-            color: #007acc; /* 蓝色字体，可换 */
+            font-size: 20px;
+            color: #fdbb2d;
             font-weight: 600;
         }
         
@@ -316,7 +316,7 @@
     <div class="container">
         <header>
             <h1>多视频序列同步播放器</h1>
-            <p class="subtitle">同时展示三个视频序列，每个序列可独立设置帧间隔，支持全局同步控制</p>
+            <p class="subtitle">从GitHub仓库自动加载图片序列，支持全局同步控制</p>
         </header>
         
         <div class="global-controls">
@@ -361,7 +361,7 @@
                 <input type="hidden" id="intervalInput1" value="40">
                 
                 <div class="display-area" id="displayArea1">
-                    <p style="text-align: center; opacity: 0.7;">等待上传图片序列</p>
+                    <p style="text-align: center; opacity: 0.7;">等待加载图片序列</p>
                 </div>
                 
                 <div class="info-panel">
@@ -387,14 +387,13 @@
                     <p style="text-align: center; opacity: 0.7;">图片列表将显示在这里</p>
                 </div>
                 
-                <!-- 上传区域移到面板底部 -->
-                <div class="upload-area" id="uploadArea1">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <p>点击上传图片序列</p>
-                    <button class="btn" id="uploadBtn1">
-                        <i class="fas fa-file-image"></i> 选择图片
+                <!-- 简化的GitHub加载区域 -->
+                <div class="github-load-area" id="githubLoadArea1">
+                    <i class="fab fa-github"></i>
+                    <p>从GitHub加载图片序列</p>
+                    <button class="btn" id="loadBtn1">
+                        <i class="fas fa-download"></i> 加载图片
                     </button>
-                    <input type="file" id="fileInput1" accept="image/*" multiple style="display: none;">
                 </div>
             </div>
             
@@ -409,7 +408,7 @@
                 <input type="hidden" id="intervalInput2" value="268">
                 
                 <div class="display-area" id="displayArea2">
-                    <p style="text-align: center; opacity: 0.7;">等待上传图片序列</p>
+                    <p style="text-align: center; opacity: 0.7;">等待加载图片序列</p>
                 </div>
                 
                 <div class="info-panel">
@@ -435,14 +434,13 @@
                     <p style="text-align: center; opacity: 0.7;">图片列表将显示在这里</p>
                 </div>
                 
-                <!-- 上传区域移到面板底部 -->
-                <div class="upload-area" id="uploadArea2">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <p>点击上传图片序列</p>
-                    <button class="btn" id="uploadBtn2">
-                        <i class="fas fa-file-image"></i> 选择图片
+                <!-- 简化的GitHub加载区域 -->
+                <div class="github-load-area" id="githubLoadArea2">
+                    <i class="fab fa-github"></i>
+                    <p>从GitHub加载图片序列</p>
+                    <button class="btn" id="loadBtn2">
+                        <i class="fas fa-download"></i> 加载图片
                     </button>
-                    <input type="file" id="fileInput2" accept="image/*" multiple style="display: none;">
                 </div>
             </div>
             
@@ -457,7 +455,7 @@
                 <input type="hidden" id="intervalInput3" value="40">
                 
                 <div class="display-area" id="displayArea3">
-                    <p style="text-align: center; opacity: 0.7;">等待上传图片序列</p>
+                    <p style="text-align: center; opacity: 0.7;">等待加载图片序列</p>
                 </div>
                 
                 <div class="info-panel">
@@ -483,20 +481,19 @@
                     <p style="text-align: center; opacity: 0.7;">图片列表将显示在这里</p>
                 </div>
                 
-                <!-- 上传区域移到面板底部 -->
-                <div class="upload-area" id="uploadArea3">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <p>点击上传图片序列</p>
-                    <button class="btn" id="uploadBtn3">
-                        <i class="fas fa-file-image"></i> 选择图片
+                <!-- 简化的GitHub加载区域 -->
+                <div class="github-load-area" id="githubLoadArea3">
+                    <i class="fab fa-github"></i>
+                    <p>从GitHub加载图片序列</p>
+                    <button class="btn" id="loadBtn3">
+                        <i class="fas fa-download"></i> 加载图片
                     </button>
-                    <input type="file" id="fileInput3" accept="image/*" multiple style="display: none;">
                 </div>
             </div>
         </div>
         
         <footer>
-            <p>多视频序列同步播放器 &copy; 2023 | 支持独立帧间隔和全局同步控制</p>
+            <p>多视频序列同步播放器 &copy; 2023 | 从GitHub仓库自动加载图片序列</p>
         </footer>
     </div>
 
@@ -504,20 +501,38 @@
         class VideoSequence {
             constructor(panelId) {
                 this.panelId = panelId;
-                this.imageFiles = [];
+                this.imageUrls = [];
                 this.currentIndex = 0;
                 this.playInterval = null;
                 this.isPlaying = false;
                 this.preloadedImages = [];
+                
+                // 预设的GitHub仓库信息
+                this.githubConfigs = {
+                    '1': {
+                        owner: 'RTVST-Demo',
+                        repo: 'rtvst-demo',
+                        path: 'h265+ldpc-frames'
+                    },
+                    '2': {
+                        owner: 'RTVST-Demo',
+                        repo: 'rtvst-demo',
+                        path: 'deepjscc-frames'
+                    },
+                    '3': {
+                        owner: 'RTVST-Demo',
+                        repo: 'rtvst-demo',
+                        path: 'rtvst-frames'
+                    }
+                };
                 
                 this.initializeElements();
                 this.bindEvents();
             }
 
             initializeElements() {
-                this.uploadArea = document.getElementById(`uploadArea${this.panelId}`);
-                this.fileInput = document.getElementById(`fileInput${this.panelId}`);
-                this.uploadBtn = document.getElementById(`uploadBtn${this.panelId}`);
+                this.githubLoadArea = document.getElementById(`githubLoadArea${this.panelId}`);
+                this.loadBtn = document.getElementById(`loadBtn${this.panelId}`);
                 this.displayArea = document.getElementById(`displayArea${this.panelId}`);
                 this.intervalInput = document.getElementById(`intervalInput${this.panelId}`);
                 this.fileList = document.getElementById(`fileList${this.panelId}`);
@@ -541,120 +556,127 @@
             }
             
             bindEvents() {
-                this.uploadArea.addEventListener('click', () => this.fileInput.click());
-                this.uploadBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    this.fileInput.click();
-                });
-                
-                this.fileInput.addEventListener('change', () => {
-                    if (this.fileInput.files.length) {
-                        this.handleFiles(this.fileInput.files);
-                    }
-                });
-                
-                // 拖放功能
-                this.uploadArea.addEventListener('dragover', (e) => {
-                    e.preventDefault();
-                    this.uploadArea.style.borderColor = '#fdbb2d';
-                    this.uploadArea.style.background = 'rgba(253, 187, 45, 0.1)';
-                });
-                
-                this.uploadArea.addEventListener('dragleave', () => {
-                    this.uploadArea.style.borderColor = 'rgba(255, 255, 255, 0.3)';
-                    this.uploadArea.style.background = 'transparent';
-                });
-                
-                this.uploadArea.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    this.uploadArea.style.borderColor = 'rgba(255, 255, 255, 0.3)';
-                    this.uploadArea.style.background = 'transparent';
-                    
-                    if (e.dataTransfer.files.length) {
-                        this.handleFiles(e.dataTransfer.files);
-                    }
+                this.loadBtn.addEventListener('click', () => {
+                    this.loadFromGitHub();
                 });
             }
             
-            handleFiles(files) {
-                // 释放之前的预加载图片
-                this.releasePreloadedImages();
+            async loadFromGitHub() {
+                // 使用预设的GitHub配置
+                const config = this.githubConfigs[this.panelId];
                 
-                this.imageFiles = Array.from(files).filter(file => 
-                    file.type.startsWith('image/')
-                );
-                
-                if (this.imageFiles.length === 0) {
-                    alert('请选择图片文件！');
+                if (!config) {
+                    alert('未找到预设的GitHub配置！');
                     return;
                 }
                 
-                // 按文件名中的数字大小排序
-                this.imageFiles.sort((a, b) => {
-                    // 提取文件名中的数字
-                    const numA = this.extractNumber(a.name);
-                    const numB = this.extractNumber(b.name);
+                try {
+                    this.loadBtn.disabled = true;
+                    this.loadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 加载中...';
                     
-                    // 如果两个文件都有数字，按数字大小排序
-                    if (numA !== null && numB !== null) {
-                        return numA - numB;
+                    // 使用GitHub API获取目录内容
+                    const apiUrl = `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${config.path}`;
+                    const response = await fetch(apiUrl);
+                    
+                    if (!response.ok) {
+                        throw new Error(`GitHub API请求失败: ${response.status}`);
                     }
                     
-                    // 如果只有一个文件有数字，有数字的排在前面
-                    if (numA !== null && numB === null) {
-                        return -1;
-                    }
-                    if (numA === null && numB !== null) {
-                        return 1;
+                    const data = await response.json();
+                    
+                    // 过滤出图片文件
+                    const imageFiles = data.filter(item => 
+                        item.type === 'file' && 
+                        /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(item.name)
+                    );
+                    
+                    if (imageFiles.length === 0) {
+                        throw new Error('在指定路径中未找到图片文件');
                     }
                     
-                    // 如果两个文件都没有数字，按文件名排序
-                    return a.name.localeCompare(b.name);
-                });
-                
-                this.updateFileList();
-                this.updateTotalFrames();
-                // 预加载所有图片
-                this.preloadAllImages();
-                this.updateStatus('stopped');
+                    // 按文件名中的数字大小排序
+                    imageFiles.sort((a, b) => {
+                        const numA = this.extractNumber(a.name);
+                        const numB = this.extractNumber(b.name);
+                        
+                        if (numA !== null && numB !== null) {
+                            return numA - numB;
+                        }
+                        
+                        if (numA !== null && numB === null) {
+                            return -1;
+                        }
+                        if (numA === null && numB !== null) {
+                            return 1;
+                        }
+                        
+                        return a.name.localeCompare(b.name);
+                    });
+                    
+                    // 释放之前的预加载图片
+                    this.releasePreloadedImages();
+                    
+                    // 保存图片URL
+                    this.imageUrls = imageFiles.map(file => file.download_url);
+                    
+                    this.updateFileList(imageFiles);
+                    this.updateTotalFrames();
+                    // 预加载所有图片
+                    await this.preloadAllImages();
+                    this.updateStatus('stopped');
+                    
+                    alert(`成功加载 ${imageFiles.length} 张图片`);
+                    
+                } catch (error) {
+                    console.error('加载GitHub图片失败:', error);
+                    alert(`加载失败: ${error.message}\n\n请确保GitHub仓库存在且路径正确。`);
+                } finally {
+                    this.loadBtn.disabled = false;
+                    this.loadBtn.innerHTML = '<i class="fas fa-download"></i> 加载图片';
+                }
             }
-
-            preloadAllImages() {
+            
+            // 提取文件名中的数字
+            extractNumber(filename) {
+                const match = filename.match(/\d+/);
+                return match ? parseInt(match[0]) : null;
+            }
+            
+            async preloadAllImages() {
                 this.preloadedImages = [];
-                this.imageFiles.forEach((file, index) => {
-                    const img = new Image();
-                    img.onload = () => {
+                
+                for (let i = 0; i < this.imageUrls.length; i++) {
+                    try {
+                        const img = new Image();
+                        await new Promise((resolve, reject) => {
+                            img.onload = resolve;
+                            img.onerror = reject;
+                            img.src = this.imageUrls[i];
+                        });
+                        this.preloadedImages[i] = img;
+                        
                         // 如果是第一张图片，显示它
-                        if (index === 0) {
+                        if (i === 0) {
                             this.showImage(0);
                         }
-                    };
-                    img.src = URL.createObjectURL(file);
-                    this.preloadedImages[index] = img;
-                });
+                    } catch (error) {
+                        console.error(`预加载图片失败: ${this.imageUrls[i]}`, error);
+                    }
+                }
             }
             
             releasePreloadedImages() {
                 if (this.preloadedImages && this.preloadedImages.length > 0) {
                     this.preloadedImages.forEach(img => {
-                        if (img.src) {
-                            URL.revokeObjectURL(img.src);
-                        }
+                        // 对于从GitHub加载的图片，不需要手动释放URL
                     });
                 }
                 this.preloadedImages = [];
             }
             
-            // 提取文件名中的数字
-            extractNumber(filename) {
-                // 匹配文件名中的数字部分
-                const match = filename.match(/\d+/);
-                return match ? parseInt(match[0]) : null;
-            }
-            
-            updateFileList() {
+            updateFileList(files) {
                 this.fileList.innerHTML = '';
-                this.imageFiles.forEach((file, index) => {
+                files.forEach((file, index) => {
                     const fileItem = document.createElement('div');
                     fileItem.className = 'file-item';
                     fileItem.textContent = `${index + 1}. ${file.name}`;
@@ -663,17 +685,17 @@
             }
             
             updateTotalFrames() {
-                this.totalFramesEl.textContent = this.imageFiles.length;
+                this.totalFramesEl.textContent = this.imageUrls.length;
             }
             
             start() {
-                if (this.imageFiles.length === 0 || this.isPlaying) return;
+                if (this.imageUrls.length === 0 || this.isPlaying) return;
                 
                 this.isPlaying = true;
                 const interval = parseInt(this.intervalInput.value);
                 
                 this.playInterval = setInterval(() => {
-                    this.currentIndex = (this.currentIndex + 1) % this.imageFiles.length;
+                    this.currentIndex = (this.currentIndex + 1) % this.imageUrls.length;
                     this.showImage(this.currentIndex);
                 }, interval);
                 
@@ -706,12 +728,12 @@
             reset() {
                 this.stop();
                 this.releasePreloadedImages();
-                this.imageFiles = [];
+                this.imageUrls = [];
                 
                 // 重置显示区域
                 this.imgElement.src = '';
                 this.imgElement.style.display = 'none';
-                this.displayArea.innerHTML = '<p style="text-align: center; opacity: 0.7;">等待上传图片序列</p>';
+                this.displayArea.innerHTML = '<p style="text-align: center; opacity: 0.7;">等待加载图片序列</p>';
                 
                 this.fileList.innerHTML = '<p style="text-align: center; opacity: 0.7;">图片列表将显示在这里</p>';
                 this.updateTotalFrames();
@@ -726,7 +748,7 @@
             }
             
             showImage(index) {
-                if (this.imageFiles.length === 0) return;
+                if (this.imageUrls.length === 0) return;
 
                 // 直接使用预加载的图片，立即显示
                 if (this.preloadedImages && this.preloadedImages[index]) {
@@ -734,7 +756,7 @@
                     this.imgElement.style.display = 'block';
                 }
 
-                this.currentFrameEl.textContent = `${index + 1} / ${this.imageFiles.length}`;
+                this.currentFrameEl.textContent = `${index + 1} / ${this.imageUrls.length}`;
 
                 const fileItems = this.fileList.getElementsByClassName('file-item');
                 for (let i = 0; i < fileItems.length; i++) {
