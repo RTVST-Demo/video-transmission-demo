@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>多视频同步播放器 - GitHub视频版本</title>
+    <title>RTVST_Demo</title>
     <style>
-        /* 样式保持不变 */
         * {
             margin: 0;
             padding: 0;
@@ -170,9 +169,9 @@
             margin-bottom: 15px;
         }
         
-        .display-area video {
-            width: 100%;
-            height: 100%;
+        .display-area img {
+            max-width: 100%;
+            max-height: 100%;
             object-fit: contain;
         }
         
@@ -181,6 +180,26 @@
             flex-wrap: wrap;
             gap: 10px;
             margin: 15px 0;
+        }
+        
+        .interval-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .interval-control input {
+            width: 80px;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .interval-control {
+            display: none;
         }
         
         .info-panel {
@@ -195,6 +214,26 @@
             justify-content: space-between;
             margin-bottom: 6px;
             font-size: 0.85rem;
+        }
+        
+        .file-list {
+            max-height: 120px;
+            overflow-y: auto;
+            margin-top: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px;
+            border-radius: 5px;
+        }
+        
+        .file-item {
+            padding: 4px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.8rem;
+        }
+        
+        .current-frame {
+            font-weight: bold;
+            color: #fdbb2d;
         }
         
         .status-indicator {
@@ -276,16 +315,13 @@
 <body>
     <div class="container">
         <header>
-            <h1>多视频同步播放器</h1>
-            <p class="subtitle">从GitHub仓库加载视频文件，支持全局同步控制</p>
+            <h1>RTVST Demo</h1>
+            <p class="subtitle"> </p>
         </header>
         
         <div class="global-controls">
             <h3><i class="fas fa-sync-alt"></i> 全局控制</h3>
             <div class="controls">
-                <button class="btn btn-global" id="loadAllVideos">
-                    <i class="fas fa-download"></i> 从GitHub加载所有视频
-                </button>
                 <button class="btn btn-global" id="globalPlay">
                     <i class="fas fa-play"></i> 全部开始
                 </button>
@@ -301,7 +337,7 @@
             </div>
         </div>
 
-        <!-- 信息显示行 -->
+        <!-- 新增的信息显示行 -->
         <div class="info-display-row">
             <div class="info-display-item">
                 <span class="info-label">SNR:</span>
@@ -321,27 +357,47 @@
                     <span class="status-indicator status-stopped" id="status1"></span>
                 </div>
                 
+                <!-- 添加隐藏的间隔输入 -->
+                <input type="hidden" id="intervalInput1" value="40">
+                
                 <div class="display-area" id="displayArea1">
-                    <p style="text-align: center; opacity: 0.7;">等待加载视频文件</p>
+                    <p style="text-align: center; opacity: 0.7;">等待加载视频帧序列</p>
                 </div>
                 
                 <div class="info-panel">
                     <div class="info-item">
-                        <span>当前时间:</span>
-                        <span id="currentTime1">-</span>
+                        <span>当前帧:</span>
+                        <span id="currentFrame1">-</span>
                     </div>
                     <div class="info-item">
-                        <span>总时长:</span>
-                        <span id="totalDuration1">-</span>
+                        <span>总帧数:</span>
+                        <span id="totalFrames1">0</span>
+                    </div>
+                    <div class="info-item">
+                        <span>帧率:</span>
+                        <span id="fpsInfo1">0 FPS</span>
                     </div>
                     <div class="info-item">
                         <span>状态:</span>
                         <span id="playStatus1">已停止</span>
                     </div>
                     <div class="info-item">
-                        <span>GitHub路径:</span>
-                        <span id="githubPath1">RTVST-Demo/video-transmission-demo/h265+ldpc-frames/output_h265.mp4</span>
+                        <span>视频源:</span>
+                        <span id="videoSource1">output_h265.mp4</span>
                     </div>
+                </div>
+                
+                <div class="file-list" id="fileList1">
+                    <p style="text-align: center; opacity: 0.7;">视频帧序列将显示在这里</p>
+                </div>
+                
+                <!-- 简化的GitHub加载区域 -->
+                <div class="github-load-area" id="githubLoadArea1">
+                    <i class="fab fa-github"></i>
+                    <p>加载重建视频帧序列</p>
+                    <button class="btn" id="loadBtn1">
+                        <i class="fas fa-download"></i> 加载视频帧
+                    </button>
                 </div>
             </div>
             
@@ -352,27 +408,47 @@
                     <span class="status-indicator status-stopped" id="status2"></span>
                 </div>
                 
+                <!-- 添加隐藏的间隔输入 -->
+                <input type="hidden" id="intervalInput2" value="268">
+                
                 <div class="display-area" id="displayArea2">
-                    <p style="text-align: center; opacity: 0.7;">等待加载视频文件</p>
+                    <p style="text-align: center; opacity: 0.7;">等待加载视频帧序列</p>
                 </div>
                 
                 <div class="info-panel">
                     <div class="info-item">
-                        <span>当前时间:</span>
-                        <span id="currentTime2">-</span>
+                        <span>当前帧:</span>
+                        <span id="currentFrame2">-</span>
                     </div>
                     <div class="info-item">
-                        <span>总时长:</span>
-                        <span id="totalDuration2">-</span>
+                        <span>总帧数:</span>
+                        <span id="totalFrames2">0</span>
+                    </div>
+                    <div class="info-item">
+                        <span>帧率:</span>
+                        <span id="fpsInfo2">0 FPS</span>
                     </div>
                     <div class="info-item">
                         <span>状态:</span>
                         <span id="playStatus2">已停止</span>
                     </div>
                     <div class="info-item">
-                        <span>GitHub路径:</span>
-                        <span id="githubPath2">RTVST-Demo/video-transmission-demo/deepjscc-frames/deepjscc_video.mp4</span>
+                        <span>视频源:</span>
+                        <span id="videoSource2">deepjscc_video.mp4</span>
                     </div>
+                </div>
+                
+                <div class="file-list" id="fileList2">
+                    <p style="text-align: center; opacity: 0.7;">视频帧序列将显示在这里</p>
+                </div>
+                
+                <!-- 简化的GitHub加载区域 -->
+                <div class="github-load-area" id="githubLoadArea2">
+                    <i class="fab fa-github"></i>
+                    <p>加载重建视频帧序列</p>
+                    <button class="btn" id="loadBtn2">
+                        <i class="fas fa-download"></i> 加载视频帧
+                    </button>
                 </div>
             </div>
             
@@ -383,45 +459,71 @@
                     <span class="status-indicator status-stopped" id="status3"></span>
                 </div>
                 
+                <!-- 添加隐藏的间隔输入 -->
+                <input type="hidden" id="intervalInput3" value="40">
+                
                 <div class="display-area" id="displayArea3">
-                    <p style="text-align: center; opacity: 0.7;">等待加载视频文件</p>
+                    <p style="text-align: center; opacity: 0.7;">等待加载视频帧序列</p>
                 </div>
                 
                 <div class="info-panel">
                     <div class="info-item">
-                        <span>当前时间:</span>
-                        <span id="currentTime3">-</span>
+                        <span>当前帧:</span>
+                        <span id="currentFrame3">-</span>
                     </div>
                     <div class="info-item">
-                        <span>总时长:</span>
-                        <span id="totalDuration3">-</span>
+                        <span>总帧数:</span>
+                        <span id="totalFrames3">0</span>
+                    </div>
+                    <div class="info-item">
+                        <span>帧率:</span>
+                        <span id="fpsInfo3">0 FPS</span>
                     </div>
                     <div class="info-item">
                         <span>状态:</span>
                         <span id="playStatus3">已停止</span>
                     </div>
                     <div class="info-item">
-                        <span>GitHub路径:</span>
-                        <span id="githubPath3">RTVST-Demo/video-transmission-demo/rtvst-frames/rtvst_video.mp4</span>
+                        <span>视频源:</span>
+                        <span id="videoSource3">rtvst_video.mp4</span>
                     </div>
+                </div>
+                
+                <div class="file-list" id="fileList3">
+                    <p style="text-align: center; opacity: 0.7;">视频帧序列将显示在这里</p>
+                </div>
+                
+                <!-- 简化的GitHub加载区域 -->
+                <div class="github-load-area" id="githubLoadArea3">
+                    <i class="fab fa-github"></i>
+                    <p>加载重建视频帧序列</p>
+                    <button class="btn" id="loadBtn3">
+                        <i class="fas fa-download"></i> 加载视频帧
+                    </button>
                 </div>
             </div>
         </div>
         
         <footer>
-            <p>多视频同步播放器 &copy; 2023 | 从GitHub仓库加载视频文件</p>
+            <p>  &copy; 2025aic |  </p>
         </footer>
     </div>
 
     <script>
-        class VideoPlayer {
+        class VideoFrameSequence {
             constructor(panelId) {
                 this.panelId = panelId;
                 this.videoElement = null;
+                this.canvas = null;
+                this.ctx = null;
+                this.frameImages = [];
+                this.currentIndex = 0;
+                this.playInterval = null;
                 this.isPlaying = false;
-                this.updateInterval = null;
+                this.totalFrames = 0;
+                this.videoLoaded = false;
                 
-                // 修正的GitHub仓库信息 - 基于frames文件夹
+                // 预设的GitHub视频文件信息
                 this.githubConfigs = {
                     '1': {
                         owner: 'RTVST-Demo',
@@ -444,188 +546,241 @@
                 };
                 
                 this.initializeElements();
+                this.bindEvents();
             }
 
             initializeElements() {
+                this.githubLoadArea = document.getElementById(`githubLoadArea${this.panelId}`);
+                this.loadBtn = document.getElementById(`loadBtn${this.panelId}`);
                 this.displayArea = document.getElementById(`displayArea${this.panelId}`);
-                this.currentTimeEl = document.getElementById(`currentTime${this.panelId}`);
-                this.totalDurationEl = document.getElementById(`totalDuration${this.panelId}`);
+                this.intervalInput = document.getElementById(`intervalInput${this.panelId}`);
+                this.fileList = document.getElementById(`fileList${this.panelId}`);
+
+                this.currentFrameEl = document.getElementById(`currentFrame${this.panelId}`);
+                this.totalFramesEl = document.getElementById(`totalFrames${this.panelId}`);
+                this.fpsInfoEl = document.getElementById(`fpsInfo${this.panelId}`);
                 this.playStatusEl = document.getElementById(`playStatus${this.panelId}`);
                 this.statusIndicator = document.getElementById(`status${this.panelId}`);
-                this.githubPathEl = document.getElementById(`githubPath${this.panelId}`);
+                this.videoSourceEl = document.getElementById(`videoSource${this.panelId}`);
+
+                // 创建img对象用于显示帧
+                this.imgElement = document.createElement('img');
+                this.imgElement.style.maxWidth = '100%';
+                this.imgElement.style.maxHeight = '100%';
+                this.imgElement.style.objectFit = 'contain';
+                this.imgElement.alt = '视频帧';
                 
-                // 显示GitHub路径
+                // 清空并添加img元素
+                this.displayArea.innerHTML = '';
+                this.displayArea.appendChild(this.imgElement);
+
+                // 显示视频源信息
                 const config = this.githubConfigs[this.panelId];
                 if (config) {
-                    this.githubPathEl.textContent = `${config.owner}/${config.repo}/${config.path}/${config.videoFile}`;
+                    this.videoSourceEl.textContent = config.videoFile;
                 }
             }
             
-            async loadVideo() {
+            bindEvents() {
+                this.loadBtn.addEventListener('click', () => {
+                    this.loadVideoFromGitHub();
+                });
+            }
+            
+            async loadVideoFromGitHub() {
+                const config = this.githubConfigs[this.panelId];
+                
+                if (!config) {
+                    alert('未找到预设的GitHub配置！');
+                    return;
+                }
+                
                 try {
-                    const config = this.githubConfigs[this.panelId];
+                    this.loadBtn.disabled = true;
+                    this.loadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 加载中...';
                     
-                    if (!config) {
-                        throw new Error('未找到GitHub配置');
-                    }
-                    
-                    // 构建GitHub Raw URL - 修正路径
+                    // 构建视频URL
                     const videoUrl = `https://raw.githubusercontent.com/${config.owner}/${config.repo}/main/${config.path}/${config.videoFile}`;
                     
                     console.log(`正在从GitHub加载视频: ${videoUrl}`);
                     
-                    // 释放之前的视频资源
-                    if (this.videoElement) {
-                        this.videoElement.pause();
-                        this.videoElement.src = '';
-                        this.videoElement.load();
-                    }
-                    
                     // 创建视频元素
                     this.videoElement = document.createElement('video');
-                    this.videoElement.controls = false;
-                    this.videoElement.style.width = '100%';
-                    this.videoElement.style.height = '100%';
-                    this.videoElement.style.objectFit = 'contain';
+                    this.videoElement.style.display = 'none';
+                    this.videoElement.crossOrigin = 'anonymous';
                     
-                    // 设置视频源
-                    this.videoElement.src = videoUrl;
+                    // 创建canvas用于提取帧
+                    this.canvas = document.createElement('canvas');
+                    this.ctx = this.canvas.getContext('2d');
                     
-                    // 清空显示区域并添加视频元素
-                    this.displayArea.innerHTML = '';
-                    this.displayArea.appendChild(this.videoElement);
-                    
-                    // 添加事件监听器
-                    this.videoElement.addEventListener('loadedmetadata', () => {
-                        this.updateTotalDuration();
-                        this.updateStatus('stopped');
-                        console.log(`视频加载成功: ${config.videoFile}`);
+                    return new Promise((resolve, reject) => {
+                        this.videoElement.addEventListener('loadedmetadata', () => {
+                            // 设置canvas尺寸
+                            this.canvas.width = this.videoElement.videoWidth;
+                            this.canvas.height = this.videoElement.videoHeight;
+                            
+                            // 计算总帧数（基于时长和帧率估算）
+                            const duration = this.videoElement.duration;
+                            const frameRate = 30; // 假设30fps
+                            this.totalFrames = Math.floor(duration * frameRate);
+                            
+                            console.log(`视频信息: 时长=${duration}s, 估算帧数=${this.totalFrames}`);
+                            
+                            this.extractVideoFrames().then(() => {
+                                this.videoLoaded = true;
+                                this.updateFileList();
+                                this.updateTotalFrames();
+                                this.updateStatus('stopped');
+                                alert(`成功提取 ${this.frameImages.length} 帧`);
+                                resolve();
+                            }).catch(reject);
+                        });
+                        
+                        this.videoElement.addEventListener('error', (e) => {
+                            reject(new Error(`视频加载失败: ${videoUrl}`));
+                        });
+                        
+                        this.videoElement.src = videoUrl;
                     });
-                    
-                    this.videoElement.addEventListener('play', () => {
-                        this.isPlaying = true;
-                        this.updateStatus('playing');
-                        this.startTimeUpdate();
-                    });
-                    
-                    this.videoElement.addEventListener('pause', () => {
-                        this.isPlaying = false;
-                        this.updateStatus('paused');
-                        this.stopTimeUpdate();
-                    });
-                    
-                    this.videoElement.addEventListener('ended', () => {
-                        this.isPlaying = false;
-                        this.updateStatus('stopped');
-                        this.stopTimeUpdate();
-                    });
-                    
-                    this.videoElement.addEventListener('timeupdate', () => {
-                        this.updateCurrentTime();
-                    });
-                    
-                    this.videoElement.addEventListener('error', (e) => {
-                        console.error('视频加载错误:', e);
-                        const errorMsg = `视频加载失败: ${videoUrl}`;
-                        this.displayArea.innerHTML = `<p style="text-align: center; color: #ff6b6b;">${errorMsg}</p>`;
-                        this.updateStatus('stopped');
-                    });
-                    
-                    // 测试视频是否可访问
-                    try {
-                        const response = await fetch(videoUrl, { method: 'HEAD' });
-                        if (!response.ok) {
-                            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                        }
-                        console.log(`视频URL可访问: ${videoUrl}`);
-                    } catch (error) {
-                        console.warn('视频URL访问测试失败:', error);
-                        this.displayArea.innerHTML = `<p style="text-align: center; color: #ffcc00;">URL测试失败: ${error.message}</p>`;
-                    }
                     
                 } catch (error) {
                     console.error('加载视频失败:', error);
-                    this.displayArea.innerHTML = `<p style="text-align: center; color: #ff6b6b;">加载失败: ${error.message}</p>`;
+                    alert(`加载失败: ${error.message}\n\n请确保GitHub仓库存在且路径正确。`);
+                } finally {
+                    this.loadBtn.disabled = false;
+                    this.loadBtn.innerHTML = '<i class="fas fa-download"></i> 加载视频帧';
                 }
             }
             
-            startTimeUpdate() {
-                this.stopTimeUpdate();
-                this.updateInterval = setInterval(() => {
-                    this.updateCurrentTime();
-                }, 100);
-            }
-            
-            stopTimeUpdate() {
-                if (this.updateInterval) {
-                    clearInterval(this.updateInterval);
-                    this.updateInterval = null;
-                }
-            }
-            
-            updateCurrentTime() {
-                if (this.videoElement) {
-                    const currentTime = this.formatTime(this.videoElement.currentTime);
-                    this.currentTimeEl.textContent = currentTime;
-                }
-            }
-            
-            updateTotalDuration() {
-                if (this.videoElement) {
-                    const duration = this.formatTime(this.videoElement.duration);
-                    this.totalDurationEl.textContent = duration;
-                }
-            }
-            
-            formatTime(seconds) {
-                if (isNaN(seconds) || seconds === Infinity) return '-';
+            async extractVideoFrames() {
+                this.frameImages = [];
+                const frameInterval = 0.1; // 每0.1秒提取一帧
+                const duration = this.videoElement.duration;
                 
-                const mins = Math.floor(seconds / 60);
-                const secs = Math.floor(seconds % 60);
-                return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                for (let time = 0; time < duration; time += frameInterval) {
+                    try {
+                        const frameDataUrl = await this.getFrameAtTime(time);
+                        this.frameImages.push(frameDataUrl);
+                    } catch (error) {
+                        console.warn(`提取帧失败 at ${time}s:`, error);
+                    }
+                }
+                
+                console.log(`成功提取 ${this.frameImages.length} 帧`);
             }
             
-            play() {
-                if (this.videoElement && !this.isPlaying) {
-                    this.videoElement.play().catch(error => {
-                        console.error('播放失败:', error);
-                        this.displayArea.innerHTML = `<p style="text-align: center; color: #ff6b6b;">播放失败: ${error.message}</p>`;
-                    });
+            getFrameAtTime(time) {
+                return new Promise((resolve, reject) => {
+                    this.videoElement.currentTime = time;
+                    
+                    const onSeeked = () => {
+                        this.videoElement.removeEventListener('seeked', onSeeked);
+                        
+                        // 绘制当前帧到canvas
+                        this.ctx.drawImage(this.videoElement, 0, 0, this.canvas.width, this.canvas.height);
+                        
+                        // 转换为DataURL
+                        const dataUrl = this.canvas.toDataURL('image/jpeg', 0.8);
+                        resolve(dataUrl);
+                    };
+                    
+                    this.videoElement.addEventListener('seeked', onSeeked);
+                    
+                    // 超时处理
+                    setTimeout(() => {
+                        this.videoElement.removeEventListener('seeked', onSeeked);
+                        reject(new Error(`提取帧超时 at ${time}s`));
+                    }, 1000);
+                });
+            }
+            
+            updateFileList() {
+                this.fileList.innerHTML = '';
+                for (let i = 0; i < this.frameImages.length; i++) {
+                    const fileItem = document.createElement('div');
+                    fileItem.className = 'file-item';
+                    fileItem.textContent = `帧 ${i + 1} (${(i * 0.1).toFixed(1)}s)`;
+                    this.fileList.appendChild(fileItem);
                 }
+            }
+            
+            updateTotalFrames() {
+                this.totalFramesEl.textContent = this.frameImages.length;
+            }
+            
+            start() {
+                if (this.frameImages.length === 0 || this.isPlaying) return;
+                
+                this.isPlaying = true;
+                const interval = parseInt(this.intervalInput.value);
+                
+                this.playInterval = setInterval(() => {
+                    this.currentIndex = (this.currentIndex + 1) % this.frameImages.length;
+                    this.showFrame(this.currentIndex);
+                }, interval);
+                
+                this.updateStatus('playing');
+                this.updateFPS(interval);
             }
             
             pause() {
-                if (this.videoElement && this.isPlaying) {
-                    this.videoElement.pause();
+                if (this.playInterval) {
+                    clearInterval(this.playInterval);
+                    this.playInterval = null;
                 }
+                
+                this.isPlaying = false;
+                this.updateStatus('paused');
             }
             
             stop() {
-                if (this.videoElement) {
-                    this.videoElement.pause();
-                    this.videoElement.currentTime = 0;
-                    this.isPlaying = false;
-                    this.updateStatus('stopped');
-                    this.stopTimeUpdate();
-                    this.updateCurrentTime();
+                if (this.playInterval) {
+                    clearInterval(this.playInterval);
+                    this.playInterval = null;
                 }
+                
+                this.isPlaying = false;
+                this.currentIndex = 0;
+                this.showFrame(0);
+                this.updateStatus('stopped');
             }
             
             reset() {
                 this.stop();
-                if (this.videoElement) {
-                    this.videoElement.src = '';
-                    this.videoElement.load();
-                }
+                this.frameImages = [];
+                this.videoLoaded = false;
                 
                 // 重置显示区域
-                this.displayArea.innerHTML = '<p style="text-align: center; opacity: 0.7;">等待加载视频文件</p>';
+                this.imgElement.src = '';
+                this.imgElement.style.display = 'none';
+                this.displayArea.innerHTML = '<p style="text-align: center; opacity: 0.7;">等待加载视频帧序列</p>';
                 
-                this.currentTimeEl.textContent = '-';
-                this.totalDurationEl.textContent = '-';
+                this.fileList.innerHTML = '<p style="text-align: center; opacity: 0.7;">视频帧序列将显示在这里</p>';
+                this.updateTotalFrames();
+                this.currentFrameEl.textContent = '-';
+                this.fpsInfoEl.textContent = '0 FPS';
                 this.updateStatus('stopped');
             }
             
+            updateFPS(interval) {
+                const fps = interval > 0 ? Math.round(1000 / interval) : 0;
+                this.fpsInfoEl.textContent = `${fps} FPS`;
+            }
+            
+            showFrame(index) {
+                if (this.frameImages.length === 0) return;
+
+                this.imgElement.src = this.frameImages[index];
+                this.imgElement.style.display = 'block';
+
+                this.currentFrameEl.textContent = `${index + 1} / ${this.frameImages.length}`;
+
+                const fileItems = this.fileList.getElementsByClassName('file-item');
+                for (let i = 0; i < fileItems.length; i++) {
+                    fileItems[i].classList.toggle('current-frame', i === index);
+                }
+            }
+    
             updateStatus(status) {
                 this.playStatusEl.textContent = 
                     status === 'playing' ? '播放中' : 
@@ -640,34 +795,29 @@
             }
         }
 
-        // 初始化三个视频播放器
+        // 初始化三个视频序列
         document.addEventListener('DOMContentLoaded', function() {
-            const player1 = new VideoPlayer('1');
-            const player2 = new VideoPlayer('2');
-            const player3 = new VideoPlayer('3');
+            const sequence1 = new VideoFrameSequence('1');
+            const sequence2 = new VideoFrameSequence('2');
+            const sequence3 = new VideoFrameSequence('3');
             
-            const players = [player1, player2, player3];
-            
-            // 加载所有视频
-            document.getElementById('loadAllVideos').addEventListener('click', () => {
-                players.forEach(player => player.loadVideo());
-            });
+            const sequences = [sequence1, sequence2, sequence3];
             
             // 全局控制
             document.getElementById('globalPlay').addEventListener('click', () => {
-                players.forEach(player => player.play());
+                sequences.forEach(seq => seq.start());
             });
             
             document.getElementById('globalPause').addEventListener('click', () => {
-                players.forEach(player => player.pause());
+                sequences.forEach(seq => seq.pause());
             });
             
             document.getElementById('globalStop').addEventListener('click', () => {
-                players.forEach(player => player.stop());
+                sequences.forEach(seq => seq.stop());
             });
             
             document.getElementById('globalReset').addEventListener('click', () => {
-                players.forEach(player => player.reset());
+                sequences.forEach(seq => seq.reset());
             });
         });
     </script>
