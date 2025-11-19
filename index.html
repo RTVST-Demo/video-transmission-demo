@@ -316,7 +316,7 @@
     <div class="container">
         <header>
             <h1>AIC-RTVST</h1>
-            <p class="subtitle">load pictures</p>
+            <p class="subtitle"> </p>
         </header>
         
         <div class="global-controls">
@@ -350,6 +350,53 @@
          </div>
         
         <div class="video-container">
+            <!-- Origin -->
+            <div class="video-panel">
+                <div class="panel-header">
+                    <h3 class="panel-title"><i class="fas fa-film"></i> Origin</h3>
+                    <span class="status-indicator status-stopped" id="status4"></span>
+                </div>
+                
+                <!-- 添加隐藏的间隔输入 -->
+                <input type="hidden" id="intervalInput4" value="40">
+                
+                <div class="display-area" id="displayArea4">
+                    <p style="text-align: center; opacity: 0.7;">等待加载图片序列</p>
+                </div>
+                
+                <div class="info-panel">
+                    <div class="info-item">
+                        <span>当前帧:</span>
+                        <span id="currentFrame4">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span>总帧数:</span>
+                        <span id="totalFrames4">0</span>
+                    </div>
+                    <div class="info-item">
+                        <span>帧率:</span>
+                        <span id="fpsInfo4">0 FPS</span>
+                    </div>
+                    <div class="info-item">
+                        <span>状态:</span>
+                        <span id="playStatus4">已停止</span>
+                    </div>
+                </div>
+                
+                <div class="file-list" id="fileList4">
+                    <p style="text-align: center; opacity: 0.7;">图片列表将显示在这里</p>
+                </div>
+                
+                <!-- 简化的GitHub加载区域 -->
+                <div class="github-load-area" id="githubLoadArea4">
+                    <i class="fab fa-github"></i>
+                    <p>加载图片序列</p>
+                    <button class="btn" id="loadBtn4">
+                        <i class="fas fa-download"></i> 加载图片
+                    </button>
+                </div>
+            </div>
+            
             <!-- H.265 + LDPC -->
             <div class="video-panel">
                 <div class="panel-header">
@@ -523,6 +570,11 @@
                         owner: 'RTVST-Demo',
                         repo: 'video-transmission-demo',
                         path: 'rtvst-frames'
+                    },
+                    '4': {
+                        owner: 'RTVST-Demo',
+                        repo: 'video-transmission-demo',
+                        path: 'origin-frames'
                     }
                 };
                 
@@ -778,13 +830,14 @@
             }
         }
 
-        // 初始化三个视频序列
+        // 初始化四个视频序列
         document.addEventListener('DOMContentLoaded', function() {
             const sequence1 = new VideoSequence('1');
             const sequence2 = new VideoSequence('2');
             const sequence3 = new VideoSequence('3');
+            const sequence4 = new VideoSequence('4'); // Origin视频序列
             
-            const sequences = [sequence1, sequence2, sequence3];
+            const sequences = [sequence4, sequence1, sequence2, sequence3]; // 调整顺序，Origin在最前面
             
             // 全局控制
             document.getElementById('globalPlay').addEventListener('click', () => {
