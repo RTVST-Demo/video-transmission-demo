@@ -35,8 +35,8 @@
         .panel-title i{color:#fdbb2d}
 
 
-        .display-area{ position:relative; }
-        .display-area img{ position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain; }
+        .display-area{width:100%;height:200px;border:2px solid rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3);overflow:hidden;margin-bottom:12px;position:relative}
+        .display-area img{max-width:100%;max-height:100%;object-fit:contain}
         
         .controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;justify-content:center}
         .info-panel{background:rgba(0,0,0,.2);padding:10px;border-radius:8px;margin-top:8px;font-size:.8rem}
@@ -181,57 +181,29 @@
     
     /* ================= 播放器 ================= */
     /* ================= 播放器（无闪烁版） ================= */
-    function flipper(prefix, total, fps, statusEl, curEl) {
-      let idx   = 0;
-      let raf   = null;
-      let prev  = null;                  // 上一帧 DOM
-      const interval = 1000 / fps;
-      let last = performance.now();
-    
-      const show = k => {
-        const cur = document.getElementById(`${prefix}-frame-${k + 1}`);
-        if (!cur) return;
-        if (prev && prev !== cur) prev.style.opacity = '0'; // 只关上一帧
-        cur.style.opacity  = '1';                           // 开当前帧
-        prev = cur;                                         // 更新指针
-        if (curEl) curEl.textContent = `${k + 1} / ${total}`;
+     function flipper(prefix, total, interval, statusEl, curEl){
+      let idx = 0, t = null;
+
+      const show = k=>{
+        document.querySelectorAll(`[id^="${prefix}-frame-"]`).forEach((el,i)=>{el.style.opacity = (i === k) ? '1' : '0';});
+        if(curEl) curEl.textContent = `${k+1} / ${total}`;
       };
-    
-      show(0);      // 首帧
-    
-      const step = now => {
-        if (now - last >= interval) {     // 时间到才真正换帧
-          idx = (idx + 1) % total;
-          show(idx);
-          last = now;
-        }
-        raf = requestAnimationFrame(step);
-      };
-    
+        
+      show(0);   // ← 2. 初始化点亮第一张
       return {
-        start() {
-          if (raf) return;
-          raf = requestAnimationFrame(step);
-          if (statusEl) {
-            statusEl.textContent = '播放中';
-            statusEl.previousElementSibling.className = 'status-indicator status-playing';
-          }
+        start(){
+          if(t) return;
+          show(idx);
+          if(statusEl){ statusEl.textContent='播放中'; statusEl.previousElementSibling.className='status-indicator status-playing'; }
+          t=setInterval(()=>{ idx=(idx+1)%total; show(idx); }, interval);
         },
-        pause() {
-          cancelAnimationFrame(raf); raf = null;
-          if (statusEl) {
-            statusEl.textContent = '已暂停';
-            statusEl.previousElementSibling.className = 'status-indicator status-paused';
-          }
+        pause(){
+          clearInterval(t); t=null;
+          if(statusEl){ statusEl.textContent='已暂停'; statusEl.previousElementSibling.className='status-indicator status-paused'; }
         },
-        stop() {
-          cancelAnimationFrame(raf); raf = null; idx = 0;
-          if (prev) prev.style.opacity = '0';
-          show(0);
-          if (statusEl) {
-            statusEl.textContent = '已停止';
-            statusEl.previousElementSibling.className = 'status-indicator status-stopped';
-          }
+        stop(){
+          clearInterval(t); t=null; idx=0; show(0);
+          if(statusEl){ statusEl.textContent='已停止'; statusEl.previousElementSibling.className='status-indicator status-stopped'; }
         }
       };
     }
