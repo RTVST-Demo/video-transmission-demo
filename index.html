@@ -155,10 +155,10 @@
     const repo = 'https://rtvst-demo.github.io/video-transmission-demo';   // ← 1. 去空格
     
     const panels = [
-      { id: 'da4', folder: 'origin-frames',     tpl: i => `img${String(i).padStart(6,'0')}.png`,       count: 10, fps: 25 },
-      { id: 'da1', folder: 'h265+ldpc-frames',  tpl: i => `output_${String(i).padStart(4,'0')}.png`,   count: 10, fps: 25 },
-      { id: 'da2', folder: 'deepjscc-frames',   tpl: i => `${100+i-1}recon_snr8.png`,                  count: 10, fps: 4 },
-      { id: 'da3', folder: 'rtvst-frames',      tpl: i => `${i-1}recon_snr8.png`,                      count: 10, fps: 25 }
+      { id: 'da4', folder: 'origin-frames',     tpl: i => `img${String(i).padStart(6,'0')}.png`,       count: 100, fps: 25 },
+      { id: 'da1', folder: 'h265+ldpc-frames',  tpl: i => `output_${String(i).padStart(4,'0')}.png`,   count: 100, fps: 25 },
+      { id: 'da2', folder: 'deepjscc-frames',   tpl: i => `${100+i-1}recon_snr8.png`,                  count: 100, fps: 4 },
+      { id: 'da3', folder: 'rtvst-frames',      tpl: i => `${i-1}recon_snr8.png`,                      count: 100, fps: 25 }
     ];
     
     panels.forEach(p=>{
