@@ -33,8 +33,27 @@
         .panel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.2)}
         .panel-title{font-size:1.2rem;display:flex;align-items:center;gap:8px}
         .panel-title i{color:#fdbb2d}
-        .display-area{width:100%;height:200px;border:2px solid rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3);overflow:hidden;margin-bottom:12px}
-        .display-area img{max-width:100%;max-height:100%;object-fit:contain}
+        .display-area{width:100%;height:200px;border:2px solid rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3);overflow:hidden;margin-bottom:12；pxposition: relative; }
+
+        .display-area img ;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            position: absolute; /* 让所有图片堆叠 */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            
+            /* 动画切换的关键：使用 opacity 和 z-index */
+            opacity: 0; /* 默认隐藏 */
+            transition: opacity 0.0s linear; /* 确保切换足够快 */
+        }
+        .display-area img.active-frame {
+            opacity: 1; /* 当前活动帧显示 */
+            z-index: 10;
+        }
+        
         .controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;justify-content:center}
         .info-panel{background:rgba(0,0,0,.2);padding:10px;border-radius:8px;margin-top:8px;font-size:.8rem}
         .info-item{display:flex;justify-content:space-between;margin-bottom:4px}
@@ -183,39 +202,52 @@
         function flipper(prefix, total, fps, statusEl, curEl) {
             let idx = 0;
             let animationFrameId = null;
-            // 计算目标间隔时间（毫秒）
-            const interval = 1000 / fps; 
-            let lastTime = performance.now(); 
-    
+            const interval = 1000 / fps; // 目标间隔时间 (ms)
+            let lastTime = performance.now(); // 记录上次绘制时间
+            let currentFrameElement = null; // 追踪当前显示的图片元素
+        
+            // 切换帧的逻辑
             const show = k => {
-                // 切换 visibility，比切换 display 性能更好
-                document.querySelectorAll(`[id^="${prefix}-frame-"]`).forEach(el => el.style.visibility = 'hidden');
-                const target = document.getElementById(`${prefix}-frame-${k + 1}`);
-                if (target) target.style.visibility = 'visible';
-                // 如果需要显示当前帧数，这里更新
-                // if(curEl) curEl.textContent = `${k+1} / ${total}`; 
+                const nextTarget = document.getElementById(`${prefix}-frame-${k + 1}`);
+        
+                // 1. 隐藏上一帧
+                if (currentFrameElement) {
+                    currentFrameElement.classList.remove('active-frame');
+                    currentFrameElement.style.zIndex = 1; // 确保隐藏帧不在最上层
+                }
+        
+                // 2. 显示当前帧
+                if (nextTarget) {
+                    nextTarget.classList.add('active-frame');
+                    nextTarget.style.zIndex = 10;
+                    currentFrameElement = nextTarget;
+                }
+                // 如果需要显示当前帧数，可以在这里更新 curEl.textContent
+                // if (curEl) curEl.textContent = `${k + 1} / ${total}`;
             };
-    
-            // 动画循环函数
+        
+            // 动画循环函数 (核心)
             const loop = (currentTime) => {
                 animationFrameId = requestAnimationFrame(loop);
-    
-                // 检查自上次绘制以来是否达到了目标间隔
+        
+                // 检查是否达到下一个帧的间隔时间
                 if (currentTime - lastTime >= interval) {
-                    // 修正时间，防止计时器累积误差
+                    // 修正时间，防止累积误差
                     lastTime = currentTime - (currentTime % interval);
-    
+        
                     idx = (idx + 1) % total;
                     show(idx);
                 }
             };
-    
-            show(0); // 初始化点亮第一张
-    
+        
+            // 初始化时确保第一帧显示
+            show(0);
+        
+            // 返回播放器控制接口
             return {
                 start() {
                     if (animationFrameId) return; // 已经在播放
-                    lastTime = performance.now(); // 重置时间
+                    lastTime = performance.now(); // 重新开始时重置时间
                     if (statusEl) {
                         statusEl.textContent = '播放中';
                         statusEl.previousElementSibling.className = 'status-indicator status-playing';
