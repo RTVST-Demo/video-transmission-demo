@@ -13,6 +13,43 @@
         header{text-align:center;padding:30px 0}
         h1{font-size:2.8rem;margin-bottom:10px;text-shadow:2px 2px 4px rgba(0,0,0,.3)}
         .subtitle{font-size:1.2rem;opacity:.9;max-width:800px;margin:0 auto;line-height:1.6}
+        
+        /* ====== 加载进度条样式 (新增) ====== */
+        .loading-bar-container{
+            margin: 20px auto;
+            width: 80%;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 10px 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .loading-bar-label{
+            color: #1a1a2e; /* 调整颜色使其在浅背景下可见 */
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+        }
+        .progress-bar{
+            height: 20px;
+            background: #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .progress-bar-fill{
+            height: 100%;
+            width: 0;
+            background: linear-gradient(to right, #4CAF50, #fdbb2d);
+            transition: width 0.4s ease;
+            text-align: center;
+            line-height: 20px;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        /* ======================== */
+        
         .global-controls{background:rgba(255,255,255,.1);backdrop-filter:blur(10px);border-radius:15px;padding:20px;margin:30px 0;text-align:center}
         .info-display-row{display:flex;justify-content:space-around;align-items:center;border:2px solid #ccc;border-radius:8px;padding:10px 0;margin:10px 0;background:rgba(255,255,255,.1);color:#000}
         .info-display-item{text-align:center;padding:5px 15px}
@@ -33,8 +70,27 @@
         .panel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.2)}
         .panel-title{font-size:1.2rem;display:flex;align-items:center;gap:8px}
         .panel-title i{color:#fdbb2d}
-        .display-area{width:100%;height:200px;border:2px solid rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3);overflow:hidden;margin-bottom:12px}
-        .display-area img{max-width:100%;max-height:100%;object-fit:contain}
+        /* 关键修复：使用绝对定位和透明度进行平滑切换 */
+        .display-area{
+            position: relative; /* 确保子元素绝对定位生效 */
+            width:100%;height:200px;border:2px solid rgba(255,255,255,.2);border-radius:10px;
+            display:flex;align-items:center;justify-content:center;
+            background:rgba(0,0,0,.3);overflow:hidden;margin-bottom:12px
+        }
+        .display-area img{
+            position: absolute; /* 图片叠加 */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: opacity 0.05s linear; /* 增加轻微过渡，消除闪烁感 */
+            opacity: 0; /* 默认隐藏 */
+        }
+        .display-area img:first-child{
+            opacity: 1; /* 初始显示第一帧 */
+        }
+        /* -------------------------------- */
         .controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;justify-content:center}
         .info-panel{background:rgba(0,0,0,.2);padding:10px;border-radius:8px;margin-top:8px;font-size:.8rem}
         .info-item{display:flex;justify-content:space-between;margin-bottom:4px}
@@ -45,17 +101,16 @@
         @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
         footer{text-align:center;margin-top:50px;padding:20px;opacity:.7;font-size:.9rem}
         .btn{background:#fdbb2d;color:#1a1a2e;border:none;padding:8px 16px;border-radius:50px;font-weight:bold;cursor:pointer;transition:all .3s;display:inline-flex;align-items:center;gap:6px;margin:4px;font-size:.85rem}
-        .btn:hover{background:#ffcc44;transform:scale(1.05)}
+        .btn:hover:not(:disabled){background:#ffcc44;transform:scale(1.05)}
         .btn-global{background:#4CAF50;padding:10px 20px;font-size:.95rem}
-        .btn-global:hover{background:#66BB6A}
+        .btn-global:hover:not(:disabled){background:#66BB6A}
         .btn-stop{background:#f44336}
-        .btn-stop:hover{background:#ef5350}
+        .btn-stop:hover:not(:disabled){background:#ef5350}
+        .btn:disabled{background:#cccccc;cursor:not-allowed;opacity:0.6;} /* 禁用按钮样式 */
         @media(max-width:1400px){.video-container{grid-template-columns:repeat(2,1fr)}}
         @media(max-width:768px){.video-container{grid-template-columns:1fr}h1{font-size:2.2rem}}
         .abstract{background:rgba(255,255,255,.08);padding:20px;border-radius:10px;line-height:1.8;border-left:4px solid #fdbb2d;color:#fff;}
         .abstract strong{color:#fdbb2d;font-weight:600;}
-        
-                
     </style>
 </head>
 <body>
@@ -65,33 +120,41 @@
             <p class="subtitle">实时视频语义传输对比演示平台</p>
         </header>
 
+        <div class="loading-bar-container">
+            <div class="loading-bar-label">
+                <span>图片预加载中...</span>
+                <span id="loading-status-text">0 / 400 (0%)</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-bar-fill" id="loading-progress-fill"></div>
+            </div>
+        </div>
+
         <div class="global-controls">
             <div class="info-display-row">
                 <div class="info-display-item"><span class="info-label">SNR:</span><span class="info-value">8 dB</span></div>
                 <div class="info-display-item"><span class="info-label">CBR:</span><span class="info-value">0.012</span></div>
             </div>
 
-            <!-- ========== 摘要块（新增，位于架构图上方） ========== -->
             <div class="abstract" style="margin-bottom:20px;">
               <strong>项目摘要：</strong>
-              本 团 队 提 出 了 一 种 实 时 视 频 语 义 传 输 系 统 （ Real-time Video Semantic 
-                Transmission，RTVST）。提出了隐式时态建模及跨通道信息结构化分解与重构方法，将传统运动估计和残差链路融合为统一的前向过程，
-                并在紧致特征空间中执行特征提取操作，从而大幅降低操作复杂度，显著提升单帧
-                编解码速度。此外，该算法通过端到端联合优化，保证高质量重建效果的同时具有
-                较好的噪声鲁棒性。RTVST直击语义视频传输实时性痛点，有望为高带宽、低时延
-                的未来流媒体业务提供方法支撑，推动语义通信从理论研究走向实际部署。本 项 目将DeepJSCC与H.265+1/3LDPC+16QAM传统视频传输系
-                统作为对比方案。
+              本 团 队 提 出 了 一 种 实 时 视 频 语 义 传 输 系 统 （ Real-time Video Semantic 
+              Transmission，RTVST）。提出了隐式时态建模及跨通道信息结构化分解与重构方法，将传统运动估计和残差链路融合为统一的前向过程，
+              并在紧致特征空间中执行特征提取操作，从而大幅降低操作复杂度，显著提升单帧
+              编解码速度。此外，该算法通过端到端联合优化，保证高质量重建效果的同时具有
+              较好的噪声鲁棒性。RTVST直击语义视频传输实时性痛点，有望为高带宽、低时延
+              的未来流媒体业务提供方法支撑，推动语义通信从理论研究走向实际部署。本 项 目将DeepJSCC与H.265+1/3LDPC+16QAM传统视频传输系
+              统作为对比方案。
             </div>
 
-            
             <div class="architecture-image">
                 <img src="https://rtvst-demo.github.io/video-transmission-demo/rtvst_Architecture.jpg " alt="RTVST架构图">
                 <div class="image-caption">RTVST模型架构图</div>
             </div>
             <div class="controls">
-                <button class="btn btn-global" id="globalPlay"><i class="fas fa-play"></i> 开始</button>
-                <button class="btn btn-global" id="globalPause"><i class="fas fa-pause"></i> 暂停</button>
-                <button class="btn btn-global btn-stop" id="globalStop"><i class="fas fa-stop"></i> 停止</button>
+                <button class="btn btn-global" id="globalPlay" disabled><i class="fas fa-play"></i> 开始</button>
+                <button class="btn btn-global" id="globalPause" disabled><i class="fas fa-pause"></i> 暂停</button>
+                <button class="btn btn-global btn-stop" id="globalStop" disabled><i class="fas fa-stop"></i> 停止</button>
             </div>
         </div>
 
@@ -105,40 +168,36 @@
         </div>
 
         <div class="video-container">
-            <!-- ====== Origin ====== -->
             <div class="video-panel">
                 <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> Origin</h3><span class="status-indicator status-stopped" id="st4"></span></div>
-                <div class="display-area" id="da4"><!-- 100 帧固定路径 --></div>
+                <div class="display-area" id="da4"></div>
                 <div class="info-panel">
                     <div class="info-item"><span>帧率:</span><span id="fps4">25 FPS</span></div>
                     <div class="info-item"><span>状态:</span><span id="ps4">已停止</span></div>
                 </div>
             </div>
 
-            <!-- ====== H.265 + LDPC ====== -->
             <div class="video-panel">
                 <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> H.265 + LDPC</h3><span class="status-indicator status-stopped" id="st1"></span></div>
-                <div class="display-area" id="da1"><!-- 100 帧固定路径 --></div>
+                <div class="display-area" id="da1"></div>
                 <div class="info-panel">
                     <div class="info-item"><span>帧率:</span><span id="fps1">25 FPS</span></div>
                     <div class="info-item"><span>状态:</span><span id="ps1">已停止</span></div>
                 </div>
             </div>
 
-            <!-- ====== DeepJSCC ====== -->
             <div class="video-panel">
                 <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> DeepJSCC</h3><span class="status-indicator status-stopped" id="st2"></span></div>
-                <div class="display-area" id="da2"><!-- 100 帧固定路径 --></div>
+                <div class="display-area" id="da2"></div>
                 <div class="info-panel">
                     <div class="info-item"><span>帧率:</span><span id="fps2">4 FPS</span></div>
                     <div class="info-item"><span>状态:</span><span id="ps2">已停止</span></div>
                 </div>
             </div>
 
-            <!-- ====== RTVST ====== -->
             <div class="video-panel">
                 <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> RTVST</h3><span class="status-indicator status-stopped" id="st3"></span></div>
-                <div class="display-area" id="da3"><!-- 100 帧固定路径 --></div>
+                <div class="display-area" id="da3"></div>
                 <div class="info-panel">
                     <div class="info-item"><span>帧率:</span><span id="fps3">25 FPS</span></div>
                     <div class="info-item"><span>状态:</span><span id="ps3">已停止</span></div>
@@ -149,69 +208,186 @@
         <footer><p>实时视频语义传输算法设计</p></footer>
     </div>
 
-    <!-- ====================== 固定路径 100 帧生成脚本 ====================== -->
     <script>
-    /* ================= 生成四路视频帧 ================= */
-    const repo = 'https://rtvst-demo.github.io/video-transmission-demo';   // ← 1. 去空格
+    /* ================= 视频帧数据配置 ================= */
+    const repo = 'https://rtvst-demo.github.io/video-transmission-demo';
     
+    // 重新配置 panels 数组并添加 prefixId 用于映射 HTML ID
     const panels = [
-      { id: 'da4', folder: 'origin-frames',     tpl: i => `img${String(i).padStart(6,'0')}.png`,       count: 100, fps: 25 },
-      { id: 'da1', folder: 'h265+ldpc-frames',  tpl: i => `output_${String(i).padStart(4,'0')}.png`,   count: 100, fps: 25 },
-      { id: 'da2', folder: 'deepjscc-frames',   tpl: i => `${100+i-1}recon_snr8.png`,                  count: 100, fps: 4 },
-      { id: 'da3', folder: 'rtvst-frames',      tpl: i => `${i-1}recon_snr8.png`,                      count: 100, fps: 25 }
+        // H.265 + LDPC
+        { id: 'da1', prefixId: 1, folder: 'h265+ldpc-frames', tpl: i => `output_${String(i).padStart(4,'0')}.png`, count: 100, fps: 25 },
+        // DeepJSCC
+        { id: 'da2', prefixId: 2, folder: 'deepjscc-frames', tpl: i => `${100+i-1}recon_snr8.png`, count: 100, fps: 4 },
+        // RTVST
+        { id: 'da3', prefixId: 3, folder: 'rtvst-frames', tpl: i => `${i-1}recon_snr8.png`, count: 100, fps: 25 },
+        // Origin
+        { id: 'da4', prefixId: 4, folder: 'origin-frames', tpl: i => `img${String(i).padStart(6,'0')}.png`, count: 100, fps: 25 },
     ];
     
-    panels.forEach(p=>{
-      const box = document.getElementById(p.id);
-      let html = '';
-      for(let i=1;i<=p.count;i++){
-        const fileName = p.tpl(i);
-        const src = `${repo}/${p.folder}/${fileName}`;
-        html += `<img id="${p.id}-frame-${i}" src="${src}" style="max-width:100%;max-height:100%;object-fit:contain;${i===1?'':'display:none'}" />`;
-      }
-      box.innerHTML = html;
-    });
-    
-    /* ================= 播放器 ================= */
-    function flipper(prefix, total, interval, statusEl, curEl){
-      let idx = 0, t = null;
-      const show = k=>{
-        document.querySelectorAll(`[id^="${prefix}-frame-"]`).forEach(el=>el.style.display='none');
-        const target = document.getElementById(`${prefix}-frame-${k+1}`);
-        if(target) target.style.display='block';
-        if(curEl) curEl.textContent = `${k+1} / ${total}`;   // ← 3. 判空
-      };
-      show(0);   // ← 2. 初始化点亮第一张
-      return {
-        start(){
-          if(t) return;
-          show(idx);
-          if(statusEl){ statusEl.textContent='播放中'; statusEl.previousElementSibling.className='status-indicator status-playing'; }
-          t=setInterval(()=>{ idx=(idx+1)%total; show(idx); }, interval);
-        },
-        pause(){
-          clearInterval(t); t=null;
-          if(statusEl){ statusEl.textContent='已暂停'; statusEl.previousElementSibling.className='status-indicator status-paused'; }
-        },
-        stop(){
-          clearInterval(t); t=null; idx=0; show(0);
-          if(statusEl){ statusEl.textContent='已停止'; statusEl.previousElementSibling.className='status-indicator status-stopped'; }
+    /* ================= 图片预加载和进度条逻辑 ================= */
+    function preloadAllImages() {
+        let loadedCount = 0;
+        let totalCount = 0;
+        const progressFill = document.getElementById('loading-progress-fill');
+        const statusText = document.getElementById('loading-status-text');
+        const globalButtons = [
+            document.getElementById('globalPlay'),
+            document.getElementById('globalPause'),
+            document.getElementById('globalStop')
+        ];
+        
+        // 禁用按钮直到加载完成
+        globalButtons.forEach(btn => btn.disabled = true);
+        
+        panels.forEach(p => {
+            const box = document.getElementById(p.id);
+            let html = '';
+            
+            for(let i = 1; i <= p.count; i++){
+                const fileName = p.tpl(i);
+                const src = `${repo}/${p.folder}/${fileName}`;
+                
+                // 1. 创建 <img /> 元素并插入 DOM
+                const imgId = `${p.id}-frame-${i}`;
+                // 注意：在 CSS 中已设置 opacity: 0 默认隐藏
+                html += `<img id="${imgId}" src="${src}" alt="Frame ${i}" />`;
+                
+                // 2. 使用 Image 对象预加载，确保图片进入浏览器缓存
+                const imgPreloader = new Image();
+                imgPreloader.src = src;
+                totalCount++;
+
+                // 3. 监听加载完成事件
+                imgPreloader.onload = imgPreloader.onerror = () => {
+                    loadedCount++;
+                    const percent = Math.round((loadedCount / totalCount) * 100);
+                    
+                    // 更新进度条
+                    progressFill.style.width = `${percent}%`;
+                    progressFill.textContent = `${percent}%`;
+                    statusText.textContent = `${loadedCount} / ${totalCount} (${percent}%)`;
+
+                    if (loadedCount === totalCount) {
+                        onAllImagesLoaded();
+                    }
+                };
+            }
+            box.innerHTML = html;
+            
+            // 初始显示第一帧 (CSS 样式已处理: .display-area img:first-child { opacity: 1; })
+        });
+        
+        function onAllImagesLoaded() {
+            // 启用全局控制按钮
+            globalButtons.forEach(btn => btn.disabled = false);
+            
+            // 更新进度条完成状态
+            const percent = 100;
+            progressFill.style.width = `${percent}%`;
+            progressFill.textContent = `加载完成 (${percent}%)`;
+            statusText.textContent = `所有图片已加载 (${totalCount} 帧)`;
+
+            // 创建播放器实例
+            createPlayers(); 
         }
-      };
+    }
+
+    /* ================= 播放器核心逻辑 (使用 requestAnimationFrame 平滑播放) ================= */
+    function flipper(prefix, total, interval, statusEl){
+        let idx = 0; 
+        let t = null;
+        let isPlaying = false;
+        let lastTimestamp = 0;
+        const intervalMs = interval; // 播放间隔 (毫秒)
+
+        // 切换指定索引的帧，使用 opacity 切换
+        const showFrame = (k)=>{
+            // 隐藏所有帧
+            document.querySelectorAll(`#${prefix} img`).forEach(el => el.style.opacity = 0);
+            
+            // 显示目标帧
+            const target = document.getElementById(`${prefix}-frame-${k+1}`);
+            if(target) target.style.opacity = 1;
+        };
+
+        // 动画循环函数
+        const nextFrame = (timestamp) => {
+            if (!isPlaying) return;
+
+            // 检查是否到达下一帧的间隔时间
+            if (timestamp - lastTimestamp >= intervalMs) {
+                lastTimestamp = timestamp;
+                
+                // 切换到下一帧
+                idx = (idx + 1) % total;
+                showFrame(idx);
+            }
+
+            // 循环调用
+            t = requestAnimationFrame(nextFrame);
+        };
+        
+        showFrame(0); // 初始化显示第一张
+
+        return {
+            start(){
+                if(isPlaying) return;
+                isPlaying = true;
+                if(statusEl){ 
+                    statusEl.textContent='播放中'; 
+                    statusEl.previousElementSibling.className='status-indicator status-playing'; 
+                }
+                lastTimestamp = performance.now(); // 重置时间戳
+                t = requestAnimationFrame(nextFrame);
+            },
+            pause(){
+                if (t) cancelAnimationFrame(t); 
+                t=null;
+                isPlaying = false;
+                if(statusEl){ 
+                    statusEl.textContent='已暂停'; 
+                    statusEl.previousElementSibling.className='status-indicator status-paused'; 
+                }
+            },
+            stop(){
+                if (t) cancelAnimationFrame(t); 
+                t=null; 
+                isPlaying = false;
+                idx=0; 
+                showFrame(0); // 停止时，显示第一帧
+                if(statusEl){ 
+                    statusEl.textContent='已停止'; 
+                    statusEl.previousElementSibling.className='status-indicator status-stopped'; 
+                }
+            }
+        };
     }
     
-    /* ================= 四路实例 ================= */
-    const players = panels.map((p,i)=>
-      flipper(p.id, p.count, 1000/p.fps,
-              document.getElementById(`ps${i+1}`),
-              document.getElementById(`cf${i+1}`))
-    );
+    let players = [];
     
-    /* ================= 全局按钮 ================= */
-    document.getElementById('globalPlay').addEventListener('click',()=>players.forEach(p=>p.start()));
-    document.getElementById('globalPause').addEventListener('click',()=>players.forEach(p=>p.pause()));
-    document.getElementById('globalStop').addEventListener('click',()=>players.forEach(p=>p.stop()));
-    </script>
+    function createPlayers() {
+        // 使用 panels 数组创建播放器实例
+        players = panels.map(p =>
+            // 1000/p.fps 是毫秒间隔
+            flipper(p.id, p.count, 1000/p.fps,
+                    document.getElementById(`ps${p.prefixId}`)) 
+        );
+    }
+    
+    /* ================= 全局按钮事件绑定 ================= */
+    function setupGlobalControls() {
+        document.getElementById('globalPlay').addEventListener('click',()=>players.forEach(p=>p.start()));
+        document.getElementById('globalPause').addEventListener('click',()=>players.forEach(p=>p.pause()));
+        document.getElementById('globalStop').addEventListener('click',()=>players.forEach(p=>p.stop()));
+    }
 
+    /* ================= 页面初始化 ================= */
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. 启动图片预加载 (加载完成后会自动启用按钮和创建播放器)
+        preloadAllImages();
+        // 2. 绑定全局控制按钮事件
+        setupGlobalControls();
+    });
+    </script>
 </body>
 </html>
