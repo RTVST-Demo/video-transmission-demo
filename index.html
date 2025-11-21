@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AIC-RTVST｜实时视频语义传输对比演示</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css ">
     <style>
         /* ====== 全页通用样式 ====== */
         *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
@@ -33,11 +33,8 @@
         .panel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.2)}
         .panel-title{font-size:1.2rem;display:flex;align-items:center;gap:8px}
         .panel-title i{color:#fdbb2d}
-
-
-        .display-area{width:100%;height:200px;border:2px solid rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3);overflow:hidden;margin-bottom:12px;position:relative}
+        .display-area{width:100%;height:200px;border:2px solid rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3);overflow:hidden;margin-bottom:12px}
         .display-area img{max-width:100%;max-height:100%;object-fit:contain}
-        
         .controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;justify-content:center}
         .info-panel{background:rgba(0,0,0,.2);padding:10px;border-radius:8px;margin-top:8px;font-size:.8rem}
         .info-item{display:flex;justify-content:space-between;margin-bottom:4px}
@@ -88,7 +85,7 @@
 
             
             <div class="architecture-image">
-                <img src="https://rtvst-demo.github.io/video-transmission-demo/rtvst_Architecture.jpg" alt="RTVST架构图">
+                <img src="https://rtvst-demo.github.io/video-transmission-demo/rtvst_Architecture.jpg " alt="RTVST架构图">
                 <div class="image-caption">RTVST模型架构图</div>
             </div>
             <div class="controls">
@@ -101,9 +98,9 @@
         <div class="performance-charts">
             <div class="charts-title"><i class="fas fa-chart-line"></i> 性能指标对比曲线</div>
             <div class="charts-container">
-                <div class="chart-item"><img src="https://rtvst-demo.github.io/video-transmission-demo/images_metrics/psnr.svg" alt="PSNR"><div class="chart-label">PSNR性能对比</div></div>
-                <div class="chart-item"><img src="https://rtvst-demo.github.io/video-transmission-demo/images_metrics/ssim.svg" alt="SSIM"><div class="chart-label">SSIM性能对比</div></div>
-                <div class="chart-item"><img src="https://rtvst-demo.github.io/video-transmission-demo/images_metrics/lpips.svg" alt="LPIPS"><div class="chart-label">LPIPS性能对比</div></div>
+                <div class="chart-item"><img src="https://rtvst-demo.github.io/video-transmission-demo/images_metrics/psnr.svg " alt="PSNR"><div class="chart-label">PSNR性能对比</div></div>
+                <div class="chart-item"><img src="https://rtvst-demo.github.io/video-transmission-demo/images_metrics/ssim.svg " alt="SSIM"><div class="chart-label">SSIM性能对比</div></div>
+                <div class="chart-item"><img src="https://rtvst-demo.github.io/video-transmission-demo/images_metrics/lpips.svg " alt="LPIPS"><div class="chart-label">LPIPS性能对比</div></div>
             </div>
         </div>
 
@@ -159,7 +156,7 @@
     <!-- ====================== 固定路径 100 帧生成脚本 ====================== -->
     <script>
     /* ================= 生成四路视频帧 ================= */
-    const repo = 'https://rtvst-demo.github.io/video-transmission-demo';   // ← 1. 去空格
+    const repo = 'https://rtvst-demo.github.io/video-transmission-demo ';   // ← 1. 去空格
     
     const panels = [
       { id: 'da4', folder: 'origin-frames',     tpl: i => `img${String(i).padStart(6,'0')}.png`,       count: 100, fps: 25 },
@@ -174,21 +171,20 @@
       for(let i=1;i<=p.count;i++){
         const fileName = p.tpl(i);
         const src = `${repo}/${p.folder}/${fileName}`;
-        html += `<img id="${p.id}-frame-${i}" src="${src}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;opacity:${i===1?1:0};transition:opacity .2s;">`;
+        html += `<img id="${p.id}-frame-${i}" src="${src}" style="max-width:100%;max-height:100%;object-fit:contain;${i===1?'':'display:none'}" />`;
       }
       box.innerHTML = html;
     });
     
     /* ================= 播放器 ================= */
-    /* ================= 播放器（无闪烁版） ================= */
-     function flipper(prefix, total, interval, statusEl, curEl){
+    function flipper(prefix, total, interval, statusEl, curEl){
       let idx = 0, t = null;
-
       const show = k=>{
-        document.querySelectorAll(`[id^="${prefix}-frame-"]`).forEach((el,i)=>{el.style.opacity = (i === k) ? '1' : '0';});
-        if(curEl) curEl.textContent = `${k+1} / ${total}`;
+        document.querySelectorAll(`[id^="${prefix}-frame-"]`).forEach(el=>el.style.display='none');
+        const target = document.getElementById(`${prefix}-frame-${k+1}`);
+        if(target) target.style.display='block';
+        if(curEl) curEl.textContent = `${k+1} / ${total}`;   // ← 3. 判空
       };
-        
       show(0);   // ← 2. 初始化点亮第一张
       return {
         start(){
@@ -207,10 +203,14 @@
         }
       };
     }
-       
+    
     /* ================= 四路实例 ================= */
-
-    const players = panels.map((p,i)=> flipper(p.id, p.count, p.fps, document.getElementById(`ps${i+1}`),document.getElementById(`cf${i+1}`))) )
+    const players = panels.map((p,i)=>
+      flipper(p.id, p.count, 1000/p.fps,
+              document.getElementById(`ps${i+1}`),
+              document.getElementById(`cf${i+1}`))
+    );
+    
     /* ================= 全局按钮 ================= */
     document.getElementById('globalPlay').addEventListener('click',()=>players.forEach(p=>p.start()));
     document.getElementById('globalPause').addEventListener('click',()=>players.forEach(p=>p.pause()));
