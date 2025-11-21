@@ -193,7 +193,6 @@
         ];
 
         let totalFrames = 0;
-        const allImageUrls = [];
 
         panelConfigs.forEach(p => {
             const box = document.getElementById(p.prefix);
@@ -201,7 +200,6 @@
             for (let i = 1; i <= p.count; i++) {
                 const fileName = p.tpl(i);
                 const src = `${repo}/${p.folder}/${fileName}`;
-                allImageUrls.push(src); // 收集所有 URL 用于加载计数
                 totalFrames++;
 
                 // 所有帧都预先加载，但只有第一帧默认显示
@@ -215,52 +213,62 @@
             box.style.border = '2px solid rgba(255, 255, 255, 0.2)';
         });
 
-        /* ================= 🚀 图片加载进度追踪函数 ================= */
+        /* ================= 🚀 图片加载进度追踪函数 (修复版本) ================= */
         function loadAllImages(onComplete) {
             const container = document.getElementById('loading-bar-container');
             const bar = document.getElementById('loading-bar');
             const text = document.getElementById('loading-text');
-
-            container.style.display = 'block'; // 显示进度条
-            let loadedCount = 0;
-
-            const updateProgress = () => {
-                loadedCount++;
-                const percent = Math.floor((loadedCount / totalFrames) * 100);
-                
-                // 更新进度条和文本
-                bar.style.width = `${percent}%`;
-                text.textContent = `正在预加载图片... (${percent}%)`;
-
-                if (loadedCount === totalFrames) {
-                    // 加载完成
-                    container.style.display = 'none'; // 隐藏进度条
-                    document.getElementById('playback-controls').style.display = 'flex'; // 显示控制按钮
-                    if (onComplete) onComplete();
-                }
-            };
-
-            // 监听 DOM 中所有图片的加载事件
             const images = document.querySelectorAll('.display-area img');
+            let loadedCount = 0;
             let imagesToLoad = 0;
 
+            container.style.display = 'block'; // 显示进度条
+
+            // 检查并设置监听器
             images.forEach(img => {
-                // 仅监听尚未完成加载的图片
-                if (!img.complete) {
-                    imagesToLoad++;
-                    img.onload = updateProgress;
-                    img.onerror = updateProgress; // 即使加载失败也算作完成，防止卡住
+                if (img.complete) {
+                    loadedCount++; // 如果已缓存，直接计入加载完成
+                } else {
+                    imagesToLoad++; // 否则需要监听
+                    img.onload = () => { updateProgress(); };
+                    img.onerror = () => { updateProgress(); }; // 加载失败也算完成，避免卡死
                 }
             });
 
-            // 应对所有图片已经缓存的情况
-            if (imagesToLoad === 0) {
-                 updateProgress(); // 至少运行一次来处理已缓存的情况
+            // 内部函数，用于更新进度条
+            const updateProgress = () => {
+                // 如果是从监听器触发，需要先增加计数
+                if (imagesToLoad > 0) {
+                     loadedCount++;
+                }
+                
+                const percent = Math.min(100, Math.floor((loadedCount / totalFrames) * 100)); // 确保不超过100
+                
+                bar.style.width = `${percent}%`;
+                text.textContent = `正在预加载图片... (${percent}%)`;
+
+                if (loadedCount >= totalFrames) {
+                    // 确保进度条在消失前达到 100%
+                    bar.style.width = '100%';
+                    text.textContent = `预加载完成 (100%)`;
+                    
+                    setTimeout(() => {
+                        container.style.display = 'none'; // 隐藏进度条
+                        document.getElementById('playback-controls').style.display = 'flex'; // 显示控制按钮
+                        if (onComplete) onComplete();
+                    }, 300); // 延迟 300ms 保证用户看到 100%
+                }
+            };
+
+            // 应对所有图片已经被缓存的情况 (imagesToLoad === 0)
+            if (imagesToLoad === 0 && totalFrames > 0) {
+                 // 如果所有图片都已加载，手动触发完成逻辑
+                 updateProgress(); 
             }
+            // 如果 totalFrames === 0 (意外情况)，也会通过 updateProgress 触发完成逻辑
         }
     
         /* ================= 播放器 (无闪烁优化) ================= */
-        // (flipper 和 addFrameInfoElement 函数保持不变)
         function flipper(prefix, total, interval, statusEl, curEl) {
             let idx = 0, t = null;
             let isWaitingForLoad = false;
@@ -285,15 +293,11 @@
                     isWaitingForLoad = true;
                     if (t) clearInterval(t); // 暂停计时器
 
-                    // console.warn(`Panel ${prefix}: Frame ${targetIndex} not ready. Pausing playback and waiting.`);
-
                     target.onload = () => {
                         // 加载完成后：显示新帧，隐藏旧帧，并重启计时器
                         target.style.display = 'block';
                         if (prevTarget) prevTarget.style.display = 'none';
                         isWaitingForLoad = false;
-
-                        // console.log(`Panel ${prefix}: Frame ${targetIndex} loaded. Resuming playback.`);
 
                         if (statusEl) {
                             statusEl.textContent = '播放中';
@@ -383,23 +387,26 @@
         let players = [];
         
         // 步骤 1: 加载所有图片并显示进度
-        loadAllImages(() => {
-            // 步骤 2: 图片加载完成后，初始化播放器实例
-            players = panelConfigs.map(p => {
-                const frameEl = addFrameInfoElement(p.id, p.count); 
-                return flipper(
-                    p.prefix, 
-                    p.count, 
-                    1000 / p.fps,
-                    document.getElementById(`ps${p.id}`), // 状态文本元素
-                    frameEl                             // 当前帧/总帧数元素
-                );
+        // 必须在 DOMContentLoaded 后执行，以确保所有 img 元素都已创建
+        document.addEventListener('DOMContentLoaded', () => {
+             loadAllImages(() => {
+                // 步骤 2: 图片加载完成后，初始化播放器实例
+                players = panelConfigs.map(p => {
+                    const frameEl = addFrameInfoElement(p.id, p.count); 
+                    return flipper(
+                        p.prefix, 
+                        p.count, 
+                        1000 / p.fps,
+                        document.getElementById(`ps${p.id}`), // 状态文本元素
+                        frameEl                             // 当前帧/总帧数元素
+                    );
+                });
+                
+                // 步骤 3: 绑定全局按钮事件
+                document.getElementById('globalPlay').addEventListener('click', () => players.forEach(p => p.start()));
+                document.getElementById('globalPause').addEventListener('click', () => players.forEach(p => p.pause()));
+                document.getElementById('globalStop').addEventListener('click', () => players.forEach(p => p.stop()));
             });
-            
-            // 步骤 3: 绑定全局按钮事件
-            document.getElementById('globalPlay').addEventListener('click', () => players.forEach(p => p.start()));
-            document.getElementById('globalPause').addEventListener('click', () => players.forEach(p => p.pause()));
-            document.getElementById('globalStop').addEventListener('click', () => players.forEach(p => p.stop()));
         });
     </script>
 
