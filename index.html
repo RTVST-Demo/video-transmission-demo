@@ -155,14 +155,14 @@
 
     <!-- ====================== 固定路径 100 帧生成脚本 ====================== -->
     <script>
-    /* 生成四路视频帧 */
-    const repo = 'https://rtvst-demo.github.io/video-transmission-demo';
+    /* ================= 生成四路视频帧 ================= */
+    const repo = 'https://rtvst-demo.github.io/video-transmission-demo';   // ← 1. 去空格
     
     const panels = [
       { id: 'da4', folder: 'origin-frames',     tpl: i => `img${String(i).padStart(6,'0')}.png`,       count: 100, fps: 25 },
       { id: 'da1', folder: 'h265+ldpc-frames',  tpl: i => `output_${String(i).padStart(4,'0')}.png`,   count: 100, fps: 25 },
-      { id: 'da2', folder: 'deepjscc-frames',   tpl: i => `${String(i-1).padStart(6,'0')}_recon_snr8.png`, count: 100, fps: 4 },
-      { id: 'da3', folder: 'rtvst-frames',      tpl: i => `${String(i-1).padStart(6,'0')}_recon_snr8.png`, count: 100, fps: 25 }
+      { id: 'da2', folder: 'deepjscc-frames',   tpl: i => `${100+i-1}recon_snr8.png`,                  count: 100, fps: 4 },
+      { id: 'da3', folder: 'rtvst-frames',      tpl: i => `${i-1}recon_snr8.png`,                      count: 100, fps: 25 }
     ];
     
     panels.forEach(p=>{
@@ -176,48 +176,42 @@
       box.innerHTML = html;
     });
     
-    /* 播放器 */
+    /* ================= 播放器 ================= */
     function flipper(prefix, total, interval, statusEl, curEl){
       let idx = 0, t = null;
-    
       const show = k=>{
-        document.querySelectorAll(`[id^="${prefix}-frame-"]`)
-            .forEach(el=>el.style.display='none');
-        document.getElementById(`${prefix}-frame-${k+1}`).style.display='block';
-        curEl.textContent = `${k+1} / ${total}`;
+        document.querySelectorAll(`[id^="${prefix}-frame-"]`).forEach(el=>el.style.display='none');
+        const target = document.getElementById(`${prefix}-frame-${k+1}`);
+        if(target) target.style.display='block';
+        if(curEl) curEl.textContent = `${k+1} / ${total}`;   // ← 3. 判空
       };
-    
+      show(0);   // ← 2. 初始化点亮第一张
       return {
         start(){
           if(t) return;
           show(idx);
-          statusEl.textContent='播放中';
-          statusEl.previousElementSibling.className='status-indicator status-playing';
+          if(statusEl){ statusEl.textContent='播放中'; statusEl.previousElementSibling.className='status-indicator status-playing'; }
           t=setInterval(()=>{ idx=(idx+1)%total; show(idx); }, interval);
         },
         pause(){
           clearInterval(t); t=null;
-          statusEl.textContent='已暂停';
-          statusEl.previousElementSibling.className='status-indicator status-paused';
+          if(statusEl){ statusEl.textContent='已暂停'; statusEl.previousElementSibling.className='status-indicator status-paused'; }
         },
         stop(){
-          clearInterval(t); t=null;
-          idx=0;
-          show(0);
-          statusEl.textContent='已停止';
-          statusEl.previousElementSibling.className='status-indicator status-stopped';
+          clearInterval(t); t=null; idx=0; show(0);
+          if(statusEl){ statusEl.textContent='已停止'; statusEl.previousElementSibling.className='status-indicator status-stopped'; }
         }
       };
-    }  // ←← 缺失的这个！现在补上了
+    }
     
-    /*四路*/
+    /* ================= 四路实例 ================= */
     const players = panels.map((p,i)=>
       flipper(p.id, p.count, 1000/p.fps,
               document.getElementById(`ps${i+1}`),
               document.getElementById(`cf${i+1}`))
     );
     
-    /* 全局控制 */
+    /* ================= 全局按钮 ================= */
     document.getElementById('globalPlay').addEventListener('click',()=>players.forEach(p=>p.start()));
     document.getElementById('globalPause').addEventListener('click',()=>players.forEach(p=>p.pause()));
     document.getElementById('globalStop').addEventListener('click',()=>players.forEach(p=>p.stop()));
