@@ -342,6 +342,37 @@
             }
         }
         
+        .architecture-image {
+            text-align: center;
+            margin: 25px 0;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid rgba(253, 187, 45, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .architecture-image img {
+            max-width: 90%;
+            max-height: 450px;
+            object-fit: contain;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .architecture-image img:hover {
+            transform: scale(1.02);
+        }
+        
+        .image-caption {
+            margin-top: 15px;
+            color: #fdbb2d;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
         
         
         @keyframes pulse {
@@ -391,10 +422,20 @@
         <div class="global-controls">
             <!-- 添加项目介绍 -->
             <div class="abstract">
-                <strong>项目简介：</strong>本项目构建了一种端到端的实时视频语义传输模型RTVST，通过隐式时态建模及跨通道信息结构化分解与重组技术，
-                有效节省运动估计及补偿模块的时间开销的同时降低了内存访问等操作开销，从而极大程度上提高了模型推理速度。
-                其性能与传统H.265+LDPC及DeepJSCC方法对比如下。
+                <strong>项目简介：</strong>本 团 队 提 出 了 一 种 实 时 视 频 语 义 传 输 系 统 （ Real-time Video Semantic 
+Transmission，RTVST）。提出了隐式时态建模及跨通道信息结构化分解与重构方法，将传统运动估计和残差链路融合为统一的前向过程，
+并在紧致特征空间中执行特征提取操作，从而大幅降低操作复杂度，显著提升单帧
+编解码速度。此外，该算法通过端到端联合优化，保证高质量重建效果的同时具有
+较好的噪声鲁棒性。RTVST直击语义视频传输实时性痛点，有望为高带宽、低时延
+的未来流媒体业务提供方法支撑，推动语义通信从理论研究走向实际部署。本 项 目将DeepJSCC与H.265+1/3LDPC+16QAM传统视频传输系
+统作为对比方案。
             </div>
+            <!-- 添加架构图 -->
+            <div class="architecture-image">
+                <img src="rtvst_Architecture.jpg" alt="RTVST架构图">
+                <div class="image-caption">RTVST模型架构图</div>
+            </div>
+            
 
             <!-- 原有的控制按钮 -->
                 <div class="controls">
@@ -431,15 +472,15 @@
             </div>
             <div class="charts-container">
                 <div class="chart-item">
-                    <img src="path/to/psnr-performance.svg" alt="PSNR性能曲线">
+                    <img src="video-transmission-demo/images_metrics/psnr.svg" alt="PSNR性能曲线">
                     <div class="chart-label">PSNR性能对比</div>
                 </div>
                 <div class="chart-item">
-                    <img src="path/to/ssim-performance.svg" alt="SSIM性能曲线">
+                    <img src="video-transmission-demo/images_metrics/ssim.svg" alt="SSIM性能曲线">
                     <div class="chart-label">SSIM性能对比</div>
                 </div>
                 <div class="chart-item">
-                    <img src="path/to/lpips-performance.svg" alt="LPIPS性能曲线">
+                    <img src="video-transmission-demo/images_metrics/lpips.svg" alt="LPIPS性能曲线">
                     <div class="chart-label">LPIPS性能对比</div>
                 </div>
             </div>
