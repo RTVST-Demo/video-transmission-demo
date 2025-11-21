@@ -325,41 +325,41 @@
         }
 
         /* 架构图容器样式 */
-    .architecture-image {
-        text-align: center;
-        margin: 25px 0;
+        .architecture-image {
+            text-align: center;
+            margin: 25px 0;
+            
+            /* 透明磨砂效果背景 */
+            background: rgba(255, 255, 255, 0.08); 
+            backdrop-filter: blur(10px); /* 磨砂玻璃效果 */
+            
+            border-radius: 12px;
+            padding: 25px;
+            
+            /* 装饰性边框 */
+            border: 1px solid rgba(253, 187, 45, 0.3); 
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
         
-        /* 透明磨砂效果背景 */
-        background: rgba(255, 255, 255, 0.08); 
-        backdrop-filter: blur(10px); /* 磨砂玻璃效果 */
+        .architecture-image img {
+            max-width: 90%;
+            max-height: 450px;
+            object-fit: contain;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s;
+        }
         
-        border-radius: 12px;
-        padding: 25px;
+        .architecture-image img:hover {
+            transform: scale(1.02); /* 鼠标悬停时放大效果 */
+        }
         
-        /* 装饰性边框 */
-        border: 1px solid rgba(253, 187, 45, 0.3); 
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-    }
-    
-    .architecture-image img {
-        max-width: 90%;
-        max-height: 450px;
-        object-fit: contain;
-        border-radius: 8px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        transition: transform 0.3s;
-    }
-    
-    .architecture-image img:hover {
-        transform: scale(1.02); /* 鼠标悬停时放大效果 */
-    }
-    
-    .image-caption {
-        margin-top: 15px;
-        color: #fdbb2d; /* 图注使用金色 */
-        font-weight: 500;
-        font-size: 1rem;
-    }
+        .image-caption {
+            margin-top: 15px;
+            color: #fdbb2d; /* 图注使用金色 */
+            font-weight: 500;
+            font-size: 1rem;
+        }
         
         
     </style>
@@ -410,7 +410,7 @@
         </div>
 
         <div class="architecture-image">
-            <img src="https://rtvst-demo.github.io/video-transmission-demo/rtvst_Architecture.jpg " alt="RTVST架构图">
+            <img src="https://rtvst-demo.github.io/video-transmission-demo/rtvst_Architecture.jpg" alt="RTVST架构图">
             <div class="image-caption">RTVST模型架构图</div>
         </div>
         
