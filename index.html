@@ -3,171 +3,483 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIC-RTVST｜实时视频语义传输对比演示</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css ">
+    <title>AIC - RTVST</title>
     <style>
-        /* ====== 全页通用样式 ====== */
-        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
-        body{background:linear-gradient(135deg,#a1c4fd,#c2e9fb,#e0f7fa);color:#333;min-height:100vh}
-        .container{max-width:1800px;margin:0 auto;padding:10px}
-        header{text-align:center;padding:30px 0}
-        h1{font-size:2.8rem;margin-bottom:10px;text-shadow:2px 2px 4px rgba(0,0,0,.3)}
-        .subtitle{font-size:1.2rem;opacity:.9;max-width:800px;margin:0 auto;line-height:1.6}
-        
-        /* ====== 加载进度条样式 (新增) ===<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIC-RTVST｜实时视频语义传输对比演示</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css ">
-    <style>
-        /* ====== 全页通用样式 ====== */
-        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
-        body{background:linear-gradient(135deg,#a1c4fd,#c2e9fb,#e0f7fa);color:#333;min-height:100vh}
-        .container{max-width:1800px;margin:0 auto;padding:10px}
-        header{text-align:center;padding:30px 0}
-        h1{font-size:2.8rem;margin-bottom:10px;text-shadow:2px 2px 4px rgba(0,0,0,.3)}
-        .subtitle{font-size:1.2rem;opacity:.9;max-width:800px;margin:0 auto;line-height:1.6}
-        
-        /* ====== 加载进度条样式 ====== */
-        .loading-bar-container{
-            margin: 20px auto;
-            width: 80%;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            padding: 10px 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        .loading-bar-label{
-            color: #1a1a2e;
-            font-weight: bold;
-            margin-bottom: 5px;
-            text-align: left;
+        
+        body {
+            background: linear-gradient(135deg, #e0f7fa, #a1c4fd);
+            color: #333; 
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1800px; /* 增加最大宽度 */
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .global-controls {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .video-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 改为4列固定布局 */
+            gap: 20px; /* 减小间距 */
+            margin-top: 30px;
+        }
+        
+        .video-panel {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px; /* 减小内边距 */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            min-width: 0; /* 防止内容溢出 */
+        }
+        
+        .panel-header {
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
-        .progress-bar{
-            height: 20px;
-            background: #ccc;
-            border-radius: 5px;
-            overflow: hidden;
+        
+        .panel-title {
+            font-size: 1.2rem; /* 减小字体大小 */
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .progress-bar-fill{
-            height: 100%;
-            width: 0;
-            background: linear-gradient(to right, #4CAF50, #fdbb2d);
-            transition: width 0.4s ease;
+        
+        .panel-title i {
+            color: #fdbb2d;
+        }
+        
+        .github-load-area {
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 20px 12px; /* 减小内边距 */
             text-align: center;
-            line-height: 20px;
-            color: white;
-            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: auto;
+            order: 999;
+        }
+        
+        .github-load-area:hover {
+            border-color: #fdbb2d;
+            background: rgba(253, 187, 45, 0.1);
+        }
+        
+        .github-load-area i {
+            font-size: 1.8rem; /* 减小图标大小 */
+            margin-bottom: 8px;
+            color: #fdbb2d;
+        }
+        
+        .btn {
+            background: #fdbb2d;
+            color: #1a1a2e;
+            border: none;
+            padding: 8px 16px; /* 减小按钮内边距 */
+            border-radius: 50px;
             font-weight: bold;
-        }
-        /* ======================== */
-        
-        .global-controls{background:rgba(255,255,255,.1);backdrop-filter:blur(10px);border-radius:15px;padding:20px;margin:30px 0;text-align:center}
-        .info-display-row{display:flex;justify-content:space-around;align-items:center;border:2px solid #ccc;border-radius:8px;padding:10px 0;margin:10px 0;background:rgba(255,255,255,.1);color:#000}
-        .info-display-item{text-align:center;padding:5px 15px}
-        .info-label{font-weight:bold;font-size:18px;color:#fff;margin-right:5px}
-        .info-value{font-size:20px;color:#fdbb2d;font-weight:600}
-        .performance-charts{background:rgba(255,255,255,.1);backdrop-filter:blur(10px);border-radius:15px;padding:25px;margin:30px 0;box-shadow:0 10px 30px rgba(0,0,0,.2)}
-        .charts-title{font-size:1.5rem;margin-bottom:20px;color:#fdbb2d;display:flex;align-items:center;gap:10px;justify-content:center}
-        .charts-container{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-        .chart-item{background:rgba(255,255,255,.05);border-radius:10px;padding:15px;text-align:center;border:1px solid rgba(255,255,255,.1)}
-        .chart-item img{width:100%;height:200px;object-fit:contain;background:rgba(0,0,0,.2);border-radius:8px;padding:10px}
-        .chart-label{margin-top:10px;color:#fdbb2d;font-weight:500;font-size:1rem}
-        .architecture-image{text-align:center;margin:25px 0;background:rgba(255,255,255,.08);backdrop-filter:blur(10px);border-radius:12px;padding:25px;border:1px solid rgba(253,187,45,.3);box-shadow:0 8px 25px rgba(0,0,0,.2)}
-        .architecture-image img{max-width:90%;max-height:450px;object-fit:contain;border-radius:8px;border:1px solid rgba(255,255,255,.2);transition:transform .3s}
-        .architecture-image img:hover{transform:scale(1.02)}
-        .image-caption{margin-top:15px;color:#fdbb2d;font-weight:500;font-size:1rem}
-        .video-container{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:30px}
-        .video-panel{background:rgba(255,255,255,.1);backdrop-filter:blur(10px);border-radius:15px;padding:15px;box-shadow:0 10px 30px rgba(0,0,0,.2);display:flex;flex-direction:column;min-width:0}
-        .panel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.2)}
-        .panel-title{font-size:1.2rem;display:flex;align-items:center;gap:8px}
-        .panel-title i{color:#fdbb2d}
-        
-        /* 更新显示区域样式 */
-        .display-area{
-            width:100%;height:200px;border:2px solid rgba(255,255,255,.2);border-radius:10px;
-            display:flex;align-items:center;justify-content:center;
-            background:rgba(0,0,0,.3);overflow:hidden;margin-bottom:12px
-        }
-        .display-area img{
-            max-width:100%;max-height:100%;object-fit:contain;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin: 4px;
+            font-size: 0.85rem; /* 减小字体大小 */
         }
         
-        .controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;justify-content:center}
-        .info-panel{background:rgba(0,0,0,.2);padding:10px;border-radius:8px;margin-top:8px;font-size:.8rem}
-        .info-item{display:flex;justify-content:space-between;margin-bottom:4px}
-        .status-indicator{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
-        .status-playing{background:#4CAF50;animation:pulse 1s infinite}
-        .status-paused{background:#ff9800}
-        .status-stopped{background:#f44336}
-        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-        footer{text-align:center;margin-top:50px;padding:20px;opacity:.7;font-size:.9rem}
-        .btn{background:#fdbb2d;color:#1a1a2e;border:none;padding:8px 16px;border-radius:50px;font-weight:bold;cursor:pointer;transition:all .3s;display:inline-flex;align-items:center;gap:6px;margin:4px;font-size:.85rem}
-        .btn:hover:not(:disabled){background:#ffcc44;transform:scale(1.05)}
-        .btn-global{background:#4CAF50;padding:10px 20px;font-size:.95rem}
-        .btn-global:hover:not(:disabled){background:#66BB6A}
-        .btn-stop{background:#f44336}
-        .btn-stop:hover:not(:disabled){background:#ef5350}
-        .btn:disabled{background:#cccccc;cursor:not-allowed;opacity:0.6;}
+        .btn:hover {
+            background: #ffcc44;
+            transform: scale(1.05);
+        }
         
-        /* 新增文件列表样式 */
-        .file-list{max-height:100px;overflow-y:auto;margin-top:8px;background:rgba(0,0,0,.2);padding:6px;border-radius:5px;font-size:.75rem}
-        .file-item{padding:3px;border-bottom:1px solid rgba(255,255,255,.1)}
-        .current-frame{font-weight:bold;color:#fdbb2d}
+        .btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
         
-        @media(max-width:1400px){.video-container{grid-template-columns:repeat(2,1fr)}}
-        @media(max-width:768px){.video-container{grid-template-columns:1fr}h1{font-size:2.2rem}}
-        .abstract{background:rgba(255,255,255,.08);padding:20px;border-radius:10px;line-height:1.8;border-left:4px solid #fdbb2d;color:#fff;}
-        .abstract strong{color:#fdbb2d;font-weight:600;}
+        .btn-global {
+            background: #4CAF50;
+            padding: 10px 20px;
+            font-size: 0.95rem;
+        }
+        
+        .btn-global:hover {
+            background: #66BB6A;
+        }
+        
+        .btn-stop {
+            background: #f44336;
+        }
+        
+        .btn-stop:hover {
+            background: #ef5350;
+        }
+        
+        .display-area {
+            width: 100%;
+            height: 200px; /* 减小显示区域高度 */
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+        
+        .display-area img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 12px 0;
+            justify-content: center;
+        }
+        
+        .info-panel {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 8px;
+        }
+        
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+            font-size: 0.8rem; /* 减小字体大小 */
+        }
+        
+        .file-list {
+            max-height: 100px; /* 减小文件列表高度 */
+            overflow-y: auto;
+            margin-top: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 6px;
+            border-radius: 5px;
+        }
+        
+        .file-item {
+            padding: 3px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.75rem; /* 减小字体大小 */
+        }
+        
+        .current-frame {
+            font-weight: bold;
+            color: #fdbb2d;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        
+        .status-playing {
+            background: #4CAF50;
+            animation: pulse 1s infinite;
+        }
+        
+        .status-paused {
+            background: #ff9800;
+        }
+        
+        .status-stopped {
+            background: #f44336;
+        }
+
+        .info-display-row {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            padding: 10px 0;
+            margin: 10px 0;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .info-display-item {
+            text-align: center;
+            padding: 5px 15px;
+        }
+
+        .info-label {
+            font-weight: bold;
+            font-size: 18px;
+            color: #fff;
+            margin-right: 5px;
+        }
+
+        .info-value {
+            font-size: 20px;
+            color: #fdbb2d;
+            font-weight: 600;
+        }
+
+        /* 摘要文本样式 */
+        .abstract {
+            /* 使用半透明背景以融入渐变背景，同时增加可读性 */
+            background: rgba(0, 0, 0, 0.3); 
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.8;
+            
+            /* 使用主题色作为左侧边框装饰 */
+            border-left: 4px solid #fdbb2d; 
+            
+            /* 假设您将 body color 改为 #333，这里需要强制设为白色或浅色 */
+            color: #fff; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .abstract strong {
+            color: #fdbb2d; /* 强调词使用金色高亮 */
+            font-weight: 600;
+        }
+        
+        /* 架构图容器样式 */
+        .architecture-image {
+            text-align: center;
+            margin: 25px 0;
+            
+            /* 透明磨砂效果背景 */
+            background: rgba(255, 255, 255, 0.08); 
+            backdrop-filter: blur(10px); /* 磨砂玻璃效果 */
+            
+            border-radius: 12px;
+            padding: 25px;
+            
+            /* 装饰性边框 */
+            border: 1px solid rgba(253, 187, 45, 0.3); 
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .architecture-image img {
+            max-width: 90%;
+            max-height: 450px;
+            object-fit: contain;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s;
+        }
+        
+        .architecture-image img:hover {
+            transform: scale(1.02); /* 鼠标悬停时放大效果 */
+        }
+        
+        .image-caption {
+            margin-top: 15px;
+            color: #fdbb2d; /* 图注使用金色 */
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        /* 性能图表容器样式 */
+        .performance-charts {
+            /* 透明磨砂效果背景 */
+            background: rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(10px);
+            
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin: 30px 0;
+        }
+        
+        .charts-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #fdbb2d; /* 标题使用金色 */
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        /* 图表布局 */
+        .charts-container {
+            display: grid;
+            /* 默认三列布局 */
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 20px;
+        }
+        
+        .chart-item {
+            background: rgba(255, 255, 255, 0.05); /* 每个图表项的透明背景 */
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .chart-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            background: rgba(0, 0, 0, 0.2); /* 图片区域的深色背景 */
+            border-radius: 8px;
+            padding: 10px;
+        }
+        
+        .chart-label {
+            margin-top: 10px;
+            color: #fdbb2d;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+        
+        /* 媒体查询：在小屏幕上图表改为两列 */
+        @media(max-width: 768px){
+            .charts-container{
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 1400px) {
+            .video-container {
+                grid-template-columns: repeat(2, 1fr); /* 中等屏幕显示2列 */
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .video-container {
+                grid-template-columns: 1fr; /* 小屏幕显示1列 */
+            }
+            
+            .container {
+                max-width: 100%;
+                padding: 10px;
+            }
+        
+        }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <header>
             <h1>AIC-RTVST</h1>
-            <p class="subtitle">实时视频语义传输对比演示平台</p>
+            <p class="subtitle">实时视频语义传输算法设计</p>
         </header>
+        
+        <div class="global-controls">
+            <div class="controls">
+                <button class="btn btn-global" id="globalPlay">
+                    <i class="fas fa-play"></i> 开始
+                </button>
+                <button class="btn btn-global" id="globalPause">
+                    <i class="fas fa-pause"></i> 暂停
+                </button>
+                <button class="btn btn-global btn-stop" id="globalStop">
+                    <i class="fas fa-stop"></i> 停止
+                </button>
 
-        <div class="loading-bar-container">
-            <div class="loading-bar-label">
-                <span>图片预加载中...</span>
-                <span id="loading-status-text">0 / 400 (0%)</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-bar-fill" id="loading-progress-fill"></div>
             </div>
         </div>
 
-        <div class="global-controls">
-            <div class="info-display-row">
-                <div class="info-display-item"><span class="info-label">SNR:</span><span class="info-value">8 dB</span></div>
-                <div class="info-display-item"><span class="info-label">CBR:</span><span class="info-value">0.012</span></div>
+        <div class="info-display-row">
+            <div class="info-display-item">
+                <span class="info-label">SNR:</span>
+                <span class="info-value" id="snrDisplay">8 dB</span>
             </div>
+            <div class="info-display-item">
+                <span class="info-label">CBR:</span>
+                <span class="info-value" id="cbrDisplay">0.012</span>
+            </div>
+         </div>
 
+                    <!-- ========== 摘要块（新增，位于架构图上方） ========== -->
             <div class="abstract" style="margin-bottom:20px;">
               <strong>项目摘要：</strong>
-              本 团 队 提 出 了 一 种 实 时 视 频 语 义 传 输 系 统 （ Real-time Video Semantic 
-              Transmission，RTVST）。提出了隐式时态建模及跨通道信息结构化分解与重构方法，将传统运动估计和残差链路融合为统一的前向过程，
-              并在紧致特征空间中执行特征提取操作，从而大幅降低操作复杂度，显著提升单帧
-              编解码速度。此外，该算法通过端到端联合优化，保证高质量重建效果的同时具有
-              较好的噪声鲁棒性。RTVST直击语义视频传输实时性痛点，有望为高带宽、低时延
-              的未来流媒体业务提供方法支撑，推动语义通信从理论研究走向实际部署。本 项 目将DeepJSCC与H.265+1/3LDPC+16QAM传统视频传输系
-              统作为对比方案。
+              本 团 队 提 出 了 一 种 实 时 视 频 语 义 传 输 系 统 （ Real-time Video Semantic 
+                Transmission，RTVST）。提出了隐式时态建模及跨通道信息结构化分解与重构方法，将传统运动估计和残差链路融合为统一的前向过程，
+                并在紧致特征空间中执行特征提取操作，从而大幅降低操作复杂度，显著提升单帧
+                编解码速度。此外，该算法通过端到端联合优化，保证高质量重建效果的同时具有
+                较好的噪声鲁棒性。RTVST直击语义视频传输实时性痛点，有望为高带宽、低时延
+                的未来流媒体业务提供方法支撑，推动语义通信从理论研究走向实际部署。本 项 目将DeepJSCC与H.265+1/3LDPC+16QAM传统视频传输系
+                统作为对比方案。
             </div>
 
+            
             <div class="architecture-image">
                 <img src="https://rtvst-demo.github.io/video-transmission-demo/rtvst_Architecture.jpg " alt="RTVST架构图">
                 <div class="image-caption">RTVST模型架构图</div>
             </div>
             <div class="controls">
-                <button class="btn btn-global" id="globalPlay" disabled><i class="fas fa-play"></i> 开始</button>
-                <button class="btn btn-global" id="globalPause" disabled><i class="fas fa-pause"></i> 暂停</button>
-                <button class="btn btn-global btn-stop" id="globalStop" disabled><i class="fas fa-stop"></i> 停止</button>
-                <button class="btn btn-global" id="globalReset" disabled><i class="fas fa-redo"></i> 重置</button>
+                <button class="btn btn-global" id="globalPlay"><i class="fas fa-play"></i> 开始</button>
+                <button class="btn btn-global" id="globalPause"><i class="fas fa-pause"></i> 暂停</button>
+                <button class="btn btn-global btn-stop" id="globalStop"><i class="fas fa-stop"></i> 停止</button>
             </div>
         </div>
 
@@ -179,758 +491,459 @@
                 <div class="chart-item"><img src="https://rtvst-demo.github.io/video-transmission-demo/images_metrics/lpips.svg " alt="LPIPS"><div class="chart-label">LPIPS性能对比</div></div>
             </div>
         </div>
-
+    
         <div class="video-container">
             <!-- Origin -->
             <div class="video-panel">
-                <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> Origin</h3><span class="status-indicator status-stopped" id="status4"></span></div>
+                <div class="panel-header">
+                    <h3 class="panel-title"><i class="fas fa-film"></i> Origin</h3>
+                    <span class="status-indicator status-stopped" id="status4"></span>
+                </div>
+                
                 <input type="hidden" id="intervalInput4" value="40">
+                
                 <div class="display-area" id="displayArea4">
-                    <p style="text-align: center; opacity: 0.7;">等待加载图片序列</p>
+                    <p style="text-align: center; opacity: 0.7;"> </p>
                 </div>
+                
                 <div class="info-panel">
-                    <div class="info-item"><span>当前帧:</span><span id="currentFrame4">-</span></div>
-                    <div class="info-item"><span>总帧数:</span><span id="totalFrames4">0</span></div>
-                    <div class="info-item"><span>帧率:</span><span id="fpsInfo4">0 FPS</span></div>
-                    <div class="info-item"><span>状态:</span><span id="playStatus4">已停止</span></div>
+
+                    <div class="info-item">
+                        <span>帧率:</span>
+                        <span id="fpsInfo4">0 FPS</span>
+                    </div>
+                    <div class="info-item">
+                        <span>状态:</span>
+                        <span id="playStatus4">已停止</span>
+                    </div>
                 </div>
+                
                 <div class="file-list" id="fileList4">
-                    <p style="text-align: center; opacity: 0.7;">图片列表将显示在这里</p>
+                    <p style="text-align: center; opacity: 0.7;"> </p>
+                </div>
+                
+                <div class="github-load-area" id="githubLoadArea4">
+                    <i class="fab fa-github"></i>
+                    <p> </p>
+                    <button class="btn" id="loadBtn4">
+                        <i class="fas fa-download"></i> 加载图片
+                    </button>
                 </div>
             </div>
-
+            
             <!-- H.265 + LDPC -->
             <div class="video-panel">
-                <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> H.265 + LDPC</h3><span class="status-indicator status-stopped" id="status1"></span></div>
+                <div class="panel-header">
+                    <h3 class="panel-title"><i class="fas fa-film"></i> H.265 + LDPC</h3>
+                    <span class="status-indicator status-stopped" id="status1"></span>
+                </div>
+                
                 <input type="hidden" id="intervalInput1" value="40">
+                
                 <div class="display-area" id="displayArea1">
-                    <p style="text-align: center; opacity: 0.7;">等待加载图片序列</p>
+                    <p style="text-align: center; opacity: 0.7;"> </p>
                 </div>
+                
                 <div class="info-panel">
-                    <div class="info-item"><span>当前帧:</span><span id="currentFrame1">-</span></div>
-                    <div class="info-item"><span>总帧数:</span><span id="totalFrames1">0</span></div>
-                    <div class="info-item"><span>帧率:</span><span id="fpsInfo1">0 FPS</span></div>
-                    <div class="info-item"><span>状态:</span><span id="playStatus1">已停止</span></div>
+                    <div class="info-item">
+                        <span>帧率:</span>
+                        <span id="fpsInfo1">0 FPS</span>
+                    </div>
+                    <div class="info-item">
+                        <span>状态:</span>
+                        <span id="playStatus1">已停止</span>
+                    </div>
                 </div>
+                
                 <div class="file-list" id="fileList1">
-                    <p style="text-align: center; opacity: 0.7;">图片列表将显示在这里</p>
+                    <p style="text-align: center; opacity: 0.7;"> </p>
+                </div>
+                
+                <div class="github-load-area" id="githubLoadArea1">
+                    <i class="fab fa-github"></i>
+                    <p> </p>
+                    <button class="btn" id="loadBtn1">
+                        <i class="fas fa-download"></i> 加载图片
+                    </button>
                 </div>
             </div>
-
+            
             <!-- DeepJSCC -->
             <div class="video-panel">
-                <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> DeepJSCC</h3><span class="status-indicator status-stopped" id="status2"></span></div>
+                <div class="panel-header">
+                    <h3 class="panel-title"><i class="fas fa-film"></i> DeepJSCC</h3>
+                    <span class="status-indicator status-stopped" id="status2"></span>
+                </div>
+                
                 <input type="hidden" id="intervalInput2" value="250">
+                
                 <div class="display-area" id="displayArea2">
-                    <p style="text-align: center; opacity: 0.7;">等待加载图片序列</p>
+                    <p style="text-align: center; opacity: 0.7;"> </p>
                 </div>
+                
                 <div class="info-panel">
-                    <div class="info-item"><span>当前帧:</span><span id="currentFrame2">-</span></div>
-                    <div class="info-item"><span>总帧数:</span><span id="totalFrames2">0</span></div>
-                    <div class="info-item"><span>帧率:</span><span id="fpsInfo2">0 FPS</span></div>
-                    <div class="info-item"><span>状态:</span><span id="playStatus2">已停止</span></div>
+                    <div class="info-item">
+                        <span>帧率:</span>
+                        <span id="fpsInfo2">0 FPS</span>
+                    </div>
+                    <div class="info-item">
+                        <span>状态:</span>
+                        <span id="playStatus2">已停止</span>
+                    </div>
                 </div>
+                
                 <div class="file-list" id="fileList2">
-                    <p style="text-align: center; opacity: 0.7;">图片列表将显示在这里</p>
+                    <p style="text-align: center; opacity: 0.7;"> </p>
+                </div>
+                
+                <div class="github-load-area" id="githubLoadArea2">
+                    <i class="fab fa-github"></i>
+                    <p> </p>
+                    <button class="btn" id="loadBtn2">
+                        <i class="fas fa-download"></i> 加载图片
+                    </button>
                 </div>
             </div>
-
+            
             <!-- RTVST -->
             <div class="video-panel">
-                <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> RTVST</h3><span class="status-indicator status-stopped" id="status3"></span></div>
+                <div class="panel-header">
+                    <h3 class="panel-title"><i class="fas fa-film"></i> RTVST</h3>
+                    <span class="status-indicator status-stopped" id="status3"></span>
+                </div>
+                
                 <input type="hidden" id="intervalInput3" value="40">
+                
                 <div class="display-area" id="displayArea3">
-                    <p style="text-align: center; opacity: 0.7;">等待加载图片序列</p>
+                    <p style="text-align: center; opacity: 0.7;"> </p>
                 </div>
+                
                 <div class="info-panel">
-                    <div class="info-item"><span>当前帧:</span><span id="currentFrame3">-</span></div>
-                    <div class="info-item"><span>总帧数:</span><span id="totalFrames3">0</span></div>
-                    <div class="info-item"><span>帧率:</span><span id="fpsInfo3">0 FPS</span></div>
-                    <div class="info-item"><span>状态:</span><span id="playStatus3">已停止</span></div>
+
+                    <div class="info-item">
+                        <span>帧率:</span>
+                        <span id="fpsInfo3">0 FPS</span>
+                    </div>
+                    <div class="info-item">
+                        <span>状态:</span>
+                        <span id="playStatus3">已停止</span>
+                    </div>
                 </div>
+                
                 <div class="file-list" id="fileList3">
-                    <p style="text-align: center; opacity: 0.7;">图片列表将显示在这里</p>
+                    <p style="text-align: center; opacity: 0.7;"> </p>
+                </div>
+                
+                <div class="github-load-area" id="githubLoadArea3">
+                    <i class="fab fa-github"></i>
+                    <p>-</p>
+                    <button class="btn" id="loadBtn3">
+                        <i class="fas fa-download"></i> 加载图片
+                    </button>
                 </div>
             </div>
         </div>
-
-        <footer><p>实时视频语义传输算法设计</p></footer>
+        
+        <footer>
+            <p>实时视频语义传输算法设计(RTVST)</p>
+        </footer>
     </div>
 
     <script>
-    /* ================= 视频序列播放器类 ================= */
-    class VideoSequence {
-        constructor(panelId) {
-            this.panelId = panelId;
-            this.imageUrls = [];
-            this.currentIndex = 0;
-            this.playInterval = null;
-            this.isPlaying = false;
-            this.preloadedImages = [];
+        class VideoSequence {
+            constructor(panelId) {
+                this.panelId = panelId;
+                this.imageUrls = [];
+                this.currentIndex = 0;
+                this.playInterval = null;
+                this.isPlaying = false;
+                this.preloadedImages = [];
+                
+                this.githubConfigs = {
+                    '1': {
+                        owner: 'RTVST-Demo',
+                        repo: 'video-transmission-demo',
+                        path: 'h265+ldpc-frames'
+                    },
+                    '2': {
+                        owner: 'RTVST-Demo',
+                        repo: 'video-transmission-demo',
+                        path: 'deepjscc-frames'
+                    },
+                    '3': {
+                        owner: 'RTVST-Demo',
+                        repo: 'video-transmission-demo',
+                        path: 'rtvst-frames'
+                    },
+                    '4': {
+                        owner: 'RTVST-Demo',
+                        repo: 'video-transmission-demo',
+                        path: 'origin-frames'
+                    }
+                };
+                
+                this.initializeElements();
+                this.bindEvents();
+            }
+
+            initializeElements() {
+                this.githubLoadArea = document.getElementById(`githubLoadArea${this.panelId}`);
+                this.loadBtn = document.getElementById(`loadBtn${this.panelId}`);
+                this.displayArea = document.getElementById(`displayArea${this.panelId}`);
+                this.intervalInput = document.getElementById(`intervalInput${this.panelId}`);
+                this.fileList = document.getElementById(`fileList${this.panelId}`);
+    
+                this.currentFrameEl = document.getElementById(`currentFrame${this.panelId}`);
+                this.totalFramesEl = document.getElementById(`totalFrames${this.panelId}`);
+                this.fpsInfoEl = document.getElementById(`fpsInfo${this.panelId}`);
+                this.playStatusEl = document.getElementById(`playStatus${this.panelId}`);
+                this.statusIndicator = document.getElementById(`status${this.panelId}`);
+    
+                this.imgElement = document.createElement('img');
+                this.imgElement.style.maxWidth = '100%';
+                this.imgElement.style.maxHeight = '100%';
+                this.imgElement.style.objectFit = 'contain';
+                this.imgElement.alt = '视频帧';
+                
+                this.displayArea.innerHTML = '';
+                this.displayArea.appendChild(this.imgElement);
+            }
             
-            this.initializeElements();
-        }
-
-        initializeElements() {
-            this.displayArea = document.getElementById(`displayArea${this.panelId}`);
-            this.intervalInput = document.getElementById(`intervalInput${this.panelId}`);
-            this.fileList = document.getElementById(`fileList${this.panelId}`);
-
-            this.currentFrameEl = document.getElementById(`currentFrame${this.panelId}`);
-            this.totalFramesEl = document.getElementById(`totalFrames${this.panelId}`);
-            this.fpsInfoEl = document.getElementById(`fpsInfo${this.panelId}`);
-            this.playStatusEl = document.getElementById(`playStatus${this.panelId}`);
-            this.statusIndicator = document.getElementById(`status${this.panelId}`);
-
-            this.imgElement = document.createElement('img');
-            this.imgElement.style.maxWidth = '100%';
-            this.imgElement.style.maxHeight = '100%';
-            this.imgElement.style.objectFit = 'contain';
-            this.imgElement.alt = '视频帧';
+            bindEvents() {
+                this.loadBtn.addEventListener('click', () => {
+                    this.loadFromGitHub();
+                });
+            }
             
-            this.displayArea.innerHTML = '';
-            this.displayArea.appendChild(this.imgElement);
-        }
-        
-        async loadImagesFromGitHub(folder, count, templateFunc) {
-            try {
+            async loadFromGitHub() {
+                const config = this.githubConfigs[this.panelId];
+                
+                if (!config) {
+                    alert('未找到预设的GitHub配置！');
+                    return;
+                }
+                
+                try {
+                    this.loadBtn.disabled = true;
+                    this.loadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 加载中...';
+                    
+                    const apiUrl = `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${config.path}`;
+                    const response = await fetch(apiUrl);
+                    
+                    if (!response.ok) {
+                        throw new Error(`GitHub API请求失败: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    
+                    const imageFiles = data.filter(item => 
+                        item.type === 'file' && 
+                        /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(item.name)
+                    );
+                    
+                    if (imageFiles.length === 0) {
+                        throw new Error('在指定路径中未找到图片文件');
+                    }
+                    
+                    imageFiles.sort((a, b) => {
+                        const numA = this.extractNumber(a.name);
+                        const numB = this.extractNumber(b.name);
+                        
+                        if (numA !== null && numB !== null) {
+                            return numA - numB;
+                        }
+                        
+                        if (numA !== null && numB === null) {
+                            return -1;
+                        }
+                        if (numA === null && numB !== null) {
+                            return 1;
+                        }
+                        
+                        return a.name.localeCompare(b.name);
+                    });
+                    
+                    this.releasePreloadedImages();
+                    
+                    this.imageUrls = imageFiles.map(file => file.download_url);
+                    
+                    this.updateFileList(imageFiles);
+                    this.updateTotalFrames();
+                    await this.preloadAllImages();
+                    this.updateStatus('stopped');
+                    
+                    alert(`成功加载 ${imageFiles.length} 张图片`);
+                    
+                } catch (error) {
+                    console.error('加载GitHub图片失败:', error);
+                    alert(`加载失败: ${error.message}\n\n请确保GitHub仓库存在且路径正确。`);
+                } finally {
+                    this.loadBtn.disabled = false;
+                    this.loadBtn.innerHTML = '<i class="fas fa-download"></i> 加载图片';
+                }
+            }
+            
+            extractNumber(filename) {
+                const match = filename.match(/\d+/);
+                return match ? parseInt(match[0]) : null;
+            }
+            
+            async preloadAllImages() {
+                this.preloadedImages = [];
+                
+                for (let i = 0; i < this.imageUrls.length; i++) {
+                    try {
+                        const img = new Image();
+                        await new Promise((resolve, reject) => {
+                            img.onload = resolve;
+                            img.onerror = reject;
+                            img.src = this.imageUrls[i];
+                        });
+                        this.preloadedImages[i] = img;
+                        
+                        if (i === 0) {
+                            this.showImage(0);
+                        }
+                    } catch (error) {
+                        console.error(`预加载图片失败: ${this.imageUrls[i]}`, error);
+                    }
+                }
+            }
+            
+            releasePreloadedImages() {
+                if (this.preloadedImages && this.preloadedImages.length > 0) {
+                    this.preloadedImages.forEach(img => {
+                        // 对于从GitHub加载的图片，不需要手动释放URL
+                    });
+                }
+                this.preloadedImages = [];
+            }
+            
+            updateFileList(files) {
+                this.fileList.innerHTML = '';
+                files.forEach((file, index) => {
+                    const fileItem = document.createElement('div');
+                    fileItem.className = 'file-item';
+                    fileItem.textContent = `${index + 1}. ${file.name}`;
+                    this.fileList.appendChild(fileItem);
+                });
+            }
+            
+            updateTotalFrames() {
+                this.totalFramesEl.textContent = this.imageUrls.length;
+            }
+            
+            start() {
+                if (this.imageUrls.length === 0 || this.isPlaying) return;
+                
+                this.isPlaying = true;
+                const interval = parseInt(this.intervalInput.value);
+                
+                this.playInterval = setInterval(() => {
+                    this.currentIndex = (this.currentIndex + 1) % this.imageUrls.length;
+                    this.showImage(this.currentIndex);
+                }, interval);
+                
+                this.updateStatus('playing');
+                this.updateFPS(interval);
+            }
+            
+            pause() {
+                if (this.playInterval) {
+                    clearInterval(this.playInterval);
+                    this.playInterval = null;
+                }
+                
+                this.isPlaying = false;
+                this.updateStatus('paused');
+            }
+            
+            stop() {
+                if (this.playInterval) {
+                    clearInterval(this.playInterval);
+                    this.playInterval = null;
+                }
+                
+                this.isPlaying = false;
+                this.currentIndex = 0;
+                this.showImage(0);
+                this.updateStatus('stopped');
+            }
+            
+            reset() {
+                this.stop();
                 this.releasePreloadedImages();
                 this.imageUrls = [];
                 
-                // 生成图片URL列表
-                for(let i = 1; i <= count; i++){
-                    const fileName = templateFunc(i);
-                    const src = `https://rtvst-demo.github.io/video-transmission-demo/${folder}/${fileName}`;
-                    this.imageUrls.push(src);
-                }
+                this.imgElement.src = '';
+                this.imgElement.style.display = 'none';
+                this.displayArea.innerHTML = '<p style="text-align: center; opacity: 0.7;">-</p>';
                 
-                await this.preloadAllImages();
-                this.updateFileList();
+                this.fileList.innerHTML = '<p style="text-align: center; opacity: 0.7;">-</p>';
                 this.updateTotalFrames();
+                this.currentFrameEl.textContent = '-';
+                this.fpsInfoEl.textContent = '0 FPS';
                 this.updateStatus('stopped');
-                
-                return true;
-            } catch (error) {
-                console.error(`加载图片失败:`, error);
-                return false;
             }
-        }
-        
-        async preloadAllImages() {
-            this.preloadedImages = [];
             
-            for (let i = 0; i < this.imageUrls.length; i++) {
-                try {
-                    const img = new Image();
-                    await new Promise((resolve, reject) => {
-                        img.onload = resolve;
-                        img.onerror = reject;
-                        img.src = this.imageUrls[i];
-                    });
-                    this.preloadedImages[i] = img;
-                    
-                    if (i === 0) {
-                        this.showImage(0);
-                    }
-                } catch (error) {
-                    console.error(`预加载图片失败: ${this.imageUrls[i]}`, error);
+            updateFPS(interval) {
+                const fps = interval > 0 ? Math.round(1000 / interval) : 0;
+                this.fpsInfoEl.textContent = `${fps} FPS`;
+            }
+            
+            showImage(index) {
+                if (this.imageUrls.length === 0) return;
+
+                if (this.preloadedImages && this.preloadedImages[index]) {
+                    this.imgElement.src = this.preloadedImages[index].src;
+                    this.imgElement.style.display = 'block';
+                }
+
+                this.currentFrameEl.textContent = `${index + 1} / ${this.imageUrls.length}`;
+
+                const fileItems = this.fileList.getElementsByClassName('file-item');
+                for (let i = 0; i < fileItems.length; i++) {
+                    fileItems[i].classList.toggle('current-frame', i === index);
                 }
             }
+    
+            updateStatus(status) {
+                this.playStatusEl.textContent = 
+                    status === 'playing' ? '播放中' : 
+                    status === 'paused' ? '已暂停' : '已停止';
+                
+                this.statusIndicator.className = 'status-indicator';
+                this.statusIndicator.classList.add(
+                    status === 'playing' ? 'status-playing' :
+                    status === 'paused' ? 'status-paused' : 'status-stopped'
+                );
+            }
         }
-        
-        releasePreloadedImages() {
-            this.preloadedImages = [];
-        }
-        
-        updateFileList() {
-            this.fileList.innerHTML = '';
-            this.imageUrls.forEach((url, index) => {
-                const fileName = url.split('/').pop();
-                const fileItem = document.createElement('div');
-                fileItem.className = 'file-item';
-                fileItem.textContent = `${index + 1}. ${fileName}`;
-                this.fileList.appendChild(fileItem);
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const sequence1 = new VideoSequence('1');
+            const sequence2 = new VideoSequence('2');
+            const sequence3 = new VideoSequence('3');
+            const sequence4 = new VideoSequence('4');
+            
+            const sequences = [sequence4, sequence1, sequence2, sequence3];
+            
+            document.getElementById('globalPlay').addEventListener('click', () => {
+                sequences.forEach(seq => seq.start());
             });
-        }
-        
-        updateTotalFrames() {
-            this.totalFramesEl.textContent = this.imageUrls.length;
-        }
-        
-        start() {
-            if (this.imageUrls.length === 0 || this.isPlaying) return;
             
-            this.isPlaying = true;
-            const interval = parseInt(this.intervalInput.value);
+            document.getElementById('globalPause').addEventListener('click', () => {
+                sequences.forEach(seq => seq.pause());
+            });
             
-            this.playInterval = setInterval(() => {
-                this.currentIndex = (this.currentIndex + 1) % this.imageUrls.length;
-                this.showImage(this.currentIndex);
-            }, interval);
+            document.getElementById('globalStop').addEventListener('click', () => {
+                sequences.forEach(seq => seq.stop());
+            });
             
-            this.updateStatus('playing');
-            this.updateFPS(interval);
-        }
-        
-        pause() {
-            if (this.playInterval) {
-                clearInterval(this.playInterval);
-                this.playInterval = null;
-            }
-            
-            this.isPlaying = false;
-            this.updateStatus('paused');
-        }
-        
-        stop() {
-            if (this.playInterval) {
-                clearInterval(this.playInterval);
-                this.playInterval = null;
-            }
-            
-            this.isPlaying = false;
-            this.currentIndex = 0;
-            this.showImage(0);
-            this.updateStatus('stopped');
-        }
-        
-        reset() {
-            this.stop();
-            this.releasePreloadedImages();
-            this.imageUrls = [];
-            
-            this.imgElement.src = '';
-            this.imgElement.style.display = 'none';
-            this.displayArea.innerHTML = '<p style="text-align: center; opacity: 0.7;">等待加载图片序列</p>';
-            
-            this.fileList.innerHTML = '<p style="text-align: center; opacity: 0.7;">图片列表将显示在这里</p>';
-            this.updateTotalFrames();
-            this.currentFrameEl.textContent = '-';
-            this.fpsInfoEl.textContent = '0 FPS';
-            this.updateStatus('stopped');
-        }
-        
-        updateFPS(interval) {
-            const fps = interval > 0 ? Math.round(1000 / interval) : 0;
-            this.fpsInfoEl.textContent = `${fps} FPS`;
-        }
-        
-        showImage(index) {
-            if (this.imageUrls.length === 0) return;
-
-            if (this.preloadedImages && this.preloadedImages[index]) {
-                this.imgElement.src = this.preloadedImages[index].src;
-                this.imgElement.style.display = 'block';
-            }
-
-            this.currentFrameEl.textContent = `${index + 1} / ${this.imageUrls.length}`;
-
-            const fileItems = this.fileList.getElementsByClassName('file-item');
-            for (let i = 0; i < fileItems.length; i++) {
-                fileItems[i].classList.toggle('current-frame', i === index);
-            }
-        }
-
-        updateStatus(status) {
-            this.playStatusEl.textContent = 
-                status === 'playing' ? '播放中' : 
-                status === 'paused' ? '已暂停' : '已停止';
-            
-            this.statusIndicator.className = 'status-indicator';
-            this.statusIndicator.classList.add(
-                status === 'playing' ? 'status-playing' :
-                status === 'paused' ? 'status-paused' : 'status-stopped'
-            );
-        }
-    }
-
-    /* ================= 图片预加载和进度条逻辑 ================= */
-    function preloadAllImages() {
-        let loadedCount = 0;
-        let totalCount = 0;
-        const progressFill = document.getElementById('loading-progress-fill');
-        const statusText = document.getElementById('loading-status-text');
-        const globalButtons = [
-            document.getElementById('globalPlay'),
-            document.getElementById('globalPause'),
-            document.getElementById('globalStop'),
-            document.getElementById('globalReset')
-        ];
-        
-        // 禁用按钮直到加载完成
-        globalButtons.forEach(btn => btn.disabled = true);
-        
-        // 创建视频序列实例
-        const sequences = [
-            { 
-                instance: new VideoSequence('1'),
-                folder: 'h265+ldpc-frames', 
-                count: 100, 
-                template: i => `output_${String(i).padStart(4,'0')}.png` 
-            },
-            { 
-                instance: new VideoSequence('2'),
-                folder: 'deepjscc-frames', 
-                count: 100, 
-                template: i => `${100+i-1}recon_snr8.png` 
-            },
-            { 
-                instance: new VideoSequence('3'),
-                folder: 'rtvst-frames', 
-                count: 100, 
-                template: i => `${i-1}recon_snr8.png` 
-            },
-            { 
-                instance: new VideoSequence('4'),
-                folder: 'origin-frames', 
-                count: 100, 
-                template: i => `img${String(i).padStart(6,'0')}.png` 
-            }
-        ];
-        
-        // 计算总图片数
-        totalCount = sequences.reduce((sum, seq) => sum + seq.count, 0);
-        
-        // 并行加载所有序列
-        const loadPromises = sequences.map(seq => 
-            seq.instance.loadImagesFromGitHub(seq.folder, seq.count, seq.template)
-        );
-        
-        // 监听加载进度
-        const progressInterval = setInterval(() => {
-            // 这里简化进度计算，实际应该根据实际加载情况计算
-            const estimatedLoaded = Math.min(loadedCount + 10, totalCount);
-            loadedCount = estimatedLoaded;
-            const percent = Math.round((loadedCount / totalCount) * 100);
-            
-            progressFill.style.width = `${percent}%`;
-            progressFill.textContent = `${percent}%`;
-            statusText.textContent = `${loadedCount} / ${totalCount} (${percent}%)`;
-        }, 100);
-        
-        // 等待所有序列加载完成
-        Promise.all(loadPromises).then(results => {
-            clearInterval(progressInterval);
-            
-            const successCount = results.filter(result => result).length;
-            loadedCount = totalCount;
-            const percent = 100;
-            
-            progressFill.style.width = `${percent}%`;
-            progressFill.textContent = `加载完成 (${percent}%)`;
-            statusText.textContent = `所有图片已加载 (${totalCount} 帧)`;
-
-            // 启用全局控制按钮
-            globalButtons.forEach(btn => btn.disabled = false);
-            
-            // 返回序列实例用于全局控制
-            return sequences.map(seq => seq.instance);
-        }).catch(error => {
-            console.error('加载失败:', error);
-            progressFill.style.background = '#f44336';
-            progressFill.textContent = '加载失败';
-            statusText.textContent = '加载失败，请刷新页面重试';
+            document.getElementById('globalReset').addEventListener('click', () => {
+                sequences.forEach(seq => seq.reset());
+            });
         });
-        
-        return sequences.map(seq => seq.instance);
-    }
-
-    /* ================= 全局按钮事件绑定 ================= */
-    function setupGlobalControls(sequences) {
-        document.getElementById('globalPlay').addEventListener('click',() => 
-            sequences.forEach(seq => seq.start()));
-        document.getElementById('globalPause').addEventListener('click',() => 
-            sequences.forEach(seq => seq.pause()));
-        document.getElementById('globalStop').addEventListener('click',() => 
-            sequences.forEach(seq => seq.stop()));
-        document.getElementById('globalReset').addEventListener('click',() => 
-            sequences.forEach(seq => seq.reset()));
-    }
-
-    /* ================= 页面初始化 ================= */
-    document.addEventListener('DOMContentLoaded', () => {
-        // 启动图片预加载 (加载完成后会自动启用按钮)
-        const sequences = preloadAllImages();
-        
-        // 绑定全局控制按钮事件
-        setupGlobalControls(sequences);
-    });
-    </script>
-</body>
-</html>=== */
-        .loading-bar-container{
-            margin: 20px auto;
-            width: 80%;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            padding: 10px 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        .loading-bar-label{
-            color: #1a1a2e; /* 调整颜色使其在浅背景下可见 */
-            font-weight: bold;
-            margin-bottom: 5px;
-            text-align: left;
-            display: flex;
-            justify-content: space-between;
-        }
-        .progress-bar{
-            height: 20px;
-            background: #ccc;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-        .progress-bar-fill{
-            height: 100%;
-            width: 0;
-            background: linear-gradient(to right, #4CAF50, #fdbb2d);
-            transition: width 0.4s ease;
-            text-align: center;
-            line-height: 20px;
-            color: white;
-            font-size: 0.9rem;
-            font-weight: bold;
-        }
-        /* ======================== */
-        
-        .global-controls{background:rgba(255,255,255,.1);backdrop-filter:blur(10px);border-radius:15px;padding:20px;margin:30px 0;text-align:center}
-        .info-display-row{display:flex;justify-content:space-around;align-items:center;border:2px solid #ccc;border-radius:8px;padding:10px 0;margin:10px 0;background:rgba(255,255,255,.1);color:#000}
-        .info-display-item{text-align:center;padding:5px 15px}
-        .info-label{font-weight:bold;font-size:18px;color:#fff;margin-right:5px}
-        .info-value{font-size:20px;color:#fdbb2d;font-weight:600}
-        .performance-charts{background:rgba(255,255,255,.1);backdrop-filter:blur(10px);border-radius:15px;padding:25px;margin:30px 0;box-shadow:0 10px 30px rgba(0,0,0,.2)}
-        .charts-title{font-size:1.5rem;margin-bottom:20px;color:#fdbb2d;display:flex;align-items:center;gap:10px;justify-content:center}
-        .charts-container{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-        .chart-item{background:rgba(255,255,255,.05);border-radius:10px;padding:15px;text-align:center;border:1px solid rgba(255,255,255,.1)}
-        .chart-item img{width:100%;height:200px;object-fit:contain;background:rgba(0,0,0,.2);border-radius:8px;padding:10px}
-        .chart-label{margin-top:10px;color:#fdbb2d;font-weight:500;font-size:1rem}
-        .architecture-image{text-align:center;margin:25px 0;background:rgba(255,255,255,.08);backdrop-filter:blur(10px);border-radius:12px;padding:25px;border:1px solid rgba(253,187,45,.3);box-shadow:0 8px 25px rgba(0,0,0,.2)}
-        .architecture-image img{max-width:90%;max-height:450px;object-fit:contain;border-radius:8px;border:1px solid rgba(255,255,255,.2);transition:transform .3s}
-        .architecture-image img:hover{transform:scale(1.02)}
-        .image-caption{margin-top:15px;color:#fdbb2d;font-weight:500;font-size:1rem}
-        .video-container{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:30px}
-        .video-panel{background:rgba(255,255,255,.1);backdrop-filter:blur(10px);border-radius:15px;padding:15px;box-shadow:0 10px 30px rgba(0,0,0,.2);display:flex;flex-direction:column;min-width:0}
-        .panel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.2)}
-        .panel-title{font-size:1.2rem;display:flex;align-items:center;gap:8px}
-        .panel-title i{color:#fdbb2d}
-        /* 关键修复：使用绝对定位和透明度进行平滑切换 */
-        .display-area{
-            position: relative; /* 确保子元素绝对定位生效 */
-            width:100%;height:200px;border:2px solid rgba(255,255,255,.2);border-radius:10px;
-            display:flex;align-items:center;justify-content:center;
-            background:rgba(0,0,0,.3);overflow:hidden;margin-bottom:12px
-        }
-        .display-area img{
-            position: absolute; /* 图片叠加 */
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            transition: opacity 0.05s linear; /* 增加轻微过渡，消除闪烁感 */
-            opacity: 0; /* 默认隐藏 */
-        }
-        .display-area img:first-child{
-            opacity: 1; /* 初始显示第一帧 */
-        }
-        /* -------------------------------- */
-        .controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;justify-content:center}
-        .info-panel{background:rgba(0,0,0,.2);padding:10px;border-radius:8px;margin-top:8px;font-size:.8rem}
-        .info-item{display:flex;justify-content:space-between;margin-bottom:4px}
-        .status-indicator{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
-        .status-playing{background:#4CAF50;animation:pulse 1s infinite}
-        .status-paused{background:#ff9800}
-        .status-stopped{background:#f44336}
-        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-        footer{text-align:center;margin-top:50px;padding:20px;opacity:.7;font-size:.9rem}
-        .btn{background:#fdbb2d;color:#1a1a2e;border:none;padding:8px 16px;border-radius:50px;font-weight:bold;cursor:pointer;transition:all .3s;display:inline-flex;align-items:center;gap:6px;margin:4px;font-size:.85rem}
-        .btn:hover:not(:disabled){background:#ffcc44;transform:scale(1.05)}
-        .btn-global{background:#4CAF50;padding:10px 20px;font-size:.95rem}
-        .btn-global:hover:not(:disabled){background:#66BB6A}
-        .btn-stop{background:#f44336}
-        .btn-stop:hover:not(:disabled){background:#ef5350}
-        .btn:disabled{background:#cccccc;cursor:not-allowed;opacity:0.6;} /* 禁用按钮样式 */
-        @media(max-width:1400px){.video-container{grid-template-columns:repeat(2,1fr)}}
-        @media(max-width:768px){.video-container{grid-template-columns:1fr}h1{font-size:2.2rem}}
-        .abstract{background:rgba(255,255,255,.08);padding:20px;border-radius:10px;line-height:1.8;border-left:4px solid #fdbb2d;color:#fff;}
-        .abstract strong{color:#fdbb2d;font-weight:600;}
-    </style>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>AIC-RTVST</h1>
-            <p class="subtitle">实时视频语义传输对比演示平台</p>
-        </header>
-
-        <div class="loading-bar-container">
-            <div class="loading-bar-label">
-                <span>图片预加载中...</span>
-                <span id="loading-status-text">0 / 400 (0%)</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-bar-fill" id="loading-progress-fill"></div>
-            </div>
-        </div>
-
-        <div class="global-controls">
-            <div class="info-display-row">
-                <div class="info-display-item"><span class="info-label">SNR:</span><span class="info-value">8 dB</span></div>
-                <div class="info-display-item"><span class="info-label">CBR:</span><span class="info-value">0.012</span></div>
-            </div>
-
-            <div class="abstract" style="margin-bottom:20px;">
-              <strong>项目摘要：</strong>
-              本 团 队 提 出 了 一 种 实 时 视 频 语 义 传 输 系 统 （ Real-time Video Semantic 
-              Transmission，RTVST）。提出了隐式时态建模及跨通道信息结构化分解与重构方法，将传统运动估计和残差链路融合为统一的前向过程，
-              并在紧致特征空间中执行特征提取操作，从而大幅降低操作复杂度，显著提升单帧
-              编解码速度。此外，该算法通过端到端联合优化，保证高质量重建效果的同时具有
-              较好的噪声鲁棒性。RTVST直击语义视频传输实时性痛点，有望为高带宽、低时延
-              的未来流媒体业务提供方法支撑，推动语义通信从理论研究走向实际部署。本 项 目将DeepJSCC与H.265+1/3LDPC+16QAM传统视频传输系
-              统作为对比方案。
-            </div>
-
-            <div class="architecture-image">
-                <img src="https://rtvst-demo.github.io/video-transmission-demo/rtvst_Architecture.jpg " alt="RTVST架构图">
-                <div class="image-caption">RTVST模型架构图</div>
-            </div>
-            <div class="controls">
-                <button class="btn btn-global" id="globalPlay" disabled><i class="fas fa-play"></i> 开始</button>
-                <button class="btn btn-global" id="globalPause" disabled><i class="fas fa-pause"></i> 暂停</button>
-                <button class="btn btn-global btn-stop" id="globalStop" disabled><i class="fas fa-stop"></i> 停止</button>
-            </div>
-        </div>
-
-        <div class="performance-charts">
-            <div class="charts-title"><i class="fas fa-chart-line"></i> 性能指标对比曲线</div>
-            <div class="charts-container">
-                <div class="chart-item"><img src="https://rtvst-demo.github.io/video-transmission-demo/images_metrics/psnr.svg " alt="PSNR"><div class="chart-label">PSNR性能对比</div></div>
-                <div class="chart-item"><img src="https://rtvst-demo.github.io/video-transmission-demo/images_metrics/ssim.svg " alt="SSIM"><div class="chart-label">SSIM性能对比</div></div>
-                <div class="chart-item"><img src="https://rtvst-demo.github.io/video-transmission-demo/images_metrics/lpips.svg " alt="LPIPS"><div class="chart-label">LPIPS性能对比</div></div>
-            </div>
-        </div>
-
-        <div class="video-container">
-            <div class="video-panel">
-                <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> Origin</h3><span class="status-indicator status-stopped" id="st4"></span></div>
-                <div class="display-area" id="da4"></div>
-                <div class="info-panel">
-                    <div class="info-item"><span>帧率:</span><span id="fps4">25 FPS</span></div>
-                    <div class="info-item"><span>状态:</span><span id="ps4">已停止</span></div>
-                </div>
-            </div>
-
-            <div class="video-panel">
-                <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> H.265 + LDPC</h3><span class="status-indicator status-stopped" id="st1"></span></div>
-                <div class="display-area" id="da1"></div>
-                <div class="info-panel">
-                    <div class="info-item"><span>帧率:</span><span id="fps1">25 FPS</span></div>
-                    <div class="info-item"><span>状态:</span><span id="ps1">已停止</span></div>
-                </div>
-            </div>
-
-            <div class="video-panel">
-                <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> DeepJSCC</h3><span class="status-indicator status-stopped" id="st2"></span></div>
-                <div class="display-area" id="da2"></div>
-                <div class="info-panel">
-                    <div class="info-item"><span>帧率:</span><span id="fps2">4 FPS</span></div>
-                    <div class="info-item"><span>状态:</span><span id="ps2">已停止</span></div>
-                </div>
-            </div>
-
-            <div class="video-panel">
-                <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> RTVST</h3><span class="status-indicator status-stopped" id="st3"></span></div>
-                <div class="display-area" id="da3"></div>
-                <div class="info-panel">
-                    <div class="info-item"><span>帧率:</span><span id="fps3">25 FPS</span></div>
-                    <div class="info-item"><span>状态:</span><span id="ps3">已停止</span></div>
-                </div>
-            </div>
-        </div>
-
-        <footer><p>实时视频语义传输算法设计</p></footer>
-    </div>
-
-    <script>
-    /* ================= 视频帧数据配置 ================= */
-    const repo = 'https://rtvst-demo.github.io/video-transmission-demo';
-    
-    // 重新配置 panels 数组并添加 prefixId 用于映射 HTML ID
-    const panels = [
-        // H.265 + LDPC
-        { id: 'da1', prefixId: 1, folder: 'h265+ldpc-frames', tpl: i => `output_${String(i).padStart(4,'0')}.png`, count: 100, fps: 25 },
-        // DeepJSCC
-        { id: 'da2', prefixId: 2, folder: 'deepjscc-frames', tpl: i => `${100+i-1}recon_snr8.png`, count: 100, fps: 4 },
-        // RTVST
-        { id: 'da3', prefixId: 3, folder: 'rtvst-frames', tpl: i => `${i-1}recon_snr8.png`, count: 100, fps: 25 },
-        // Origin
-        { id: 'da4', prefixId: 4, folder: 'origin-frames', tpl: i => `img${String(i).padStart(6,'0')}.png`, count: 100, fps: 25 },
-    ];
-    
-    /* ================= 图片预加载和进度条逻辑 ================= */
-    function preloadAllImages() {
-        let loadedCount = 0;
-        let totalCount = 0;
-        const progressFill = document.getElementById('loading-progress-fill');
-        const statusText = document.getElementById('loading-status-text');
-        const globalButtons = [
-            document.getElementById('globalPlay'),
-            document.getElementById('globalPause'),
-            document.getElementById('globalStop')
-        ];
-        
-        // 禁用按钮直到加载完成
-        globalButtons.forEach(btn => btn.disabled = true);
-        
-        panels.forEach(p => {
-            const box = document.getElementById(p.id);
-            let html = '';
-            
-            for(let i = 1; i <= p.count; i++){
-                const fileName = p.tpl(i);
-                const src = `${repo}/${p.folder}/${fileName}`;
-                
-                // 1. 创建 <img /> 元素并插入 DOM
-                const imgId = `${p.id}-frame-${i}`;
-                // 注意：在 CSS 中已设置 opacity: 0 默认隐藏
-                html += `<img id="${imgId}" src="${src}" alt="Frame ${i}" />`;
-                
-                // 2. 使用 Image 对象预加载，确保图片进入浏览器缓存
-                const imgPreloader = new Image();
-                imgPreloader.src = src;
-                totalCount++;
-
-                // 3. 监听加载完成事件
-                imgPreloader.onload = imgPreloader.onerror = () => {
-                    loadedCount++;
-                    const percent = Math.round((loadedCount / totalCount) * 100);
-                    
-                    // 更新进度条
-                    progressFill.style.width = `${percent}%`;
-                    progressFill.textContent = `${percent}%`;
-                    statusText.textContent = `${loadedCount} / ${totalCount} (${percent}%)`;
-
-                    if (loadedCount === totalCount) {
-                        onAllImagesLoaded();
-                    }
-                };
-            }
-            box.innerHTML = html;
-            
-            // 初始显示第一帧 (CSS 样式已处理: .display-area img:first-child { opacity: 1; })
-        });
-        
-        function onAllImagesLoaded() {
-            // 启用全局控制按钮
-            globalButtons.forEach(btn => btn.disabled = false);
-            
-            // 更新进度条完成状态
-            const percent = 100;
-            progressFill.style.width = `${percent}%`;
-            progressFill.textContent = `加载完成 (${percent}%)`;
-            statusText.textContent = `所有图片已加载 (${totalCount} 帧)`;
-
-            // 创建播放器实例
-            createPlayers(); 
-        }
-    }
-
-    /* ================= 播放器核心逻辑 (使用 requestAnimationFrame 平滑播放) ================= */
-    function flipper(prefix, total, interval, statusEl){
-        let idx = 0; 
-        let t = null;
-        let isPlaying = false;
-        let lastTimestamp = 0;
-        const intervalMs = interval; // 播放间隔 (毫秒)
-
-        // 切换指定索引的帧，使用 opacity 切换
-        const showFrame = (k)=>{
-            // 隐藏所有帧
-            document.querySelectorAll(`#${prefix} img`).forEach(el => el.style.opacity = 0);
-            
-            // 显示目标帧
-            const target = document.getElementById(`${prefix}-frame-${k+1}`);
-            if(target) target.style.opacity = 1;
-        };
-
-        // 动画循环函数
-        const nextFrame = (timestamp) => {
-            if (!isPlaying) return;
-
-            // 检查是否到达下一帧的间隔时间
-            if (timestamp - lastTimestamp >= intervalMs) {
-                lastTimestamp = timestamp;
-                
-                // 切换到下一帧
-                idx = (idx + 1) % total;
-                showFrame(idx);
-            }
-
-            // 循环调用
-            t = requestAnimationFrame(nextFrame);
-        };
-        
-        showFrame(0); // 初始化显示第一张
-
-        return {
-            start(){
-                if(isPlaying) return;
-                isPlaying = true;
-                if(statusEl){ 
-                    statusEl.textContent='播放中'; 
-                    statusEl.previousElementSibling.className='status-indicator status-playing'; 
-                }
-                lastTimestamp = performance.now(); // 重置时间戳
-                t = requestAnimationFrame(nextFrame);
-            },
-            pause(){
-                if (t) cancelAnimationFrame(t); 
-                t=null;
-                isPlaying = false;
-                if(statusEl){ 
-                    statusEl.textContent='已暂停'; 
-                    statusEl.previousElementSibling.className='status-indicator status-paused'; 
-                }
-            },
-            stop(){
-                if (t) cancelAnimationFrame(t); 
-                t=null; 
-                isPlaying = false;
-                idx=0; 
-                showFrame(0); // 停止时，显示第一帧
-                if(statusEl){ 
-                    statusEl.textContent='已停止'; 
-                    statusEl.previousElementSibling.className='status-indicator status-stopped'; 
-                }
-            }
-        };
-    }
-    
-    let players = [];
-    
-    function createPlayers() {
-        // 使用 panels 数组创建播放器实例
-        players = panels.map(p =>
-            // 1000/p.fps 是毫秒间隔
-            flipper(p.id, p.count, 1000/p.fps,
-                    document.getElementById(`ps${p.prefixId}`)) 
-        );
-    }
-    
-    /* ================= 全局按钮事件绑定 ================= */
-    function setupGlobalControls() {
-        document.getElementById('globalPlay').addEventListener('click',()=>players.forEach(p=>p.start()));
-        document.getElementById('globalPause').addEventListener('click',()=>players.forEach(p=>p.pause()));
-        document.getElementById('globalStop').addEventListener('click',()=>players.forEach(p=>p.stop()));
-    }
-
-    /* ================= 页面初始化 ================= */
-    document.addEventListener('DOMContentLoaded', () => {
-        // 1. 启动图片预加载 (加载完成后会自动启用按钮和创建播放器)
-        preloadAllImages();
-        // 2. 绑定全局控制按钮事件
-        setupGlobalControls();
-    });
     </script>
 </body>
 </html>
