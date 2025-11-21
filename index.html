@@ -361,7 +361,6 @@
             font-size: 1rem;
         }
         
-        
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -373,6 +372,7 @@
         </header>
         
         <div class="global-controls">
+            <h3><i class="fas fa-sync-alt"></i> 全局控制</h3>
             <div class="controls">
                 <button class="btn btn-global" id="globalPlay">
                     <i class="fas fa-play"></i> 开始
@@ -383,24 +383,27 @@
                 <button class="btn btn-global btn-stop" id="globalStop">
                     <i class="fas fa-stop"></i> 停止
                 </button>
+                <button class="btn btn-global" id="globalReset">
+                    <i class="fas fa-redo"></i> 重置
+                </button>
             </div>
         </div>
 
         <div class="info-display-row">
-            <div class="info-display-item">
-                <span class="info-label">SNR:</span>
-                <span class="info-value" id="snrDisplay">8 dB</span>
-            </div>
-            <div class="info-display-item">
-                <span class="info-label">CBR:</span>
-                <span class="info-value" id="cbrDisplay">0.012</span>
-            </div>
-         </div>
+        <div class="info-display-item">
+            <span class="info-label">SNR:</span>
+            <span class="info-value" id="snrDisplay">8 dB</span>
+        </div>
+        <div class="info-display-item">
+            <span class="info-label">CBR:</span>
+            <span class="info-value" id="cbrDisplay">0.012</span>
+        </div>
+     </div>
 
-        <!-- ========== 摘要块（新增，位于架构图上方） ========== -->
+                        <!-- ========== 摘要块（新增，位于架构图上方） ========== -->
         <div class="abstract" style="margin-bottom:20px;">
-            <strong>项目摘要：</strong>
-              本 团 队 提 出 了 一 种 实 时 视 频 语 义 传 输 系 统 （ Real-time Video Semantic 
+          <strong>项目摘要：</strong>
+          本 团 队 提 出 了 一 种 实 时 视 频 语 义 传 输 系 统 （ Real-time Video Semantic 
             Transmission，RTVST）。提出了隐式时态建模及跨通道信息结构化分解与重构方法，将传统运动估计和残差链路融合为统一的前向过程，
             并在紧致特征空间中执行特征提取操作，从而大幅降低操作复杂度，显著提升单帧
             编解码速度。此外，该算法通过端到端联合优化，保证高质量重建效果的同时具有
@@ -409,11 +412,11 @@
             统作为对比方案。
         </div>
 
+        
         <div class="architecture-image">
-            <img src="https://rtvst-demo.github.io/video-transmission-demo/rtvst_Architecture.jpg" alt="RTVST架构图">
+            <img src="https://rtvst-demo.github.io/video-transmission-demo/rtvst_Architecture.jpg " alt="RTVST架构图">
             <div class="image-caption">RTVST模型架构图</div>
         </div>
-        
         
         <div class="video-container">
             <!-- Origin -->
@@ -426,11 +429,18 @@
                 <input type="hidden" id="intervalInput4" value="40">
                 
                 <div class="display-area" id="displayArea4">
-                    <p style="text-align: center; opacity: 0.7;"> </p>
+                    <p style="text-align: center; opacity: 0.7;">等待加载图片序列</p>
                 </div>
                 
                 <div class="info-panel">
-   
+                    <div class="info-item">
+                        <span>当前帧:</span>
+                        <span id="currentFrame4">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span>总帧数:</span>
+                        <span id="totalFrames4">0</span>
+                    </div>
                     <div class="info-item">
                         <span>帧率:</span>
                         <span id="fpsInfo4">0 FPS</span>
@@ -442,12 +452,12 @@
                 </div>
                 
                 <div class="file-list" id="fileList4">
-                    <p style="text-align: center; opacity: 0.7;"> </p>
+                    <p style="text-align: center; opacity: 0.7;">图片列表将显示在这里</p>
                 </div>
                 
                 <div class="github-load-area" id="githubLoadArea4">
                     <i class="fab fa-github"></i>
-                    <p> </p>
+                    <p>加载图片序列</p>
                     <button class="btn" id="loadBtn4">
                         <i class="fas fa-download"></i> 加载图片
                     </button>
@@ -464,11 +474,18 @@
                 <input type="hidden" id="intervalInput1" value="40">
                 
                 <div class="display-area" id="displayArea1">
-                    <p style="text-align: center; opacity: 0.7;"> </p>
+                    <p style="text-align: center; opacity: 0.7;">等待加载图片序列</p>
                 </div>
                 
                 <div class="info-panel">
-
+                    <div class="info-item">
+                        <span>当前帧:</span>
+                        <span id="currentFrame1">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span>总帧数:</span>
+                        <span id="totalFrames1">0</span>
+                    </div>
                     <div class="info-item">
                         <span>帧率:</span>
                         <span id="fpsInfo1">0 FPS</span>
@@ -480,12 +497,12 @@
                 </div>
                 
                 <div class="file-list" id="fileList1">
-                    <p style="text-align: center; opacity: 0.7;"> </p>
+                    <p style="text-align: center; opacity: 0.7;">图片列表将显示在这里</p>
                 </div>
                 
                 <div class="github-load-area" id="githubLoadArea1">
                     <i class="fab fa-github"></i>
-                    <p> </p>
+                    <p>加载图片序列</p>
                     <button class="btn" id="loadBtn1">
                         <i class="fas fa-download"></i> 加载图片
                     </button>
@@ -502,11 +519,18 @@
                 <input type="hidden" id="intervalInput2" value="250">
                 
                 <div class="display-area" id="displayArea2">
-                    <p style="text-align: center; opacity: 0.7;"> </p>
+                    <p style="text-align: center; opacity: 0.7;">等待加载图片序列</p>
                 </div>
                 
                 <div class="info-panel">
-
+                    <div class="info-item">
+                        <span>当前帧:</span>
+                        <span id="currentFrame2">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span>总帧数:</span>
+                        <span id="totalFrames2">0</span>
+                    </div>
                     <div class="info-item">
                         <span>帧率:</span>
                         <span id="fpsInfo2">0 FPS</span>
@@ -518,12 +542,12 @@
                 </div>
                 
                 <div class="file-list" id="fileList2">
-                    <p style="text-align: center; opacity: 0.7;"> </p>
+                    <p style="text-align: center; opacity: 0.7;">图片列表将显示在这里</p>
                 </div>
                 
                 <div class="github-load-area" id="githubLoadArea2">
                     <i class="fab fa-github"></i>
-                    <p> </p>
+                    <p>加载图片序列</p>
                     <button class="btn" id="loadBtn2">
                         <i class="fas fa-download"></i> 加载图片
                     </button>
@@ -540,11 +564,18 @@
                 <input type="hidden" id="intervalInput3" value="40">
                 
                 <div class="display-area" id="displayArea3">
-                    <p style="text-align: center; opacity: 0.7;"> </p>
+                    <p style="text-align: center; opacity: 0.7;">等待加载图片序列</p>
                 </div>
                 
                 <div class="info-panel">
-   
+                    <div class="info-item">
+                        <span>当前帧:</span>
+                        <span id="currentFrame3">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span>总帧数:</span>
+                        <span id="totalFrames3">0</span>
+                    </div>
                     <div class="info-item">
                         <span>帧率:</span>
                         <span id="fpsInfo3">0 FPS</span>
@@ -556,12 +587,12 @@
                 </div>
                 
                 <div class="file-list" id="fileList3">
-                    <p style="text-align: center; opacity: 0.7;"> </p>
+                    <p style="text-align: center; opacity: 0.7;">图片列表将显示在这里</p>
                 </div>
                 
                 <div class="github-load-area" id="githubLoadArea3">
                     <i class="fab fa-github"></i>
-                    <p> </p>
+                    <p>加载图片序列</p>
                     <button class="btn" id="loadBtn3">
                         <i class="fas fa-download"></i> 加载图片
                     </button>
@@ -570,7 +601,7 @@
         </div>
         
         <footer>
-            <p>实时视频语义传输算法设计</p>
+            <p>AIC-RTVST - 实时视频传输对比演示平台</p>
         </footer>
     </div>
 
