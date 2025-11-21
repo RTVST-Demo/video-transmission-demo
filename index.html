@@ -324,41 +324,65 @@
             font-weight: 600;
         }
 
-        /* 架构图容器样式 */
-        .architecture-image {
-            text-align: center;
-            margin: 25px 0;
-            
+        /* 性能图表容器样式 */
+        .performance-charts {
             /* 透明磨砂效果背景 */
-            background: rgba(255, 255, 255, 0.08); 
-            backdrop-filter: blur(10px); /* 磨砂玻璃效果 */
+            background: rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(10px);
             
-            border-radius: 12px;
+            border-radius: 15px;
             padding: 25px;
-            
-            /* 装饰性边框 */
-            border: 1px solid rgba(253, 187, 45, 0.3); 
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin: 30px 0;
         }
         
-        .architecture-image img {
-            max-width: 90%;
-            max-height: 450px;
+        .charts-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #fdbb2d; /* 标题使用金色 */
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        /* 图表布局 */
+        .charts-container {
+            display: grid;
+            /* 默认三列布局 */
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 20px;
+        }
+        
+        .chart-item {
+            background: rgba(255, 255, 255, 0.05); /* 每个图表项的透明背景 */
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .chart-item img {
+            width: 100%;
+            height: 200px;
             object-fit: contain;
+            background: rgba(0, 0, 0, 0.2); /* 图片区域的深色背景 */
             border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s;
+            padding: 10px;
         }
         
-        .architecture-image img:hover {
-            transform: scale(1.02); /* 鼠标悬停时放大效果 */
-        }
-        
-        .image-caption {
-            margin-top: 15px;
-            color: #fdbb2d; /* 图注使用金色 */
+        .chart-label {
+            margin-top: 10px;
+            color: #fdbb2d;
             font-weight: 500;
             font-size: 1rem;
+        }
+        
+        /* 媒体查询：在小屏幕上图表改为两列 */
+        @media(max-width: 768px){
+            .charts-container{
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
         
     </style>
@@ -413,9 +437,13 @@
         </div>
 
         
-        <div class="architecture-image">
-            <img src="https://rtvst-demo.github.io/video-transmission-demo/rtvst_Architecture.jpg " alt="RTVST架构图">
-            <div class="image-caption">RTVST模型架构图</div>
+        <div class="performance-charts">
+            <div class="charts-title"><i class="fas fa-chart-line"></i> 性能指标对比曲线</div>
+            <div class="charts-container">
+                <div class="chart-item"><img src="https://rtvst-demo.github.io/video-transmission-demo/images_metrics/psnr.svg " alt="PSNR"><div class="chart-label">PSNR性能对比</div></div>
+                <div class="chart-item"><img src="https://rtvst-demo.github.io/video-transmission-demo/images_metrics/ssim.svg " alt="SSIM"><div class="chart-label">SSIM性能对比</div></div>
+                <div class="chart-item"><img src="https://rtvst-demo.github.io/video-transmission-demo/images_metrics/lpips.svg " alt="LPIPS"><div class="chart-label">LPIPS性能对比</div></div>
+            </div>
         </div>
         
         <div class="video-container">
