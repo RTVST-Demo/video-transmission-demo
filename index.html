@@ -13,8 +13,8 @@
         }
         
         body {
-            background: linear-gradient(135deg, #e0f7fa, #a1c4fd);
-            color: #333; 
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #fff;
             min-height: 100vh;
             padding: 20px;
         }
@@ -267,126 +267,6 @@
             color: #fdbb2d;
             font-weight: 600;
         }
-
-        /* 摘要文本样式 */
-        .abstract {
-            /* 使用半透明背景以融入渐变背景，同时增加可读性 */
-            background: rgba(0, 0, 0, 0.3); 
-            padding: 20px;
-            border-radius: 10px;
-            line-height: 1.8;
-            
-            /* 使用主题色作为左侧边框装饰 */
-            border-left: 4px solid #fdbb2d; 
-            
-            /* 假设您将 body color 改为 #333，这里需要强制设为白色或浅色 */
-            color: #fff; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-        
-        .abstract strong {
-            color: #fdbb2d; /* 强调词使用金色高亮 */
-            font-weight: 600;
-        }
-        
-        /* 架构图容器样式 */
-        .architecture-image {
-            text-align: center;
-            margin: 25px 0;
-            
-            /* 透明磨砂效果背景 */
-            background: rgba(255, 255, 255, 0.08); 
-            backdrop-filter: blur(10px); /* 磨砂玻璃效果 */
-            
-            border-radius: 12px;
-            padding: 25px;
-            
-            /* 装饰性边框 */
-            border: 1px solid rgba(253, 187, 45, 0.3); 
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-        }
-        
-        .architecture-image img {
-            max-width: 90%;
-            max-height: 450px;
-            object-fit: contain;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s;
-        }
-        
-        .architecture-image img:hover {
-            transform: scale(1.02); /* 鼠标悬停时放大效果 */
-        }
-        
-        .image-caption {
-            margin-top: 15px;
-            color: #fdbb2d; /* 图注使用金色 */
-            font-weight: 500;
-            font-size: 1rem;
-        }
-
-        /* 性能图表容器样式 */
-        .performance-charts {
-            /* 透明磨砂效果背景 */
-            background: rgba(255, 255, 255, 0.1); 
-            backdrop-filter: blur(10px);
-            
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            margin: 30px 0;
-        }
-        
-        .charts-title {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: #fdbb2d; /* 标题使用金色 */
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            justify-content: center;
-        }
-        
-        /* 图表布局 */
-        .charts-container {
-            display: grid;
-            /* 默认三列布局 */
-            grid-template-columns: repeat(3, 1fr); 
-            gap: 20px;
-        }
-        
-        .chart-item {
-            background: rgba(255, 255, 255, 0.05); /* 每个图表项的透明背景 */
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .chart-item img {
-            width: 100%;
-            height: 200px;
-            object-fit: contain;
-            background: rgba(0, 0, 0, 0.2); /* 图片区域的深色背景 */
-            border-radius: 8px;
-            padding: 10px;
-        }
-        
-        .chart-label {
-            margin-top: 10px;
-            color: #fdbb2d;
-            font-weight: 500;
-            font-size: 1rem;
-        }
-        
-        /* 媒体查询：在小屏幕上图表改为两列 */
-        @media(max-width: 768px){
-            .charts-container{
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
         
         @keyframes pulse {
             0% { opacity: 1; }
@@ -421,7 +301,6 @@
                 max-width: 100%;
                 padding: 10px;
             }
-        
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -430,10 +309,11 @@
     <div class="container">
         <header>
             <h1>AIC-RTVST</h1>
-            <p class="subtitle">实时视频语义传输算法设计</p>
+            <p class="subtitle">实时视频传输对比演示平台</p>
         </header>
         
         <div class="global-controls">
+            <h3><i class="fas fa-sync-alt"></i> 全局控制</h3>
             <div class="controls">
                 <button class="btn btn-global" id="globalPlay">
                     <i class="fas fa-play"></i> 开始
@@ -444,7 +324,9 @@
                 <button class="btn btn-global btn-stop" id="globalStop">
                     <i class="fas fa-stop"></i> 停止
                 </button>
-
+                <button class="btn btn-global" id="globalReset">
+                    <i class="fas fa-redo"></i> 重置
+                </button>
             </div>
         </div>
 
@@ -458,40 +340,7 @@
                 <span class="info-value" id="cbrDisplay">0.012</span>
             </div>
          </div>
-
-                    <!-- ========== 摘要块（新增，位于架构图上方） ========== -->
-            <div class="abstract" style="margin-bottom:20px;">
-              <strong>项目摘要：</strong>
-              本 团 队 提 出 了 一 种 实 时 视 频 语 义 传 输 系 统 （ Real-time Video Semantic 
-                Transmission，RTVST）。提出了隐式时态建模及跨通道信息结构化分解与重构方法，将传统运动估计和残差链路融合为统一的前向过程，
-                并在紧致特征空间中执行特征提取操作，从而大幅降低操作复杂度，显著提升单帧
-                编解码速度。此外，该算法通过端到端联合优化，保证高质量重建效果的同时具有
-                较好的噪声鲁棒性。RTVST直击语义视频传输实时性痛点，有望为高带宽、低时延
-                的未来流媒体业务提供方法支撑，推动语义通信从理论研究走向实际部署。本 项 目将DeepJSCC与H.265+1/3LDPC+16QAM传统视频传输系
-                统作为对比方案。
-            </div>
-
-            
-            <div class="architecture-image">
-                <img src="https://rtvst-demo.github.io/video-transmission-demo/rtvst_Architecture.jpg " alt="RTVST架构图">
-                <div class="image-caption">RTVST模型架构图</div>
-            </div>
-            <div class="controls">
-                <button class="btn btn-global" id="globalPlay"><i class="fas fa-play"></i> 开始</button>
-                <button class="btn btn-global" id="globalPause"><i class="fas fa-pause"></i> 暂停</button>
-                <button class="btn btn-global btn-stop" id="globalStop"><i class="fas fa-stop"></i> 停止</button>
-            </div>
-        </div>
-
-        <div class="performance-charts">
-            <div class="charts-title"><i class="fas fa-chart-line"></i> 性能指标对比曲线</div>
-            <div class="charts-container">
-                <div class="chart-item"><img src="https://rtvst-demo.github.io/video-transmission-demo/images_metrics/psnr.svg " alt="PSNR"><div class="chart-label">PSNR性能对比</div></div>
-                <div class="chart-item"><img src="https://rtvst-demo.github.io/video-transmission-demo/images_metrics/ssim.svg " alt="SSIM"><div class="chart-label">SSIM性能对比</div></div>
-                <div class="chart-item"><img src="https://rtvst-demo.github.io/video-transmission-demo/images_metrics/lpips.svg " alt="LPIPS"><div class="chart-label">LPIPS性能对比</div></div>
-            </div>
-        </div>
-    
+        
         <div class="video-container">
             <!-- Origin -->
             <div class="video-panel">
@@ -503,11 +352,18 @@
                 <input type="hidden" id="intervalInput4" value="40">
                 
                 <div class="display-area" id="displayArea4">
-                    <p style="text-align: center; opacity: 0.7;"> </p>
+                    <p style="text-align: center; opacity: 0.7;">等待加载图片序列</p>
                 </div>
                 
                 <div class="info-panel">
-
+                    <div class="info-item">
+                        <span>当前帧:</span>
+                        <span id="currentFrame4">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span>总帧数:</span>
+                        <span id="totalFrames4">0</span>
+                    </div>
                     <div class="info-item">
                         <span>帧率:</span>
                         <span id="fpsInfo4">0 FPS</span>
@@ -519,12 +375,12 @@
                 </div>
                 
                 <div class="file-list" id="fileList4">
-                    <p style="text-align: center; opacity: 0.7;"> </p>
+                    <p style="text-align: center; opacity: 0.7;">图片列表将显示在这里</p>
                 </div>
                 
                 <div class="github-load-area" id="githubLoadArea4">
                     <i class="fab fa-github"></i>
-                    <p> </p>
+                    <p>加载图片序列</p>
                     <button class="btn" id="loadBtn4">
                         <i class="fas fa-download"></i> 加载图片
                     </button>
@@ -541,10 +397,18 @@
                 <input type="hidden" id="intervalInput1" value="40">
                 
                 <div class="display-area" id="displayArea1">
-                    <p style="text-align: center; opacity: 0.7;"> </p>
+                    <p style="text-align: center; opacity: 0.7;">等待加载图片序列</p>
                 </div>
                 
                 <div class="info-panel">
+                    <div class="info-item">
+                        <span>当前帧:</span>
+                        <span id="currentFrame1">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span>总帧数:</span>
+                        <span id="totalFrames1">0</span>
+                    </div>
                     <div class="info-item">
                         <span>帧率:</span>
                         <span id="fpsInfo1">0 FPS</span>
@@ -556,12 +420,12 @@
                 </div>
                 
                 <div class="file-list" id="fileList1">
-                    <p style="text-align: center; opacity: 0.7;"> </p>
+                    <p style="text-align: center; opacity: 0.7;">图片列表将显示在这里</p>
                 </div>
                 
                 <div class="github-load-area" id="githubLoadArea1">
                     <i class="fab fa-github"></i>
-                    <p> </p>
+                    <p>加载图片序列</p>
                     <button class="btn" id="loadBtn1">
                         <i class="fas fa-download"></i> 加载图片
                     </button>
@@ -578,10 +442,18 @@
                 <input type="hidden" id="intervalInput2" value="250">
                 
                 <div class="display-area" id="displayArea2">
-                    <p style="text-align: center; opacity: 0.7;"> </p>
+                    <p style="text-align: center; opacity: 0.7;">等待加载图片序列</p>
                 </div>
                 
                 <div class="info-panel">
+                    <div class="info-item">
+                        <span>当前帧:</span>
+                        <span id="currentFrame2">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span>总帧数:</span>
+                        <span id="totalFrames2">0</span>
+                    </div>
                     <div class="info-item">
                         <span>帧率:</span>
                         <span id="fpsInfo2">0 FPS</span>
@@ -593,12 +465,12 @@
                 </div>
                 
                 <div class="file-list" id="fileList2">
-                    <p style="text-align: center; opacity: 0.7;"> </p>
+                    <p style="text-align: center; opacity: 0.7;">图片列表将显示在这里</p>
                 </div>
                 
                 <div class="github-load-area" id="githubLoadArea2">
                     <i class="fab fa-github"></i>
-                    <p> </p>
+                    <p>加载图片序列</p>
                     <button class="btn" id="loadBtn2">
                         <i class="fas fa-download"></i> 加载图片
                     </button>
@@ -615,11 +487,18 @@
                 <input type="hidden" id="intervalInput3" value="40">
                 
                 <div class="display-area" id="displayArea3">
-                    <p style="text-align: center; opacity: 0.7;"> </p>
+                    <p style="text-align: center; opacity: 0.7;">等待加载图片序列</p>
                 </div>
                 
                 <div class="info-panel">
-
+                    <div class="info-item">
+                        <span>当前帧:</span>
+                        <span id="currentFrame3">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span>总帧数:</span>
+                        <span id="totalFrames3">0</span>
+                    </div>
                     <div class="info-item">
                         <span>帧率:</span>
                         <span id="fpsInfo3">0 FPS</span>
@@ -631,12 +510,12 @@
                 </div>
                 
                 <div class="file-list" id="fileList3">
-                    <p style="text-align: center; opacity: 0.7;"> </p>
+                    <p style="text-align: center; opacity: 0.7;">图片列表将显示在这里</p>
                 </div>
                 
                 <div class="github-load-area" id="githubLoadArea3">
                     <i class="fab fa-github"></i>
-                    <p>-</p>
+                    <p>加载图片序列</p>
                     <button class="btn" id="loadBtn3">
                         <i class="fas fa-download"></i> 加载图片
                     </button>
@@ -645,7 +524,7 @@
         </div>
         
         <footer>
-            <p>实时视频语义传输算法设计(RTVST)</p>
+            <p>AIC-RTVST - 实时视频传输对比演示平台</p>
         </footer>
     </div>
 
@@ -877,9 +756,9 @@
                 
                 this.imgElement.src = '';
                 this.imgElement.style.display = 'none';
-                this.displayArea.innerHTML = '<p style="text-align: center; opacity: 0.7;">-</p>';
+                this.displayArea.innerHTML = '<p style="text-align: center; opacity: 0.7;">等待加载图片序列</p>';
                 
-                this.fileList.innerHTML = '<p style="text-align: center; opacity: 0.7;">-</p>';
+                this.fileList.innerHTML = '<p style="text-align: center; opacity: 0.7;">图片列表将显示在这里</p>';
                 this.updateTotalFrames();
                 this.currentFrameEl.textContent = '-';
                 this.fpsInfoEl.textContent = '0 FPS';
