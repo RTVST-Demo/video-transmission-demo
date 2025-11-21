@@ -13,8 +13,8 @@
         }
         
         body {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-            color: #fff;
+            background: linear-gradient(135deg, #e0f7fa, #a1c4fd);
+            color: #333; 
             min-height: 100vh;
             padding: 20px;
         }
@@ -302,6 +302,28 @@
                 padding: 10px;
             }
         }
+
+        /* 摘要文本样式 */
+        .abstract {
+            /* 使用半透明背景以融入渐变背景，同时增加可读性 */
+            background: rgba(0, 0, 0, 0.3); 
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.8;
+            
+            /* 使用主题色作为左侧边框装饰 */
+            border-left: 4px solid #fdbb2d; 
+            
+            /* 假设您将 body color 改为 #333，这里需要强制设为白色或浅色 */
+            color: #fff; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .abstract strong {
+            color: #fdbb2d; /* 强调词使用金色高亮 */
+            font-weight: 600;
+        }
+        
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -340,6 +362,18 @@
                 <span class="info-value" id="cbrDisplay">0.012</span>
             </div>
          </div>
+
+        <!-- ========== 摘要块（新增，位于架构图上方） ========== -->
+        <div class="abstract" style="margin-bottom:20px;">
+            <strong>项目摘要：</strong>
+              本 团 队 提 出 了 一 种 实 时 视 频 语 义 传 输 系 统 （ Real-time Video Semantic 
+            Transmission，RTVST）。提出了隐式时态建模及跨通道信息结构化分解与重构方法，将传统运动估计和残差链路融合为统一的前向过程，
+            并在紧致特征空间中执行特征提取操作，从而大幅降低操作复杂度，显著提升单帧
+            编解码速度。此外，该算法通过端到端联合优化，保证高质量重建效果的同时具有
+            较好的噪声鲁棒性。RTVST直击语义视频传输实时性痛点，有望为高带宽、低时延
+            的未来流媒体业务提供方法支撑，推动语义通信从理论研究走向实际部署。本 项 目将DeepJSCC与H.265+1/3LDPC+16QAM传统视频传输系
+            统作为对比方案。
+        </div>
         
         <div class="video-container">
             <!-- Origin -->
