@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIC - RTVST</title>
+    <title>实时视频语义传输算法设计(RTVST)</title>
     <style>
         * {
             margin: 0;
@@ -423,12 +423,12 @@
             <!-- 添加项目介绍 -->
             <div class="abstract">
                 <strong>项目简介：</strong>本 团 队 提 出 了 一 种 实 时 视 频 语 义 传 输 系 统 （ Real-time Video Semantic 
-Transmission，RTVST）。提出了隐式时态建模及跨通道信息结构化分解与重构方法，将传统运动估计和残差链路融合为统一的前向过程，
-并在紧致特征空间中执行特征提取操作，从而大幅降低操作复杂度，显著提升单帧
-编解码速度。此外，该算法通过端到端联合优化，保证高质量重建效果的同时具有
-较好的噪声鲁棒性。RTVST直击语义视频传输实时性痛点，有望为高带宽、低时延
-的未来流媒体业务提供方法支撑，推动语义通信从理论研究走向实际部署。本 项 目将DeepJSCC与H.265+1/3LDPC+16QAM传统视频传输系
-统作为对比方案。
+                Transmission，RTVST）。提出了隐式时态建模及跨通道信息结构化分解与重构方法，将传统运动估计和残差链路融合为统一的前向过程，
+                并在紧致特征空间中执行特征提取操作，从而大幅降低操作复杂度，显著提升单帧
+                编解码速度。此外，该算法通过端到端联合优化，保证高质量重建效果的同时具有
+                较好的噪声鲁棒性。RTVST直击语义视频传输实时性痛点，有望为高带宽、低时延
+                的未来流媒体业务提供方法支撑，推动语义通信从理论研究走向实际部署。本 项 目将DeepJSCC与H.265+1/3LDPC+16QAM传统视频传输系
+                统作为对比方案。
             </div>
             <!-- 添加架构图 -->
             <div class="architecture-image">
@@ -447,9 +447,6 @@ Transmission，RTVST）。提出了隐式时态建模及跨通道信息结构化
                 </button>
                 <button class="btn btn-global btn-stop" id="globalStop">
                     <i class="fas fa-stop"></i> 停止
-                </button>
-                <button class="btn btn-global" id="globalReset">
-                    <i class="fas fa-redo"></i> 重置
                 </button>
             </div>
         </div>
@@ -472,15 +469,15 @@ Transmission，RTVST）。提出了隐式时态建模及跨通道信息结构化
             </div>
             <div class="charts-container">
                 <div class="chart-item">
-                    <img src="video-transmission-demo/images_metrics/psnr.svg" alt="PSNR性能曲线">
+                    <img src="./images_metrics/psnr.svg" alt="PSNR性能曲线">
                     <div class="chart-label">PSNR性能对比</div>
                 </div>
                 <div class="chart-item">
-                    <img src="video-transmission-demo/images_metrics/ssim.svg" alt="SSIM性能曲线">
+                    <img src="./images_metrics/ssim.svg" alt="SSIM性能曲线">
                     <div class="chart-label">SSIM性能对比</div>
                 </div>
                 <div class="chart-item">
-                    <img src="video-transmission-demo/images_metrics/lpips.svg" alt="LPIPS性能曲线">
+                    <img src="./images_metrics/lpips.svg" alt="LPIPS性能曲线">
                     <div class="chart-label">LPIPS性能对比</div>
                 </div>
             </div>
