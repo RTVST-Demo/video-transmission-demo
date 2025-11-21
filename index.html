@@ -54,6 +54,22 @@
         @media(max-width:768px){.video-container{grid-template-columns:1fr}h1{font-size:2.2rem}}
         .abstract{background:rgba(255,255,255,.08);padding:20px;border-radius:10px;line-height:1.8;border-left:4px solid #fdbb2d;color:#fff;}
         .abstract strong{color:#fdbb2d;font-weight:600;}
+
+        /* ====== 进度条样式 ====== */
+        .progress-bar-container{
+            width:100%;
+            height:8px;
+            background:rgba(0,0,0,.5);
+            border-radius:4px;
+            margin-bottom:10px; /* 在显示区上方留出空间 */
+            overflow:hidden;
+        }
+        .progress-bar{
+            height:100%;
+            width:0; /* 初始宽度为 0 */
+            background:linear-gradient(90deg,#fdbb2d,#ffcc44);
+            transition:width 0.1s linear; /* 平滑过渡效果 */
+        }
         
                 
     </style>
@@ -108,6 +124,11 @@
             <!-- ====== Origin ====== -->
             <div class="video-panel">
                 <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> Origin</h3><span class="status-indicator status-stopped" id="st4"></span></div>
+                
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="pb4"></div>
+                </div>
+
                 <div class="display-area" id="da4"><!-- 100 帧固定路径 --></div>
                 <div class="info-panel">
                     <div class="info-item"><span>帧率:</span><span id="fps4">25 FPS</span></div>
@@ -118,6 +139,11 @@
             <!-- ====== H.265 + LDPC ====== -->
             <div class="video-panel">
                 <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> H.265 + LDPC</h3><span class="status-indicator status-stopped" id="st1"></span></div>
+                
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="pb4"></div>
+                </div>
+                
                 <div class="display-area" id="da1"><!-- 100 帧固定路径 --></div>
                 <div class="info-panel">
                     <div class="info-item"><span>帧率:</span><span id="fps1">25 FPS</span></div>
@@ -128,6 +154,13 @@
             <!-- ====== DeepJSCC ====== -->
             <div class="video-panel">
                 <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> DeepJSCC</h3><span class="status-indicator status-stopped" id="st2"></span></div>
+
+                                
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="pb4"></div>
+                </div>
+
+                
                 <div class="display-area" id="da2"><!-- 100 帧固定路径 --></div>
                 <div class="info-panel">
                     <div class="info-item"><span>帧率:</span><span id="fps2">4 FPS</span></div>
@@ -138,6 +171,12 @@
             <!-- ====== RTVST ====== -->
             <div class="video-panel">
                 <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> RTVST</h3><span class="status-indicator status-stopped" id="st3"></span></div>
+                
+                                
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="pb4"></div>
+                </div>
+                
                 <div class="display-area" id="da3"><!-- 100 帧固定路径 --></div>
                 <div class="info-panel">
                     <div class="info-item"><span>帧率:</span><span id="fps3">25 FPS</span></div>
