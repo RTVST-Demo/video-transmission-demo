@@ -125,9 +125,13 @@
             <div class="video-panel">
                 <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> Origin</h3><span class="status-indicator status-stopped" id="st4"></span></div>
                 
-                <div class="progress-bar-container">
-                    <div class="progress-bar" id="pb4"></div>
+                <div class="progress-bar-container" style="margin-bottom: 5px;">
+                <div class="progress-bar" id="lb4" title="加载进度"></div> 
                 </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="pb4" title="播放进度"></div>
+                </div>
+                                
 
                 <div class="display-area" id="da4"><!-- 100 帧固定路径 --></div>
                 <div class="info-panel">
@@ -140,8 +144,11 @@
             <div class="video-panel">
                 <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> H.265 + LDPC</h3><span class="status-indicator status-stopped" id="st1"></span></div>
                 
+                <div class="progress-bar-container" style="margin-bottom: 5px;">
+                    <div class="progress-bar" id="lb1" title="加载进度"></div> 
+                </div>
                 <div class="progress-bar-container">
-                    <div class="progress-bar" id="pb1"></div>
+                    <div class="progress-bar" id="pb1" title="播放进度"></div>
                 </div>
                 
                 <div class="display-area" id="da1"><!-- 100 帧固定路径 --></div>
@@ -155,9 +162,11 @@
             <div class="video-panel">
                 <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> DeepJSCC</h3><span class="status-indicator status-stopped" id="st2"></span></div>
 
-                                
+                <div class="progress-bar-container" style="margin-bottom: 5px;">
+                    <div class="progress-bar" id="lb2" title="加载进度"></div> 
+                </div>
                 <div class="progress-bar-container">
-                    <div class="progress-bar" id="pb2"></div>
+                    <div class="progress-bar" id="pb2" title="播放进度"></div>
                 </div>
 
                 
@@ -172,9 +181,11 @@
             <div class="video-panel">
                 <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> RTVST</h3><span class="status-indicator status-stopped" id="st3"></span></div>
                 
-                                
+                <div class="progress-bar-container" style="margin-bottom: 5px;">
+                    <div class="progress-bar" id="lb3" title="加载进度"></div> 
+                </div>
                 <div class="progress-bar-container">
-                    <div class="progress-bar" id="pb3"></div>
+                    <div class="progress-bar" id="pb3" title="播放进度"></div>
                 </div>
                 
                 <div class="display-area" id="da3"><!-- 100 帧固定路径 --></div>
@@ -190,123 +201,140 @@
 
     <!-- ====================== 固定路径 100 帧生成脚本 ====================== -->
     <script>
-    /* ================= 生成四路视频帧 ================= */
-    const repo = 'https://rtvst-demo.github.io/video-transmission-demo';   // ← 1. 去空格
-    
-    const panels = [
-      { id: 'da4', folder: 'origin-frames',     tpl: i => `img${String(i).padStart(6,'0')}.png`,       count: 100, fps: 25 },
-      { id: 'da1', folder: 'h265+ldpc-frames',  tpl: i => `output_${String(i).padStart(4,'0')}.png`,   count: 100, fps: 25 },
-      { id: 'da2', folder: 'deepjscc-frames',   tpl: i => `${100+i-1}recon_snr8.png`,                  count: 100, fps: 4 },
-      { id: 'da3', folder: 'rtvst-frames',      tpl: i => `${i-1}recon_snr8.png`,                      count: 100, fps: 25 }
-    ];
-    
-    panels.forEach(p=>{
-      const box = document.getElementById(p.id);
-      let html = '';
-      for(let i=1;i<=p.count;i++){
-        const fileName = p.tpl(i);
-        const src = `${repo}/${p.folder}/${fileName}`;
-        html += `<img id="${p.id}-frame-${i}" src="${src}" style="max-width:100%;max-height:100%;object-fit:contain;${i===1?'':'display:none'}" />`;
-      }
-      box.innerHTML = html;
-    });
-    
-    /* ================= 播放器 ================= */
-    /* ================= 播放器 (已修改) ================= */
-    // 增加了 progressEl 参数，并用它替代了原代码中的 curEl
-    function flipper(prefix, total, interval, statusEl, progressEl){ 
-      let idx = 0, t = null;
-      
-      const show = k=>{
-        // 批量操作，减少重绘
-        const frames = document.querySelectorAll(`[id^="${prefix}-frame-"]`);
-        const target = document.getElementById(`${prefix}-frame-${k+1}`);
+        /* ================= 生成四路视频帧配置 ================= */
+        const repo = 'https://rtvst-demo.github.io/video-transmission-demo';
         
-        // --- 【关键更新：计算并设置进度条宽度】 ---
-        const progress = ((k + 1) / total) * 100;
-        if(progressEl) progressEl.style.width = `${progress}%`;
-        // ----------------------------------------
+        const panels = [
+            { id: 'da4', folder: 'origin-frames', tpl: i => `img${String(i).padStart(6,'0')}.png`, count: 100, fps: 25, loadBarId: 'lb4' },
+            { id: 'da1', folder: 'h265+ldpc-frames', tpl: i => `output_${String(i).padStart(4,'0')}.png`, count: 100, fps: 25, loadBarId: 'lb1' },
+            { id: 'da2', folder: 'deepjscc-frames', tpl: i => `${100+i-1}recon_snr8.png`, count: 100, fps: 4, loadBarId: 'lb2' },
+            { id: 'da3', folder: 'rtvst-frames', tpl: i => `${i-1}recon_snr8.png`, count: 100, fps: 25, loadBarId: 'lb3' }
+        ];
+    
+        let loadedCount = 0;
         
-        // 使用 requestAnimationFrame 优化渲染时机
-        requestAnimationFrame(() => {
-          frames.forEach(el => el.style.display = 'none');
-          if(target) target.style.display = 'block';
+        /* ================= 图片预加载和进度更新 ================= */
+        panels.forEach(p => {
+            const box = document.getElementById(p.id);
+            const loadBar = document.getElementById(p.loadBarId);
+            
+            let loadedFrames = 0;
+            
+            // 动态创建并加载所有图片
+            for(let i=1; i<=p.count; i++){
+                const fileName = p.tpl(i);
+                const src = `${repo}/${p.folder}/${fileName}`;
+                
+                const img = document.createElement('img');
+                img.id = `${p.id}-frame-${i}`;
+                img.src = src;
+                img.style.maxWidth = '100%';
+                img.style.maxHeight = '100%';
+                img.style.objectFit = 'contain';
+                img.style.display = (i === 1 ? 'block' : 'none'); // 仅显示第一帧
+                
+                // 监听图片加载事件
+                img.onload = () => {
+                    loadedFrames++;
+                    
+                    // 更新加载进度条
+                    const progress = (loadedFrames / p.count) * 100;
+                    if(loadBar) {
+                        loadBar.style.width = `${progress}%`;
+                        if (loadedFrames === p.count) {
+                            // 加载完成后，可能需要改变颜色或移除加载进度条
+                            // loadBar.style.background = '#4CAF50'; 
+                        }
+                    }
+                };
+    
+                img.onerror = () => {
+                     console.error(`Error loading frame: ${src}`);
+                };
+    
+                box.appendChild(img);
+            }
+        });
+    
+        /* ================= 播放器 (已修改) ================= */
+        // 进度条参数现在只用于播放进度
+        function flipper(prefix, total, interval, statusEl, playProgressEl){ 
+            let idx = 0, t = null;
+            
+            const show = k=>{
+                // 批量操作，减少重绘
+                const frames = document.querySelectorAll(`[id^="${prefix}-frame-"]`);
+                const target = document.getElementById(`${prefix}-frame-${k+1}`);
+                
+                // --- 【更新：计算并设置播放进度条宽度】 ---
+                const progress = ((k + 1) / total) * 100;
+                if(playProgressEl) playProgressEl.style.width = `${progress}%`;
+                // ----------------------------------------
+                
+                // 使用 requestAnimationFrame 优化渲染时机
+                requestAnimationFrame(() => {
+                    frames.forEach(el => el.style.display = 'none');
+                    if(target) target.style.display = 'block';
+                });
+            };
+            
+            show(0);
+            
+            return {
+                start(){
+                    if(t) return;
+                    // 仅在 start 时重置 idx 和 show，避免暂停后继续播放时闪烁
+                    if(statusEl){ 
+                        statusEl.textContent='播放中'; 
+                        statusEl.previousElementSibling.className='status-indicator status-playing'; 
+                    }
+                    t = setInterval(() => { 
+                        idx = (idx + 1) % total; 
+                        show(idx); 
+                    }, interval);
+                },
+                pause(){
+                    clearInterval(t); 
+                    t = null;
+                    if(statusEl){ 
+                        statusEl.textContent='已暂停'; 
+                        statusEl.previousElementSibling.className='status-indicator status-paused'; 
+                    }
+                },
+                stop(){
+                    clearInterval(t); 
+                    t = null; 
+                    idx = 0; 
+                    show(0); // 停止后回到第一帧，进度条归零
+                    if(statusEl){ 
+                        statusEl.textContent='已停止'; 
+                        statusEl.previousElementSibling.className='status-indicator status-stopped'; 
+                    }
+                }
+            };
+        }
+        
+        /* ================= 四路实例 (已更新，传入播放进度条ID) ================= */
+        const players = panels.map((p)=>{
+            let idSuffix;
+            if(p.id === 'da4') idSuffix = 4; // Origin
+            else if(p.id === 'da1') idSuffix = 1; // H265
+            else if(p.id === 'da2') idSuffix = 2; // DeepJSCC
+            else if(p.id === 'da3') idSuffix = 3; // RTVST
+    
+            return flipper(
+                p.id, 
+                p.count, 
+                1000/p.fps,
+                document.getElementById(`ps${idSuffix}`),   // 状态显示元素
+                document.getElementById(`pb${idSuffix}`)    // 播放进度条元素
+            );
         });
         
-        // 原来的 curEl (帧计数) 不再更新
-        // if(curEl) curEl.textContent = `${k+1} / ${total}`;
-      };
-      
-      show(0);
-      
-      return {
-        start(){
-          if(t) return;
-          show(idx);
-          if(statusEl){ 
-            statusEl.textContent='播放中'; 
-            statusEl.previousElementSibling.className='status-indicator status-playing'; 
-          }
-          t = setInterval(() => { 
-            idx = (idx + 1) % total; 
-            show(idx); 
-          }, interval);
-        },
-        pause(){
-          clearInterval(t); 
-          t = null;
-          if(statusEl){ 
-            statusEl.textContent='已暂停'; 
-            statusEl.previousElementSibling.className='status-indicator status-paused'; 
-          }
-        },
-        stop(){
-          clearInterval(t); 
-          t = null; 
-          idx = 0; 
-          show(0);
-          if(statusEl){ 
-            statusEl.textContent='已停止'; 
-            statusEl.previousElementSibling.className='status-indicator status-stopped'; 
-          }
-        }
-      };
-    }
-    
-    /* ================= 四路实例 ================= */
-    /* ================= 四路实例 (已修改) ================= */
-    const players = panels.map((p,i)=>{
-      const panelIndex = i + 1; // 1-based index (1, 2, 3, 4)
-      // panels.map 返回的 p 是按照 panels 数组顺序来的，i=0 是 Origin(4)，i=1 是 H265(1)，i=2 是 DeepJSCC(2)，i=3 是 RTVST(3)。
-      // 我们需要根据 panel 的 ID 来获取正确的 DOM 索引。
-      
-      // 按照你的 HTML 结构，ID 1, 2, 3, 4 对应关系如下：
-      // H265(1): i=1 -> ps1, pb1
-      // DeepJSCC(2): i=2 -> ps2, pb2
-      // RTVST(3): i=3 -> ps3, pb3
-      // Origin(4): i=0 -> ps4, pb4
-      
-      // 修正后的 ID 查找逻辑:
-      let idSuffix;
-      if(p.id === 'da4') idSuffix = 4; // Origin
-      else if(p.id === 'da1') idSuffix = 1; // H265
-      else if(p.id === 'da2') idSuffix = 2; // DeepJSCC
-      else if(p.id === 'da3') idSuffix = 3; // RTVST
-    
-      return flipper(
-        p.id, 
-        p.count, 
-        1000/p.fps,
-        document.getElementById(`ps${idSuffix}`),  // 状态显示元素
-        document.getElementById(`pb${idSuffix}`)   // 进度条元素
-      );
-    });
-    
-    /* ================= 全局按钮 ================= */
-    document.getElementById('globalPlay').addEventListener('click',()=>players.forEach(p=>p.start()));
-    document.getElementById('globalPause').addEventListener('click',()=>players.forEach(p=>p.pause()));
-    document.getElementById('globalStop').addEventListener('click',()=>players.forEach(p=>p.stop()));
+        /* ================= 全局按钮 ================= */
+        document.getElementById('globalPlay').addEventListener('click',()=>players.forEach(p=>p.start()));
+        document.getElementById('globalPause').addEventListener('click',()=>players.forEach(p=>p.pause()));
+        document.getElementById('globalStop').addEventListener('click',()=>players.forEach(p=>p.stop()));
     </script>
-
 </body>
 </html>
