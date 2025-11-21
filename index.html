@@ -267,6 +267,82 @@
             color: #fdbb2d;
             font-weight: 600;
         }
+        .abstract {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            border-left: 4px solid #fdbb2d;
+        }
+
+        .abstract strong {
+            color: #fdbb2d;
+            font-weight: 600;
+        }
+
+        .performance-charts {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .charts-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #fdbb2d;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-align: center;
+            justify-content: center;
+        }
+        
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
+        .chart-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .chart-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 10px;
+        }
+        
+        .chart-label {
+            margin-top: 10px;
+            color: #fdbb2d;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-item img {
+                height: 180px;
+            }
+        }
+        
+        
         
         @keyframes pulse {
             0% { opacity: 1; }
@@ -313,8 +389,15 @@
         </header>
         
         <div class="global-controls">
-            <h3><i class="fas fa-sync-alt"></i> 全局控制</h3>
-            <div class="controls">
+            <!-- 添加项目介绍 -->
+            <div class="abstract">
+                <strong>项目简介：</strong>本项目构建了一种端到端的实时视频语义传输模型RTVST，通过隐式时态建模及跨通道信息结构化分解与重组技术，
+                有效节省运动估计及补偿模块的时间开销的同时降低了内存访问等操作开销，从而极大程度上提高了模型推理速度。
+                其性能与传统H.265+LDPC及DeepJSCC方法对比如下。
+            </div>
+
+            <!-- 原有的控制按钮 -->
+                <div class="controls">
                 <button class="btn btn-global" id="globalPlay">
                     <i class="fas fa-play"></i> 开始
                 </button>
@@ -340,7 +423,28 @@
                 <span class="info-value" id="cbrDisplay">0.012</span>
             </div>
          </div>
-        
+
+        <!-- 在video-container之前添加这个性能图表容器 -->
+        <div class="performance-charts">
+            <div class="charts-title">
+                <i class="fas fa-chart-line"></i> 性能指标对比曲线
+            </div>
+            <div class="charts-container">
+                <div class="chart-item">
+                    <img src="path/to/psnr-performance.svg" alt="PSNR性能曲线">
+                    <div class="chart-label">PSNR性能对比</div>
+                </div>
+                <div class="chart-item">
+                    <img src="path/to/ssim-performance.svg" alt="SSIM性能曲线">
+                    <div class="chart-label">SSIM性能对比</div>
+                </div>
+                <div class="chart-item">
+                    <img src="path/to/lpips-performance.svg" alt="LPIPS性能曲线">
+                    <div class="chart-label">LPIPS性能对比</div>
+                </div>
+            </div>
+        </div>
+
         <div class="video-container">
             <!-- Origin -->
             <div class="video-panel">
