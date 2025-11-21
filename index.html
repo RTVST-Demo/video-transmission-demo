@@ -52,6 +52,10 @@
         .btn-stop:hover{background:#ef5350}
         @media(max-width:1400px){.video-container{grid-template-columns:repeat(2,1fr)}}
         @media(max-width:768px){.video-container{grid-template-columns:1fr}h1{font-size:2.2rem}}
+        .abstract{background:rgba(255,255,255,.08);padding:20px;border-radius:10px;line-height:1.8;border-left:4px solid #fdbb2d;color:#fff;}
+        .abstract strong{color:#fdbb2d;font-weight:600;}
+        
+                
     </style>
 </head>
 <body>
@@ -66,6 +70,20 @@
                 <div class="info-display-item"><span class="info-label">SNR:</span><span class="info-value">8 dB</span></div>
                 <div class="info-display-item"><span class="info-label">CBR:</span><span class="info-value">0.012</span></div>
             </div>
+
+            <!-- ========== 摘要块（新增，位于架构图上方） ========== -->
+            <div class="abstract" style="margin-bottom:20px;">
+              <strong>项目摘要：</strong>
+              本 团 队 提 出 了 一 种 实 时 视 频 语 义 传 输 系 统 （ Real-time Video Semantic 
+                Transmission，RTVST）。提出了隐式时态建模及跨通道信息结构化分解与重构方法，将传统运动估计和残差链路融合为统一的前向过程，
+                并在紧致特征空间中执行特征提取操作，从而大幅降低操作复杂度，显著提升单帧
+                编解码速度。此外，该算法通过端到端联合优化，保证高质量重建效果的同时具有
+                较好的噪声鲁棒性。RTVST直击语义视频传输实时性痛点，有望为高带宽、低时延
+                的未来流媒体业务提供方法支撑，推动语义通信从理论研究走向实际部署。本 项 目将DeepJSCC与H.265+1/3LDPC+16QAM传统视频传输系
+                统作为对比方案。
+            </div>
+
+            
             <div class="architecture-image">
                 <img src="https://rtvst-demo.github.io/video-transmission-demo/rtvst_Architecture.jpg" alt="RTVST架构图">
                 <div class="image-caption">RTVST模型架构图</div>
@@ -137,6 +155,10 @@
 
     <!-- ====================== 固定路径 100 帧生成脚本 ====================== -->
     <script>
+        /* ===== 1. 立即调试 ===== */
+        console.log('>>> 脚本执行了');
+        console.log('da4 容器是否存在：', document.getElementById('da4'));
+                
         // 一次性把 4 组 <img> 标签写进对应容器
         /* ================= 按真实文件名生成 <img> 标签 ================= */
         const repo = 'https://rtvst-demo.github.io/video-transmission-demo';
