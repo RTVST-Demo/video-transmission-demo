@@ -33,10 +33,20 @@
         .panel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.2)}
         .panel-title{font-size:1.2rem;display:flex;align-items:center;gap:8px}
         .panel-title i{color:#fdbb2d}
-        /* 关键样式：设置相对定位，让帧图片绝对定位叠加 */
-        .display-area{position:relative;width:100%;height:200px;border:2px solid rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3);overflow:hidden;margin-bottom:12px}
-        /* 帧图片的绝对定位，使其完全覆盖 display-area */
-        .display-area img{position:absolute;top:0;left:0;max-width:100%;max-height:100%;object-fit:contain}
+        /* 🚀 关键 CSS 改变：为平滑切换做准备 */
+        .display-area{
+            position: relative; /* 确保子元素 img 的绝对定位是相对于此容器 */
+            width:100%;height:200px;border:2px solid rgba(255,255,255,.2);border-radius:10px;
+            display:flex;align-items:center;justify-content:center;
+            background:rgba(0,0,0,.3);overflow:hidden;margin-bottom:12px
+        }
+        .display-area img{
+            position: absolute; /* 绝对定位让图片叠加 */
+            top: 0;
+            left: 0;
+            max-width:100%;max-height:100%;object-fit:contain
+        }
+        /* 🚀 */
         .controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;justify-content:center}
         .info-panel{background:rgba(0,0,0,.2);padding:10px;border-radius:8px;margin-top:8px;font-size:.8rem}
         .info-item{display:flex;justify-content:space-between;margin-bottom:4px}
@@ -57,36 +67,7 @@
         .abstract{background:rgba(255,255,255,.08);padding:20px;border-radius:10px;line-height:1.8;border-left:4px solid #fdbb2d;color:#fff;}
         .abstract strong{color:#fdbb2d;font-weight:600;}
         
-        /* 🚀 额外的进度条样式（用于演示无闪烁加载） */
-        #loading-bar-container {
-            margin: 20px auto;
-            width: 80%;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            font-size: 1rem;
-            color: #fff;
-            position: relative;
-            display: none; /* 默认隐藏 */
-        }
-        #loading-bar {
-            height: 30px;
-            width: 0%;
-            background: linear-gradient(90deg, #4CAF50, #8BC34A);
-            border-radius: 10px;
-            transition: width 0.3s ease-in-out;
-            position: absolute;
-            left: 0;
-            top: 0;
-        }
-        #loading-text {
-            position: relative; 
-            line-height: 30px;
-            font-weight: bold;
-            z-index: 10;
-        }
+                
     </style>
 </head>
 <body>
@@ -102,13 +83,7 @@
                 <div class="info-display-item"><span class="info-label">CBR:</span><span class="info-value">0.012</span></div>
             </div>
 
-                        <div id="loading-bar-container">
-                <div id="loading-bar"></div>
-                <div id="loading-text">正在预加载图片... (0%)</div>
-            </div>
-
-
-            <div class="abstract" style="margin-bottom:20px;">
+                        <div class="abstract" style="margin-bottom:20px;">
               <strong>项目摘要：</strong>
               本 团 队 提 出 了 一 种 实 时 视 频 语 义 传 输 系 统 （ Real-time Video Semantic 
                 Transmission，RTVST）。提出了隐式时态建模及跨通道信息结构化分解与重构方法，将传统运动估计和残差链路融合为统一的前向过程，
@@ -124,8 +99,7 @@
                 <img src="https://rtvst-demo.github.io/video-transmission-demo/rtvst_Architecture.jpg " alt="RTVST架构图">
                 <div class="image-caption">RTVST模型架构图</div>
             </div>
-
-                        <div class="controls" id="playback-controls" style="display: none;">
+            <div class="controls">
                 <button class="btn btn-global" id="globalPlay"><i class="fas fa-play"></i> 开始</button>
                 <button class="btn btn-global" id="globalPause"><i class="fas fa-pause"></i> 暂停</button>
                 <button class="btn btn-global btn-stop" id="globalStop"><i class="fas fa-stop"></i> 停止</button>
@@ -146,16 +120,18 @@
                 <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> Origin</h3><span class="status-indicator status-stopped" id="st4"></span></div>
                 <div class="display-area" id="da4"></div>
                 <div class="info-panel">
-                                        <div class="info-item"><span>帧率:</span><span id="fps4">25 FPS</span></div>
+                    <div class="info-item"><span>当前帧:</span><span id="cf4">1 / 100</span></div>
+                                        <div class="info-item"><span>帧率:</span><span id="fps4">25 FPS</span></div>
                     <div class="info-item"><span>状态:</span><span id="ps4">已停止</span></div>
                 </div>
             </div>
 
                         <div class="video-panel">
-                <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> H.265 + LDPC</h3><span class="status-indicator status-stopped" id="st1"></span></div>
+                <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> H.265 + LDPC </h3><span class="status-indicator status-stopped" id="st1"></span></div>
                 <div class="display-area" id="da1"></div>
                 <div class="info-panel">
-                                        <div class="info-item"><span>帧率:</span><span id="fps1">25 FPS</span></div>
+                    <div class="info-item"><span>当前帧:</span><span id="cf1">1 / 100</span></div>
+                                        <div class="info-item"><span>帧率:</span><span id="fps1">25 FPS</span></div>
                     <div class="info-item"><span>状态:</span><span id="ps1">已停止</span></div>
                 </div>
             </div>
@@ -164,16 +140,18 @@
                 <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> DeepJSCC</h3><span class="status-indicator status-stopped" id="st2"></span></div>
                 <div class="display-area" id="da2"></div>
                 <div class="info-panel">
-                                        <div class="info-item"><span>帧率:</span><span id="fps2">4 FPS</span></div>
+                    <div class="info-item"><span>当前帧:</span><span id="cf2">1 / 100</span></div>
+                                        <div class="info-item"><span>帧率:</span><span id="fps2">4 FPS</span></div>
                     <div class="info-item"><span>状态:</span><span id="ps2">已停止</span></div>
                 </div>
             </div>
 
                         <div class="video-panel">
-                <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> RTVST  </h3><span class="status-indicator status-stopped" id="st3"></span></div>
+                <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> RTVST</h3><span class="status-indicator status-stopped" id="st3"></span></div>
                 <div class="display-area" id="da3"></div>
                 <div class="info-panel">
-                                        <div class="info-item"><span>帧率:</span><span id="fps3">25 FPS</span></div>
+                    <div class="info-item"><span>当前帧:</span><span id="cf3">1 / 100</span></div>
+                                        <div class="info-item"><span>帧率:</span><span id="fps3">25 FPS</span></div>
                     <div class="info-item"><span>状态:</span><span id="ps3">已停止</span></div>
                 </div>
             </div>
@@ -182,217 +160,147 @@
         <footer><p>实时视频语义传输算法设计</p></footer>
     </div>
 
-    <script>
-        /* ================= 全局配置和 DOM 注入 ================= */
-        const repo = 'https://rtvst-demo.github.io/video-transmission-demo';
-        const panelConfigs = [
-            { id: 4, prefix: 'da4', folder: 'origin-frames', tpl: i => `img${String(i).padStart(6, '0')}.png`, count: 100, fps: 25 },
-            { id: 1, prefix: 'da1', folder: 'h265+ldpc-frames', tpl: i => `output_${String(i).padStart(4, '0')}.png`, count: 100, fps: 25 },
-            { id: 2, prefix: 'da2', folder: 'deepjscc-frames', tpl: i => `${100 + i - 1}recon_snr8.png`, count: 100, fps: 4 },
-            { id: 3, prefix: 'da3', folder: 'rtvst-frames', tpl: i => `${i - 1}recon_snr8.png`, count: 100, fps: 25 }
-        ];
-        let totalFrames = 0;
-
-        panelConfigs.forEach(p => {
-            const box = document.getElementById(p.prefix);
-            let html = '';
-            for (let i = 1; i <= p.count; i++) {
-                const fileName = p.tpl(i);
-                const src = `${repo}/${p.folder}/${fileName}`;
-                totalFrames++;
-
-                // 所有帧都预先加载，但只有第一帧默认显示
-                html += `<img id="${p.prefix}-frame-${i}" src="${src}" 
-                         style="max-width:100%;max-height:100%;object-fit:contain;position:absolute;top:0;left:0;
-                         ${i === 1 ? '' : 'display:none'}" />`;
-            }
-            box.innerHTML = html;
-            box.style.border = '2px solid rgba(255, 255, 255, 0.2)';
-        });
-
-
-        /* ================= 🚀 图片加载进度追踪函数（修复等待按钮不出现问题） ================= */
-        function loadAllImages(onComplete) {
-            const container = document.getElementById('loading-bar-container');
-            const bar = document.getElementById('loading-bar');
-            const text = document.getElementById('loading-text');
-            const images = document.querySelectorAll('.display-area img');
-            let loadedCount = 0;
-            let imagesToLoad = 0;
-
-            container.style.display = 'block';
-
-            const updateProgress = () => {
-                loadedCount++;
-                const percent = Math.min(100, Math.floor((loadedCount / totalFrames) * 100));
-                
-                bar.style.width = `${percent}%`;
-                text.textContent = `正在预加载图片... (${percent}%)`;
-
-                if (loadedCount >= totalFrames) {
-                    bar.style.width = '100%';
-                    text.textContent = `预加载完成 (100%)`;
-                    
-                    // 确保在进度条完成动画后，隐藏它并显示控制按钮
-                    setTimeout(() => {
-                        container.style.display = 'none';
-                        document.getElementById('playback-controls').style.display = 'flex';
-                        if (onComplete) onComplete();
-                    }, 300);
-                }
-            };
-
-            images.forEach(img => {
-                if (img.complete) {
-                    loadedCount++;
-                } else {
-                    imagesToLoad++;
-                    img.onload = updateProgress;
-                    img.onerror = updateProgress; // 即使加载失败也算作完成
-                }
-            });
-
-            // 处理所有图片已被缓存的情况
-            if (imagesToLoad === 0 && totalFrames > 0) {
-                loadedCount = 0; // 重置计数，以便 updateProgress 正确执行 totalFrames 次
-                for (let i = 0; i < totalFrames; i++) {
-                    updateProgress(); // 手动触发所有已加载图片的完成逻辑
-                }
-            }
-        }
+        <script>
+    /* ================= 生成四路视频帧 ================= */
+    const repo = 'https://rtvst-demo.github.io/video-transmission-demo';   
+    
+    const panels = [
+      { id: 'da4', prefixId: 4, folder: 'origin-frames',     tpl: i => `img${String(i).padStart(6,'0')}.png`,       count: 100, fps: 25 },
+      { id: 'da1', prefixId: 1, folder: 'h265+ldpc-frames',  tpl: i => `output_${String(i).padStart(4,'0')}.png`,   count: 100, fps: 25 },
+      { id: 'da2', prefixId: 2, folder: 'deepjscc-frames',   tpl: i => `${100+i-1}recon_snr8.png`,                  count: 100, fps: 4 },
+      { id: 'da3', prefixId: 3, folder: 'rtvst-frames',      tpl: i => `${i-1}recon_snr8.png`,                      count: 100, fps: 25 }
+    ];
+    
+    panels.forEach(p=>{
+      const box = document.getElementById(p.id);
+      let html = '';
+      for(let i=1;i<=p.count;i++){
+        const fileName = p.tpl(i);
+        const src = `${repo}/${p.folder}/${fileName}`;
+        // 确保图片使用了绝对定位，并且只有第一帧可见
+        html += `<img id="${p.id}-frame-${i}" src="${src}" style="max-width:100%;max-height:100%;object-fit:contain;position:absolute;${i===1?'':'display:none'}" />`;
+      }
+      box.innerHTML = html;
+    });
+    
+    /* ================= 🚀 播放器 (无闪烁优化) ================= */
+    function flipper(prefix, total, interval, statusEl, curEl){
+      let idx = 0; 
+      let t = null;
+      let isPlaying = false; // 跟踪是否处于播放状态
+      
+      // 隐藏所有帧，显示指定索引的帧
+      const showFrame = (k)=>{
+        document.querySelectorAll(`#${prefix} img`).forEach(el=>el.style.display='none');
+        const target = document.getElementById(`${prefix}-frame-${k+1}`);
+        if(target) target.style.display='block';
+        if(curEl) curEl.textContent = `${k+1} / ${total}`;   
+      };
+      
+      // 核心切换逻辑：尝试切换到下一帧
+      const tryNextFrame = () => {
+        if (!isPlaying) return;
         
-        /* ================= 播放器 (无闪烁优化 - 核心修改) ================= */
-        function flipper(prefix, total, interval, statusEl, curEl) {
-            let idx = 0, t = null;
-            let isWaitingForLoad = false;
+        const nextIdx = (idx + 1) % total;
+        const currentFrameEl = document.getElementById(`${prefix}-frame-${idx + 1}`);
+        const nextFrameEl = document.getElementById(`${prefix}-frame-${nextIdx + 1}`);
+
+        if (!nextFrameEl) {
+          // 如果没有下一帧，则保持当前帧并停止（或循环）
+          if (statusEl) {
+            statusEl.textContent = '已停止';
+            statusEl.previousElementSibling.className = 'status-indicator status-stopped';
+          }
+          return;
+        }
+
+        if (nextFrameEl.complete) {
+          // 1. **已加载:** 直接切换到下一帧
+          if (currentFrameEl) currentFrameEl.style.display = 'none';
+          nextFrameEl.style.display = 'block';
+          idx = nextIdx;
+          if (curEl) curEl.textContent = `${idx + 1} / ${total}`;
+          
+          // 继续播放（递归调用或设置下一个定时器）
+          t = setTimeout(tryNextFrame, interval);
+
+        } else {
+          // 2. **未加载:** 保持当前帧，并等待下一帧加载完成
+          if (statusEl) statusEl.textContent = '加载中...'; // 提示正在加载
+          
+          // 绑定 onload 事件，加载完成后继续播放
+          nextFrameEl.onload = nextFrameEl.onerror = () => {
+            if (!isPlaying) return; // 如果在加载过程中被暂停或停止，则不继续
             
-            // 核心切换逻辑：检查下一帧是否已加载，未加载则暂停并等待
-            const show = (k) => {
-                // 计算当前要显示的帧（k+1）和上一帧（用于隐藏）的索引
-                const targetIndex = k + 1;
-                const prevIndex = (k === 0 ? total : k); // 切换前的索引
-
-                const prevTarget = document.getElementById(`${prefix}-frame-${prevIndex}`);
-                const target = document.getElementById(`${prefix}-frame-${targetIndex}`);
-
-                if (!target) return;
-
-                if (target.complete) {
-                    // 1. **已加载:** 直接切换
-                    if (prevTarget) prevTarget.style.display = 'none';
-                    target.style.display = 'block';
-                    isWaitingForLoad = false;
-                } else {
-                    // 2. **未加载:** 暂停计时器并等待
-                    isWaitingForLoad = true;
-                    if (t) clearInterval(t); 
-                    t = null; // 确保计时器停止
-
-                    // 保持旧帧显示（prevTarget 仍可见）
-                    if (statusEl) statusEl.textContent = '加载中...'; // 提示正在加载
-                    
-                    target.onload = () => {
-                        // 加载完成后：切换图片
-                        target.style.display = 'block';
-                        if (prevTarget) prevTarget.style.display = 'none';
-                        isWaitingForLoad = false;
-
-                        // **重要:** 重启计时器，从下一帧开始
-                        idx = targetIndex % total; // 更新索引到已切换的帧
-                        if (!t) {
-                            if (statusEl) { 
-                              statusEl.textContent = '播放中';
-                              statusEl.previousElementSibling.className = 'status-indicator status-playing';
-                            }
-                            t = setInterval(() => { idx = (idx + 1) % total; show(idx); }, interval);
-                        }
-                    };
-                    target.onerror = target.onload; // 失败也当作加载完成处理，避免卡住
-                }
-                
-                if (curEl) curEl.textContent = `${targetIndex} / ${total}`;
-            };
-
-            // 确保停止时只显示第一帧
-            const resetFrames = () => {
-                document.querySelectorAll(`[id^="${prefix}-frame-"]`).forEach((el, i) => {
-                    el.style.display = (i === 0) ? 'block' : 'none';
-                });
-                if (curEl) curEl.textContent = `1 / ${total}`;
+            // 切换到新加载的帧
+            if (currentFrameEl) currentFrameEl.style.display = 'none';
+            nextFrameEl.style.display = 'block';
+            idx = nextIdx;
+            if (curEl) curEl.textContent = `${idx + 1} / ${total}`;
+            
+            if (statusEl) { 
+              statusEl.textContent = '播放中';
+              statusEl.previousElementSibling.className = 'status-indicator status-playing';
             }
-            resetFrames(); // 初始化时显示第一帧
+            
+            // 设置下一个切换的定时器
+            t = setTimeout(tryNextFrame, interval);
+          };
 
-            return {
-                start() {
-                    if (t || isWaitingForLoad) return;
-                    
-                    // 确保从当前帧开始调用 show
-                    if (statusEl) {
-                        statusEl.textContent = '播放中';
-                        statusEl.previousElementSibling.className = 'status-indicator status-playing';
-                    }
-                    // 立即切换到下一帧 (idx+1)
-                    t = setInterval(() => { idx = (idx + 1) % total; show(idx); }, interval);
-                },
-                pause() {
-                    clearInterval(t);
-                    t = null;
-                    isWaitingForLoad = false;
-                    if (statusEl) {
-                        statusEl.textContent = '已暂停';
-                        statusEl.previousElementSibling.className = 'status-indicator status-paused';
-                    }
-                },
-                stop() {
-                    clearInterval(t);
-                    t = null;
-                    idx = 0;
-                    isWaitingForLoad = false;
-                    resetFrames();
-                    if (statusEl) {
-                        statusEl.textContent = '已停止';
-                        statusEl.previousElementSibling.className = 'status-indicator status-stopped';
-                    }
-                }
-            };
+          // 确保触发加载
+          if (!nextFrameEl.src) nextFrameEl.src = nextFrameEl.src;
         }
+      };
 
-        /* ================= 添加帧数信息元素 ================= */
-        function addFrameInfoElement(panelId, totalCount) {
-            // 获取 video-panel 容器
-            const infoPanelContainer = document.getElementById(`da${panelId}`).closest('.video-panel').querySelector('.info-panel');
-            const frameInfo = document.createElement('div');
-            frameInfo.className = 'info-item';
-            frameInfo.innerHTML = `<span>当前帧:</span><span id="cf${panelId}">1 / ${totalCount}</span>`;
-            // 插入到 FPS 上面
-            infoPanelContainer.insertBefore(frameInfo, infoPanelContainer.firstChild); 
-            return document.getElementById(`cf${panelId}`);
+
+      showFrame(0);   // 初始化显示第一张
+      
+      return {
+        start(){
+          if(isPlaying) return;
+          isPlaying = true;
+          if(statusEl){ 
+            statusEl.textContent='播放中'; 
+            statusEl.previousElementSibling.className='status-indicator status-playing'; 
+          }
+          
+          // 启动时，立即尝试加载下一帧
+          tryNextFrame(); 
+        },
+        pause(){
+          clearTimeout(t); 
+          t=null;
+          isPlaying = false;
+          if(statusEl){ 
+            statusEl.textContent='已暂停'; 
+            statusEl.previousElementSibling.className='status-indicator status-paused'; 
+          }
+        },
+        stop(){
+          clearTimeout(t); 
+          t=null; 
+          isPlaying = false;
+          idx=0; 
+          showFrame(0); // 停止时，显示第一帧
+          if(statusEl){ 
+            statusEl.textContent='已停止'; 
+            statusEl.previousElementSibling.className='status-indicator status-stopped'; 
+          }
         }
-
-        /* ================= 启动逻辑 ================= */
-        let players = [];
-
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. 先进行图片预加载，确保用户体验
-            loadAllImages(() => {
-                // 2. 图片加载完成后，初始化播放器实例
-                players = panelConfigs.map(p => {
-                    const frameEl = addFrameInfoElement(p.id.slice(-1), p.count); 
-                    return flipper(
-                        p.prefix, 
-                        p.count, 
-                        1000 / p.fps,
-                        document.getElementById(`ps${p.id.slice(-1)}`), // 状态文本元素
-                        frameEl                             // 当前帧/总帧数元素
-                    );
-                });
-                
-                // 3. 绑定全局按钮事件
-                document.getElementById('globalPlay').addEventListener('click', () => players.forEach(p => p.start()));
-                document.getElementById('globalPause').addEventListener('click', () => players.forEach(p => p.pause()));
-                document.getElementById('globalStop').addEventListener('click', () => players.forEach(p => p.stop()));
-            });
-        });
+      };
+    }
+    
+    /* ================= 四路实例 ================= */
+    const players = panels.map((p)=>
+      flipper(p.id, p.count, 1000/p.fps,
+              document.getElementById(`ps${p.prefixId}`),
+              document.getElementById(`cf${p.prefixId}`))
+    );
+    
+    /* ================= 全局按钮 ================= */
+    document.getElementById('globalPlay').addEventListener('click',()=>players.forEach(p=>p.start()));
+    document.getElementById('globalPause').addEventListener('click',()=>players.forEach(p=>p.pause()));
+    document.getElementById('globalStop').addEventListener('click',()=>players.forEach(p=>p.stop()));
     </script>
 
 </body>
