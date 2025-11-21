@@ -34,7 +34,7 @@
         .panel-title{font-size:1.2rem;display:flex;align-items:center;gap:8px}
         .panel-title i{color:#fdbb2d}
         .display-area{width:100%;height:200px;border:2px solid rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3);overflow:hidden;margin-bottom:12px;position:relative}
-        .display-area img{max-width:100%;max-height:100%;object-fit:contain;position:absolute;transition:opacity 0.3s ease-in-out}
+        .display-area img{max-width:100%;max-height:100%;object-fit:contain;position:absolute;transition:opacity 0.1s ease-in-out}
         .controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;justify-content:center}
         .info-panel{background:rgba(0,0,0,.2);padding:10px;border-radius:8px;margin-top:8px;font-size:.8rem}
         .info-item{display:flex;justify-content:space-between;margin-bottom:4px}
@@ -54,6 +54,17 @@
         @media(max-width:768px){.video-container{grid-template-columns:1fr}h1{font-size:2.2rem}}
         .abstract{background:rgba(255,255,255,.08);padding:20px;border-radius:10px;line-height:1.8;border-left:4px solid #fdbb2d;color:#fff;}
         .abstract strong{color:#fdbb2d;font-weight:600;}
+        
+        /* 加载提示样式 */
+        .loading-text {
+            color: #fdbb2d;
+            font-size: 14px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
     </style>
 </head>
 <body>
@@ -106,7 +117,9 @@
             <!-- ====== Origin ====== -->
             <div class="video-panel">
                 <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> Origin</h3><span class="status-indicator status-stopped" id="st4"></span></div>
-                <div class="display-area" id="da4"><!-- 100 帧固定路径 --></div>
+                <div class="display-area" id="da4">
+                    <div class="loading-text">加载中...</div>
+                </div>
                 <div class="info-panel">
                     <div class="info-item"><span>帧率:</span><span id="fps4">25 FPS</span></div>
                     <div class="info-item"><span>状态:</span><span id="ps4">已停止</span></div>
@@ -116,7 +129,9 @@
             <!-- ====== H.265 + LDPC ====== -->
             <div class="video-panel">
                 <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> H.265 + LDPC</h3><span class="status-indicator status-stopped" id="st1"></span></div>
-                <div class="display-area" id="da1"><!-- 100 帧固定路径 --></div>
+                <div class="display-area" id="da1">
+                    <div class="loading-text">加载中...</div>
+                </div>
                 <div class="info-panel">
                     <div class="info-item"><span>帧率:</span><span id="fps1">25 FPS</span></div>
                     <div class="info-item"><span>状态:</span><span id="ps1">已停止</span></div>
@@ -126,7 +141,9 @@
             <!-- ====== DeepJSCC ====== -->
             <div class="video-panel">
                 <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> DeepJSCC</h3><span class="status-indicator status-stopped" id="st2"></span></div>
-                <div class="display-area" id="da2"><!-- 100 帧固定路径 --></div>
+                <div class="display-area" id="da2">
+                    <div class="loading-text">加载中...</div>
+                </div>
                 <div class="info-panel">
                     <div class="info-item"><span>帧率:</span><span id="fps2">4 FPS</span></div>
                     <div class="info-item"><span>状态:</span><span id="ps2">已停止</span></div>
@@ -136,7 +153,9 @@
             <!-- ====== RTVST ====== -->
             <div class="video-panel">
                 <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> RTVST</h3><span class="status-indicator status-stopped" id="st3"></span></div>
-                <div class="display-area" id="da3"><!-- 100 帧固定路径 --></div>
+                <div class="display-area" id="da3">
+                    <div class="loading-text">加载中...</div>
+                </div>
                 <div class="info-panel">
                     <div class="info-item"><span>帧率:</span><span id="fps3">25 FPS</span></div>
                     <div class="info-item"><span>状态:</span><span id="ps3">已停止</span></div>
@@ -158,60 +177,98 @@
       { id: 'da2', folder: 'deepjscc-frames',   tpl: i => `${100+i-1}recon_snr8.png`,                  count: 100, fps: 4 },
       { id: 'da3', folder: 'rtvst-frames',      tpl: i => `${i-1}recon_snr8.png`,                      count: 100, fps: 25 }
     ];
-    
-    // 预加载图片函数
+
+    // 存储所有播放器实例
+    const players = [];
+    let allImagesLoaded = false;
+
+    // 改进的预加载函数
     function preloadImages(panel) {
-      const images = [];
-      for(let i = 1; i <= panel.count; i++) {
-        const fileName = panel.tpl(i);
-        const src = `${repo}/${panel.folder}/${fileName}`;
-        const img = new Image();
-        img.src = src;
-        images.push(img);
-      }
-      return images;
+      return new Promise((resolve) => {
+        const images = [];
+        let loadedCount = 0;
+        
+        for(let i = 1; i <= panel.count; i++) {
+          const fileName = panel.tpl(i);
+          const src = `${repo}/${panel.folder}/${fileName}`;
+          const img = new Image();
+          
+          img.onload = () => {
+            loadedCount++;
+            images.push(img);
+            if(loadedCount === panel.count) {
+              resolve(images);
+            }
+          };
+          
+          img.onerror = () => {
+            console.warn(`Failed to load image: ${src}`);
+            loadedCount++;
+            // 即使加载失败也推入数组，保持索引一致
+            images.push(new Image());
+            if(loadedCount === panel.count) {
+              resolve(images);
+            }
+          };
+          
+          img.src = src;
+        }
+      });
     }
-    
+
     // 初始化所有面板
-    const panelImages = {};
-    panels.forEach(panel => {
-      panelImages[panel.id] = preloadImages(panel);
-    });
-    
-    // 初始化DOM
-    panels.forEach(panel => {
-      const box = document.getElementById(panel.id);
-      let html = '';
-      for(let i = 0; i < panel.count; i++) {
-        const opacity = i === 0 ? 1 : 0;
-        html += `<img id="${panel.id}-frame-${i+1}" src="${panelImages[panel.id][i].src}" style="opacity:${opacity};" />`;
-      }
-      box.innerHTML = html;
-    });
-    
+    async function initializePanels() {
+      const panelImages = {};
+      
+      // 预加载所有图片
+      const loadingPromises = panels.map(panel => preloadImages(panel));
+      const loadedImages = await Promise.all(loadingPromises);
+      
+      // 初始化DOM
+      panels.forEach((panel, index) => {
+        panelImages[panel.id] = loadedImages[index];
+        const box = document.getElementById(panel.id);
+        
+        // 移除加载提示
+        const loadingText = box.querySelector('.loading-text');
+        if (loadingText) {
+          loadingText.remove();
+        }
+        
+        let html = '';
+        for(let i = 0; i < panel.count; i++) {
+          const displayStyle = i === 0 ? 'block' : 'none';
+          html += `<img id="${panel.id}-frame-${i+1}" src="${panelImages[panel.id][i].src}" style="display:${displayStyle};" />`;
+        }
+        box.innerHTML = html;
+      });
+      
+      allImagesLoaded = true;
+      initializePlayers();
+    }
+
     /* ================= 播放器 ================= */
-    function flipper(prefix, total, interval, statusEl, curEl){
+    function flipper(prefix, total, interval, statusEl) {
       let idx = 0, t = null;
+      
       const show = k => {
         // 隐藏所有图片
         document.querySelectorAll(`[id^="${prefix}-frame-"]`).forEach(el => {
-          el.style.opacity = 0;
+          el.style.display = 'none';
         });
         
         // 显示当前图片
         const target = document.getElementById(`${prefix}-frame-${k+1}`);
         if(target) {
-          target.style.opacity = 1;
+          target.style.display = 'block';
         }
-        
-        if(curEl) curEl.textContent = `${k+1} / ${total}`;
       };
       
       show(0);
       
       return {
         start(){
-          if(t) return;
+          if(t || !allImagesLoaded) return;
           show(idx);
           if(statusEl){ 
             statusEl.textContent='播放中'; 
@@ -223,6 +280,7 @@
           }, interval);
         },
         pause(){
+          if(!t) return;
           clearInterval(t); 
           t = null;
           if(statusEl){ 
@@ -231,8 +289,10 @@
           }
         },
         stop(){
-          clearInterval(t); 
-          t = null; 
+          if(t) {
+            clearInterval(t); 
+            t = null;
+          }
           idx = 0; 
           show(0);
           if(statusEl){ 
@@ -242,18 +302,51 @@
         }
       };
     }
+
+    /* ================= 初始化播放器 ================= */
+    function initializePlayers() {
+      // 清空之前的播放器
+      players.length = 0;
+      
+      // 创建新的播放器实例
+      panels.forEach((p, i) => {
+        players.push(
+          flipper(p.id, p.count, 1000/p.fps, document.getElementById(`ps${i+1}`))
+        );
+      });
+      
+      // 启用全局按钮
+      document.getElementById('globalPlay').disabled = false;
+      document.getElementById('globalPause').disabled = false;
+      document.getElementById('globalStop').disabled = false;
+    }
+
+    /* ================= 全局按钮事件 ================= */
+    document.getElementById('globalPlay').addEventListener('click', () => {
+      if (allImagesLoaded) {
+        players.forEach(p => p.start());
+      }
+    });
     
-    /* ================= 四路实例 ================= */
-    const players = panels.map((p,i) =>
-      flipper(p.id, p.count, 1000/p.fps,
-              document.getElementById(`ps${i+1}`),
-              document.getElementById(`cf${i+1}`))
-    );
+    document.getElementById('globalPause').addEventListener('click', () => {
+      if (allImagesLoaded) {
+        players.forEach(p => p.pause());
+      }
+    });
     
-    /* ================= 全局按钮 ================= */
-    document.getElementById('globalPlay').addEventListener('click',()=>players.forEach(p=>p.start()));
-    document.getElementById('globalPause').addEventListener('click',()=>players.forEach(p=>p.pause()));
-    document.getElementById('globalStop').addEventListener('click',()=>players.forEach(p=>p.stop()));
+    document.getElementById('globalStop').addEventListener('click', () => {
+      if (allImagesLoaded) {
+        players.forEach(p => p.stop());
+      }
+    });
+
+    // 初始化时禁用按钮，直到图片加载完成
+    document.getElementById('globalPlay').disabled = true;
+    document.getElementById('globalPause').disabled = true;
+    document.getElementById('globalStop').disabled = true;
+
+    // 开始初始化
+    initializePanels();
     </script>
 </body>
 </html>
