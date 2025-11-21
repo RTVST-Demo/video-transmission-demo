@@ -33,7 +33,9 @@
         .panel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.2)}
         .panel-title{font-size:1.2rem;display:flex;align-items:center;gap:8px}
         .panel-title i{color:#fdbb2d}
-        .display-area{width:100%;height:200px;border:2px solid rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3);overflow:hidden;margin-bottom:12px}
+        
+        .display-area{width:100%;height:200px;border:2px solid rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3);overflow:hidden;margin-bottom:12px;position:relative}
+        
         .display-area img{max-width:100%;max-height:100%;object-fit:contain}
         .controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;justify-content:center}
         .info-panel{background:rgba(0,0,0,.2);padding:10px;border-radius:8px;margin-top:8px;font-size:.8rem}
@@ -171,7 +173,7 @@
       for(let i=1;i<=p.count;i++){
         const fileName = p.tpl(i);
         const src = `${repo}/${p.folder}/${fileName}`;
-        html += `<img id="${p.id}-frame-${i}" src="${src}" style="max-width:100%;max-height:100%;object-fit:contain;${i===1?'':'display:none'}" />`;
+        html += `<img id="${p.id}-frame-${i}" src="${src}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;opacity:${i===1?1:0};transition:opacity .2s;">`;
       }
       box.innerHTML = html;
     });
@@ -179,12 +181,12 @@
     /* ================= 播放器 ================= */
     function flipper(prefix, total, interval, statusEl, curEl){
       let idx = 0, t = null;
+
       const show = k=>{
-        document.querySelectorAll(`[id^="${prefix}-frame-"]`).forEach(el=>el.style.display='none');
-        const target = document.getElementById(`${prefix}-frame-${k+1}`);
-        if(target) target.style.display='block';
-        if(curEl) curEl.textContent = `${k+1} / ${total}`;   // ← 3. 判空
+        document.querySelectorAll(`[id^="${prefix}-frame-"]`).forEach((el,i)=>{el.style.opacity = (i === k) ? '1' : '0';});
+        if(curEl) curEl.textContent = `${k+1} / ${total}`;
       };
+        
       show(0);   // ← 2. 初始化点亮第一张
       return {
         start(){
