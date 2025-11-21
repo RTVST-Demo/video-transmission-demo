@@ -180,25 +180,27 @@
     });
     
     /* ================= 播放器 ================= */
+    /* ================= 播放器（无闪烁版） ================= */
     function flipper(prefix, total, fps, statusEl, curEl) {
-      let idx = 0, raf = null;
-      const interval = 1000 / fps;               // 理论帧间隔
-      let last = performance.now();              // 上一帧时间
+      let idx   = 0;
+      let raf   = null;
+      let prev  = null;                  // 上一帧 DOM
+      const interval = 1000 / fps;
+      let last = performance.now();
     
       const show = k => {
         const cur = document.getElementById(`${prefix}-frame-${k + 1}`);
-        if (cur) {
-          // 叠层覆盖（无闪烁）
-          document.querySelectorAll(`[id^="${prefix}-frame-"]`).forEach(el => el.style.opacity = '0');
-          cur.style.opacity = '1';
-        }
+        if (!cur) return;
+        if (prev && prev !== cur) prev.style.opacity = '0'; // 只关上一帧
+        cur.style.opacity  = '1';                           // 开当前帧
+        prev = cur;                                         // 更新指针
         if (curEl) curEl.textContent = `${k + 1} / ${total}`;
       };
     
-      show(0);                                    // 第一张点亮
+      show(0);      // 首帧
     
-      const step = (now) => {
-        if (now - last >= interval) {             // 时间到才换帧
+      const step = now => {
+        if (now - last >= interval) {     // 时间到才真正换帧
           idx = (idx + 1) % total;
           show(idx);
           last = now;
@@ -209,11 +211,11 @@
       return {
         start() {
           if (raf) return;
+          raf = requestAnimationFrame(step);
           if (statusEl) {
             statusEl.textContent = '播放中';
             statusEl.previousElementSibling.className = 'status-indicator status-playing';
           }
-          raf = requestAnimationFrame(step);
         },
         pause() {
           cancelAnimationFrame(raf); raf = null;
@@ -224,6 +226,7 @@
         },
         stop() {
           cancelAnimationFrame(raf); raf = null; idx = 0;
+          if (prev) prev.style.opacity = '0';
           show(0);
           if (statusEl) {
             statusEl.textContent = '已停止';
