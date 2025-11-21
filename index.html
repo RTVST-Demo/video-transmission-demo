@@ -141,7 +141,7 @@
                 <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> H.265 + LDPC</h3><span class="status-indicator status-stopped" id="st1"></span></div>
                 
                 <div class="progress-bar-container">
-                    <div class="progress-bar" id="pb4"></div>
+                    <div class="progress-bar" id="pb1"></div>
                 </div>
                 
                 <div class="display-area" id="da1"><!-- 100 帧固定路径 --></div>
@@ -157,7 +157,7 @@
 
                                 
                 <div class="progress-bar-container">
-                    <div class="progress-bar" id="pb4"></div>
+                    <div class="progress-bar" id="pb2"></div>
                 </div>
 
                 
@@ -174,7 +174,7 @@
                 
                                 
                 <div class="progress-bar-container">
-                    <div class="progress-bar" id="pb4"></div>
+                    <div class="progress-bar" id="pb3"></div>
                 </div>
                 
                 <div class="display-area" id="da3"><!-- 100 帧固定路径 --></div>
@@ -212,7 +212,9 @@
     });
     
     /* ================= 播放器 ================= */
-    function flipper(prefix, total, interval, statusEl, curEl){
+    /* ================= 播放器 (已修改) ================= */
+    // 增加了 progressEl 参数，并用它替代了原代码中的 curEl
+    function flipper(prefix, total, interval, statusEl, progressEl){ 
       let idx = 0, t = null;
       
       const show = k=>{
@@ -220,13 +222,19 @@
         const frames = document.querySelectorAll(`[id^="${prefix}-frame-"]`);
         const target = document.getElementById(`${prefix}-frame-${k+1}`);
         
+        // --- 【关键更新：计算并设置进度条宽度】 ---
+        const progress = ((k + 1) / total) * 100;
+        if(progressEl) progressEl.style.width = `${progress}%`;
+        // ----------------------------------------
+        
         // 使用 requestAnimationFrame 优化渲染时机
         requestAnimationFrame(() => {
           frames.forEach(el => el.style.display = 'none');
           if(target) target.style.display = 'block';
         });
         
-        if(curEl) curEl.textContent = `${k+1} / ${total}`;
+        // 原来的 curEl (帧计数) 不再更新
+        // if(curEl) curEl.textContent = `${k+1} / ${total}`;
       };
       
       show(0);
@@ -266,11 +274,33 @@
     }
     
     /* ================= 四路实例 ================= */
-    const players = panels.map((p,i)=>
-      flipper(p.id, p.count, 1000/p.fps,
-              document.getElementById(`ps${i+1}`),
-              document.getElementById(`cf${i+1}`))
-    );
+    /* ================= 四路实例 (已修改) ================= */
+    const players = panels.map((p,i)=>{
+      const panelIndex = i + 1; // 1-based index (1, 2, 3, 4)
+      // panels.map 返回的 p 是按照 panels 数组顺序来的，i=0 是 Origin(4)，i=1 是 H265(1)，i=2 是 DeepJSCC(2)，i=3 是 RTVST(3)。
+      // 我们需要根据 panel 的 ID 来获取正确的 DOM 索引。
+      
+      // 按照你的 HTML 结构，ID 1, 2, 3, 4 对应关系如下：
+      // H265(1): i=1 -> ps1, pb1
+      // DeepJSCC(2): i=2 -> ps2, pb2
+      // RTVST(3): i=3 -> ps3, pb3
+      // Origin(4): i=0 -> ps4, pb4
+      
+      // 修正后的 ID 查找逻辑:
+      let idSuffix;
+      if(p.id === 'da4') idSuffix = 4; // Origin
+      else if(p.id === 'da1') idSuffix = 1; // H265
+      else if(p.id === 'da2') idSuffix = 2; // DeepJSCC
+      else if(p.id === 'da3') idSuffix = 3; // RTVST
+    
+      return flipper(
+        p.id, 
+        p.count, 
+        1000/p.fps,
+        document.getElementById(`ps${idSuffix}`),  // 状态显示元素
+        document.getElementById(`pb${idSuffix}`)   // 进度条元素
+      );
+    });
     
     /* ================= 全局按钮 ================= */
     document.getElementById('globalPlay').addEventListener('click',()=>players.forEach(p=>p.start()));
