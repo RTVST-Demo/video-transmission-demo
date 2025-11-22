@@ -8,7 +8,7 @@
     <style>
         /* ====== 全页通用样式 ====== */
         *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
-        body{background:linear-gradient(135deg,#a1c4fd,#c2e9fb,#e0f7fa);color:#333;min-height:100vh}
+        body{background:linear-gradient(135deg,#a1c4fd,#c2e9fb,#e0f7fa);color:#000;min-height:100vh}
         .container{max-width:1800px;margin:0 auto;padding:10px}
         header{text-align:center;padding:30px 0}
         h1{font-size:2.8rem;margin-bottom:10px;text-shadow:2px 2px 4px rgba(0,0,0,.3)}
@@ -113,19 +113,19 @@
         @media(max-width:768px){.video-container{grid-template-columns:1fr}h1{font-size:2.2rem}}
 
         .abstract{
-            background:rgba(255,255,255,.08);
-            padding:20px 30px;  /* 左右添加内边距，留出1-2字距离 */
+            background: #f5f5f5; /* 改为浅灰色背景 */
+            padding:20px 30px;
             border-radius:10px;
             line-height:1.8;
             border-left:4px solid #fdbb2d;
             color:#000;
             font-size:1.2rem;
             font-weight:500;
-            text-align: justify;  /* 保持两端对齐 */
+            text-align: justify;
             text-justify: inter-ideograph;
-            word-break: break-all; /* 允许在任意字符间断行 */
-            /* 移除 text-align-last: justify; 让最后一行自然对齐 */
+            word-break: break-all;
         }
+        
         .abstract strong{
             color:#000;
             font-weight:600;
@@ -170,7 +170,7 @@
 
             <!-- ========== 摘要块 ========== -->
             <div class="abstract" style="margin-bottom:20px;">
-              <strong>项目摘要：</strong>
+              <strong>算法简介：</strong>
                 语义通信作为6G关键技术，以其高压缩与强鲁棒性在图像、视频传输中展现出
                 显著优势。语义通信通过提取并传输图像的语义特征实现了极高的压缩增益。同时，
                 其以任务为导向的特性使得系统对底层传输错误鲁棒，只要语义信息得以保留，接
