@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>实时视频语义传输算法设计(RTVST)</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css ">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /* ====== 全页通用样式 ====== */
         *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
-        body{background:linear-gradient(135deg,#a1c4fd,#c2e9fb,#e0f7fa);color:#000;min-height:100vh}
+        body{background:linear-gradient(135deg,#a1c4fd,#c2e9fb,#e0f7fa);color:#333;min-height:100vh}
         .container{max-width:1800px;margin:0 auto;padding:10px}
         header{text-align:center;padding:30px 0}
         h1{font-size:2.8rem;margin-bottom:10px;text-shadow:2px 2px 4px rgba(0,0,0,.3)}
@@ -65,7 +65,7 @@
         .chart-item img {
             border-radius: 25px;
             width: 100%;
-            height: 400px;  /* 从320px增加到380px */
+            height: 400px;
             object-fit: contain;
             background: rgba(0,0,0,.2);
             border-radius: 15px;
@@ -113,7 +113,7 @@
         @media(max-width:768px){.video-container{grid-template-columns:1fr}h1{font-size:2.2rem}}
 
         .abstract{
-            background: #f5f5f5; /* 改为浅灰色背景 */
+            background:rgba(255,255,255,.08);
             padding:20px 30px;
             border-radius:10px;
             line-height:1.8;
@@ -125,7 +125,6 @@
             text-justify: inter-ideograph;
             word-break: break-all;
         }
-        
         .abstract strong{
             color:#000;
             font-weight:600;
@@ -151,9 +150,9 @@
             display: flex;
             align-items: center;
             gap: 20px;
-            justify-content: center; /* 关键：水平居中 */
+            justify-content: center;
             width: 100%;
-            margin: 20px 0; /* 添加上下边距 */
+            margin: 20px 0;
         }
                 
     </style>
@@ -166,11 +165,9 @@
         </header>
 
         <div class="global-controls">
-
-
             <!-- ========== 摘要块 ========== -->
             <div class="abstract" style="margin-bottom:20px;">
-              <strong>算法简介：</strong>
+              <strong>项目摘要：</strong>
                 语义通信作为6G关键技术，以其高压缩与强鲁棒性在图像、视频传输中展现出
                 显著优势。语义通信通过提取并传输图像的语义特征实现了极高的压缩增益。同时，
                 其以任务为导向的特性使得系统对底层传输错误鲁棒，只要语义信息得以保留，接
@@ -205,7 +202,6 @@
             </div>
             
             <!-- ========== 信息显示行移动到性能曲线下方 ========== -->
-            <!-- 并行布局容器 -->
             <div class="control-row">
                 <!-- SNR选择器 -->
                 <div class="snr-selector">
@@ -223,6 +219,7 @@
                     <span class="info-value">0.012</span>
                 </div>
             </div> 
+            
             <!-- ========== 控制按钮移动到信息显示行下方 ========== -->
             <div class="controls">
                 <button class="btn btn-global" id="globalPlay"><i class="fas fa-play"></i> 开始</button>
@@ -245,8 +242,7 @@
                     <div class="progress-bar" id="lb4" title="加载进度"></div> 
                 </div>
                       
-
-                <div class="display-area" id="da4"><!-- 100 帧固定路径 --></div>
+                <div class="display-area" id="da4"></div>
                 <div class="info-panel">
                     <div class="info-item"><span>帧率:</span><span id="fps4">25 FPS</span></div>
                     <div class="info-item"><span>状态:</span><span id="ps4">已停止</span></div>
@@ -266,8 +262,7 @@
                     <div class="progress-bar" id="lb1" title="加载进度"></div> 
                 </div>
             
-                
-                <div class="display-area" id="da1"><!-- 100 帧固定路径 --></div>
+                <div class="display-area" id="da1"></div>
                 <div class="info-panel">
                     <div class="info-item"><span>帧率:</span><span id="fps1">25 FPS</span></div>
                     <div class="info-item"><span>状态:</span><span id="ps1">已停止</span></div>
@@ -286,8 +281,7 @@
                     <div class="progress-bar" id="lb2" title="加载进度"></div> 
                 </div>
 
-
-                <div class="display-area" id="da2"><!-- 100 帧固定路径 --></div>
+                <div class="display-area" id="da2"></div>
                 <div class="info-panel">
                     <div class="info-item"><span>帧率:</span><span id="fps2">4 FPS</span></div>
                     <div class="info-item"><span>状态:</span><span id="ps2">已停止</span></div>
@@ -306,9 +300,8 @@
                 <div class="progress-bar-container" style="margin-bottom: 5px;">
                     <div class="progress-bar" id="lb3" title="加载进度"></div> 
                 </div>
-
                 
-                <div class="display-area" id="da3"><!-- 100 帧固定路径 --></div>
+                <div class="display-area" id="da3"></div>
                 <div class="info-panel">
                     <div class="info-item"><span>帧率:</span><span id="fps3">25 FPS</span></div>
                     <div class="info-item"><span>状态:</span><span id="ps3">已停止</span></div>
@@ -319,36 +312,46 @@
         <footer><p>实时视频语义传输算法设计</p></footer>
     </div>
 
-    <!-- ====================== 固定路径 100 帧生成脚本 ====================== -->
+    <!-- ====================== 简化版脚本 - 直接使用完整地址 ====================== -->
     <script>
-        /* ================= 配置不同SNR对应的完整路径 ================= */
-        /* ================= 配置不同SNR对应的完整路径 ================= */
-        const snrConfig = {
+        // 直接定义每个SNR对应的完整图片地址数组
+        const videoFrames = {
             '4': {
-                origin: 'origin-frames',
-                h265: 'h265+ldpc-frames-4db', 
-                deepjscc: 'deepjscc-frames-4db',
-                rtvst: 'rtvst-frames-4db'
+                origin: Array.from({length: 100}, (_, i) => 
+                    `https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img${String(i+1).padStart(6,'0')}.png`),
+                h265: Array.from({length: 100}, (_, i) => 
+                    `https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames-4db/output_${String(i+1).padStart(4,'0')}.png`),
+                deepjscc: Array.from({length: 100}, (_, i) => 
+                    `https://rtvst-demo.github.io/video-transmission-demo/deepjscc-frames-4db/${i}recon_snr4.png`),
+                rtvst: Array.from({length: 100}, (_, i) => 
+                    `https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/${i}recon_snr4.png`)
             },
             '8': {
-                origin: 'origin-frames',
-                h265: 'h265+ldpc-frames',
-                deepjscc: 'deepjscc-frames',
-                rtvst: 'rtvst-frames'
+                origin: Array.from({length: 100}, (_, i) => 
+                    `https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img${String(i+1).padStart(6,'0')}.png`),
+                h265: Array.from({length: 100}, (_, i) => 
+                    `https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames/output_${String(i+1).padStart(4,'0')}.png`),
+                deepjscc: Array.from({length: 100}, (_, i) => 
+                    `https://rtvst-demo.github.io/video-transmission-demo/deepjscc-frames/${i}recon_snr8.png`),
+                rtvst: Array.from({length: 100}, (_, i) => 
+                    `https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames/${i}recon_snr8.png`)
             },
             '12': {
-                origin: 'origin-frames',
-                h265: 'h265+ldpc-frames-12db',
-                deepjscc: 'deepjscc-frames-12db',
-                rtvst: 'rtvst-frames-12db'
+                origin: Array.from({length: 100}, (_, i) => 
+                    `https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img${String(i+1).padStart(6,'0')}.png`),
+                h265: Array.from({length: 100}, (_, i) => 
+                    `https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames-12db/output_${String(i+1).padStart(4,'0')}.png`),
+                deepjscc: Array.from({length: 100}, (_, i) => 
+                    `https://rtvst-demo.github.io/video-transmission-demo/deepjscc-frames-12db/${i}recon_snr12.png`),
+                rtvst: Array.from({length: 100}, (_, i) => 
+                    `https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-12db/${i}recon_snr12.png`)
             }
         };
-        
-        const repo = 'https://rtvst-demo.github.io/video-transmission-demo';
+
         let currentPlayers = [];
         let currentSnr = '8';
         
-        /* ================= 初始化页面 ================= */
+        // 初始化页面
         function initializePage() {
             setupEventListeners();
             
@@ -357,61 +360,30 @@
                 el.textContent = '请选择SNR';
             });
             
-            // 不设置默认值，完全由用户选择
             document.querySelectorAll('[id^="da"]').forEach(container => {
                 container.innerHTML = '<div class="placeholder">请选择SNR开始加载视频</div>';
             });
         }
         
-        /* ================= SNR选择器事件 ================= */
+        // SNR选择器事件
         document.getElementById('snrSelect').addEventListener('change', function(e) {
             const selectedSnr = e.target.value;
             if (selectedSnr) {
-                // 立即停止所有播放器
                 stopAllPlayers();
-                
                 currentSnr = selectedSnr;
                 loadVideos(currentSnr);
             }
         });
         
-        /* ================= 加载视频帧 ================= */
+        // 加载视频帧
         function loadVideos(snr) {
-            const config = snrConfig[snr];
+            const frames = videoFrames[snr];
             
             const panels = [
-                { 
-                    id: 'da4', 
-                    folder: config.origin,
-                    tpl: i => `img${String(i).padStart(6,'0')}.png`, 
-                    count: 100, 
-                    fps: 25, 
-                    loadBarId: 'lb4' 
-                },
-                { 
-                    id: 'da1', 
-                    folder: config.h265,
-                    tpl: i => `output_${String(i).padStart(4,'0')}.png`, 
-                    count: 100, 
-                    fps: 25, 
-                    loadBarId: 'lb1' 
-                },
-                { 
-                    id: 'da2', 
-                    folder: config.deepjscc,
-                    tpl: i => `${i-1}recon_snr${snr}.png`,  // 使用实际选择的snr值
-                    count: 100, 
-                    fps: 4, 
-                    loadBarId: 'lb2' 
-                },
-                { 
-                    id: 'da3', 
-                    folder: config.rtvst,
-                    tpl: i => `${i-1}recon_snr${snr}.png`,  // 使用实际选择的snr值
-                    count: 100, 
-                    fps: 25, 
-                    loadBarId: 'lb3' 
-                }
+                { id: 'da4', frames: frames.origin, fps: 25, loadBarId: 'lb4' },
+                { id: 'da1', frames: frames.h265, fps: 25, loadBarId: 'lb1' },
+                { id: 'da2', frames: frames.deepjscc, fps: 4, loadBarId: 'lb2' },
+                { id: 'da3', frames: frames.rtvst, fps: 25, loadBarId: 'lb3' }
             ];
         
             // 清除现有的视频帧
@@ -422,11 +394,6 @@
         
             // 重置进度条
             document.querySelectorAll('.progress-bar').forEach(bar => {
-                bar.style.width = '0%';
-            });
-        
-            // 重置播放进度条
-            document.querySelectorAll('.play-progress').forEach(bar => {
                 bar.style.width = '0%';
             });
         
@@ -443,10 +410,8 @@
             // 加载新的视频帧
             loadVideoFrames(panels);
         }
-        
-        // 其他函数保持不变...
     
-        /* ================= 图片预加载和进度更新 ================= */
+        // 图片预加载和进度更新
         function loadVideoFrames(panels) {
             let totalLoaded = 0;
             const totalPanels = panels.length;
@@ -456,13 +421,11 @@
                 const loadBar = document.getElementById(p.loadBarId);
                 
                 let loadedFrames = 0;
+                const totalFrames = p.frames.length;
                 
-                for(let i = 1; i <= p.count; i++) {
-                    const fileName = p.tpl(i);
-                    const src = `${repo}/${p.folder}/${fileName}`;
-                    
+                p.frames.forEach((src, index) => {
                     const img = document.createElement('img');
-                    img.id = `${p.id}-frame-${i}`;
+                    img.id = `${p.id}-frame-${index + 1}`;
                     img.src = src;
                     img.style.maxWidth = '100%';
                     img.style.maxHeight = '100%';
@@ -471,13 +434,13 @@
                     
                     img.onload = () => {
                         loadedFrames++;
-                        const progress = (loadedFrames / p.count) * 100;
+                        const progress = (loadedFrames / totalFrames) * 100;
                         if(loadBar) {
                             loadBar.style.width = `${progress}%`;
                         }
                         
                         // 当当前面板的所有帧加载完成时
-                        if(loadedFrames === p.count) {
+                        if(loadedFrames === totalFrames) {
                             totalLoaded++;
                             
                             // 显示第一帧
@@ -490,17 +453,17 @@
                             }
                         }
                     };
-    
+
                     img.onerror = () => {
                         console.error(`Error loading frame: ${src}`);
                     };
-    
+
                     box.appendChild(img);
-                }
+                });
             });
         }
 
-        /* ================= 初始化播放器 ================= */
+        // 初始化播放器
         function initializePlayers(panels) {
             // 停止当前所有播放器
             currentPlayers.forEach(player => {
@@ -516,24 +479,20 @@
 
                 return flipper(
                     p.id, 
-                    p.count, 
+                    p.frames.length, 
                     1000/p.fps,
-                    document.getElementById(`ps${idSuffix}`),
-                    document.getElementById(`pb${idSuffix}`)
+                    document.getElementById(`ps${idSuffix}`)
                 );
             });
         }
 
-        /* ================= 播放器函数 ================= */
-        function flipper(prefix, total, interval, statusEl, playProgressEl) { 
+        // 播放器函数
+        function flipper(prefix, total, interval, statusEl) { 
             let idx = 0, t = null;
             
             const show = k => {
                 const frames = document.querySelectorAll(`[id^="${prefix}-frame-"]`);
                 const target = document.getElementById(`${prefix}-frame-${k+1}`);
-                
-                const progress = ((k + 1) / total) * 100;
-                if(playProgressEl) playProgressEl.style.width = `${progress}%`;
                 
                 requestAnimationFrame(() => {
                     frames.forEach(el => el.style.display = 'none');
@@ -576,15 +535,16 @@
             };
         }
 
-        /* ================= 事件监听器设置 ================= */
-        function setupEventListeners() {
-            // SNR选择器事件
-            document.getElementById('snrSelect').addEventListener('change', function(e) {
-                currentSnr = e.target.value;
-                loadVideos(currentSnr);
+        // 停止所有播放器
+        function stopAllPlayers() {
+            currentPlayers.forEach(p => {
+                if(p) p.stop();
             });
+            currentPlayers = [];
+        }
 
-            // 全局控制按钮事件
+        // 事件监听器设置
+        function setupEventListeners() {
             document.getElementById('globalPlay').addEventListener('click', () => {
                 currentPlayers.forEach(p => p.start());
             });
@@ -596,8 +556,8 @@
             });
         }
 
-        /* ================= 页面加载完成后初始化 ================= */
+        // 页面加载完成后初始化
         document.addEventListener('DOMContentLoaded', initializePage);
     </script>
 </body>
-</html>加载过程中就不要显示视频了吧
+</html>
