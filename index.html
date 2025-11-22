@@ -196,6 +196,7 @@
 
     <script>
         /* ================= 配置不同SNR对应的完整路径 ================= */
+
         const snrConfig = {
             '4': {
                 origin: 'origin-frames',
@@ -221,8 +222,12 @@
         let currentPlayers = [];
         let currentSnr = '8';
         
-        // 图片缓存 - 存储所有已加载的图片
+        // 增强的图片缓存 - 存储图片元素和加载状态
         const imageCache = new Map();
+        const loadingPromises = new Map(); // 防止重复加载
+        
+        // 跟踪已加载的SNR
+        const loadedSnrs = new Set();
         
         /* ================= 初始化页面 ================= */
         function initializePage() {
@@ -237,12 +242,12 @@
                 container.innerHTML = '<div class="placeholder">请选择SNR开始加载视频</div>';
             });
             
-            // 默认加载8dB的视频
+            // 预加载默认SNR
             loadVideos(currentSnr);
         }
         
-        /* ================= 加载视频帧 - 优化版本 ================= */
-        function loadVideos(snr) {
+        /* ================= 加载视频帧 - 增强缓存版本 ================= */
+        async function loadVideos(snr) {
             const config = snrConfig[snr];
             
             const panels = [
@@ -292,17 +297,141 @@
                 }
             ];
         
-            // 清除现有的显示内容
-            panels.forEach(p => {
-                const box = document.getElementById(p.id);
-                box.innerHTML = '';
-            });
+            // 如果这个SNR已经加载过，直接显示
+            if (loadedSnrs.has(snr)) {
+                showCachedVideos(snr, panels);
+                return;
+            }
         
             // 重置UI状态
             resetUIState(panels);
+            
+            // 标记为正在加载
+            loadedSnrs.add(snr);
+            
+            // 使用增强的加载方法
+            await loadVideoFramesWithCache(panels, snr);
+        }
         
-            // 使用优化的加载方法
-            loadVideoFramesOptimized(panels, snr);
+        /* ================= 显示已缓存的视频 ================= */
+        function showCachedVideos(snr, panels) {
+            panels.forEach(p => {
+                const box = document.getElementById(p.id);
+                box.innerHTML = ''; // 清空现有内容
+                
+                // 从缓存中恢复图片
+                for(let i = 1; i <= p.count; i++) {
+                    const fileName = p.tpl(i);
+                    const cacheKey = `${snr}_${p.folder}_${fileName}`;
+                    
+                    if (imageCache.has(cacheKey)) {
+                        const img = imageCache.get(cacheKey).cloneNode(true);
+                        img.id = `${p.id}-frame-${i}`;
+                        img.style.display = i === 1 ? 'block' : 'none';
+                        box.appendChild(img);
+                    }
+                }
+                
+                // 更新状态
+                const statusEl = document.getElementById(p.statusId);
+                if (statusEl) statusEl.textContent = '已缓存';
+                
+                const loadText = document.getElementById(p.loadTextId);
+                if (loadText) loadText.textContent = '100%';
+                
+                const loadBar = document.getElementById(p.loadBarId);
+                if (loadBar) loadBar.style.width = '100%';
+            });
+            
+            // 初始化播放器
+            initializePlayers(panels);
+        }
+        
+        /* ================= 增强的图片加载方法 ================= */
+        async function loadVideoFramesWithCache(panels, snr) {
+            const allPromises = [];
+            
+            panels.forEach(p => {
+                const box = document.getElementById(p.id);
+                const loadBar = document.getElementById(p.loadBarId);
+                const loadText = document.getElementById(p.loadTextId);
+                
+                box.innerHTML = ''; // 清空现有内容
+                
+                let loadedFrames = 0;
+                const totalFrames = p.count;
+                
+                // 为每个面板创建加载promise
+                const panelPromise = new Promise((resolve) => {
+                    for(let i = 1; i <= totalFrames; i++) {
+                        const fileName = p.tpl(i);
+                        const src = `${repo}/${p.folder}/${fileName}`;
+                        const cacheKey = `${snr}_${p.folder}_${fileName}`;
+                        
+                        // 创建图片元素
+                        const img = new Image();
+                        img.id = `${p.id}-frame-${i}`;
+                        img.style.display = 'none';
+                        
+                        // 检查是否已经在加载中
+                        if (loadingPromises.has(cacheKey)) {
+                            loadingPromises.get(cacheKey).then(() => {
+                                handleFrameLoaded();
+                            });
+                            continue;
+                        }
+                        
+                        // 创建加载promise
+                        const loadPromise = new Promise((imgResolve, imgReject) => {
+                            img.onload = () => {
+                                // 缓存图片元素
+                                imageCache.set(cacheKey, img);
+                                loadingPromises.delete(cacheKey);
+                                imgResolve();
+                                handleFrameLoaded();
+                            };
+                            img.onerror = () => {
+                                console.error(`加载失败: ${src}`);
+                                loadingPromises.delete(cacheKey);
+                                imgResolve(); // 即使失败也继续
+                                handleFrameLoaded();
+                            };
+                            img.src = src;
+                        });
+                        
+                        loadingPromises.set(cacheKey, loadPromise);
+                        
+                        box.appendChild(img);
+                        
+                        function handleFrameLoaded() {
+                            loadedFrames++;
+                            const progress = Math.round((loadedFrames / totalFrames) * 100);
+                            
+                            // 更新进度
+                            if (loadBar) loadBar.style.width = `${progress}%`;
+                            if (loadText) loadText.textContent = `${progress}%`;
+                            
+                            // 显示第一帧
+                            if (loadedFrames === 1) {
+                                img.style.display = 'block';
+                            }
+                            
+                            // 当所有帧加载完成
+                            if (loadedFrames === totalFrames) {
+                                const statusEl = document.getElementById(p.statusId);
+                                if (statusEl) statusEl.textContent = '加载完成';
+                                resolve();
+                            }
+                        }
+                    }
+                });
+                
+                allPromises.push(panelPromise);
+            });
+            
+            // 等待所有面板加载完成
+            await Promise.all(allPromises);
+            initializePlayers(panels);
         }
         
         /* ================= 重置UI状态 ================= */
@@ -330,81 +459,6 @@
             });
         }
         
-        /* ================= 优化的图片加载方法 ================= */
-        function loadVideoFramesOptimized(panels, snr) {
-            let totalLoadedPanels = 0;
-            
-            panels.forEach(p => {
-                const box = document.getElementById(p.id);
-                const loadBar = document.getElementById(p.loadBarId);
-                const loadText = document.getElementById(p.loadTextId);
-                
-                let loadedFrames = 0;
-                const totalFrames = p.count;
-                
-                // 批量加载图片
-                for(let i = 1; i <= totalFrames; i++) {
-                    const fileName = p.tpl(i);
-                    const src = `${repo}/${p.folder}/${fileName}`;
-                    const cacheKey = `${snr}_${p.folder}_${fileName}`;
-                    
-                    // 创建图片元素
-                    const img = document.createElement('img');
-                    img.id = `${p.id}-frame-${i}`;
-                    img.style.display = 'none';
-                    
-                    // 检查缓存
-                    if (imageCache.has(cacheKey)) {
-                        // 使用缓存的图片数据
-                        const cachedData = imageCache.get(cacheKey);
-                        img.src = cachedData;
-                        handleFrameLoaded();
-                    } else {
-                        // 加载新图片
-                        img.src = src;
-                        img.onload = () => {
-                            // 缓存图片URL
-                            imageCache.set(cacheKey, src);
-                            handleFrameLoaded();
-                        };
-                        img.onerror = () => {
-                            console.error(`加载失败: ${src}`);
-                            handleFrameLoaded();
-                        };
-                    }
-                    
-                    box.appendChild(img);
-                    
-                    function handleFrameLoaded() {
-                        loadedFrames++;
-                        const progress = Math.round((loadedFrames / totalFrames) * 100);
-                        
-                        // 更新进度
-                        if (loadBar) loadBar.style.width = `${progress}%`;
-                        if (loadText) loadText.textContent = `${progress}%`;
-                        
-                        // 当所有帧加载完成
-                        if (loadedFrames === totalFrames) {
-                            totalLoadedPanels++;
-                            
-                            // 显示第一帧
-                            const firstFrame = document.getElementById(`${p.id}-frame-1`);
-                            if (firstFrame) firstFrame.style.display = 'block';
-                            
-                            // 更新状态
-                            const statusEl = document.getElementById(p.statusId);
-                            if (statusEl) statusEl.textContent = '加载完成';
-                            
-                            // 当所有面板都加载完成
-                            if (totalLoadedPanels === panels.length) {
-                                initializePlayers(panels);
-                            }
-                        }
-                    }
-                }
-            });
-        }
-        
         /* ================= 停止所有播放器 ================= */
         function stopAllPlayers() {
             currentPlayers.forEach(player => {
@@ -412,11 +466,11 @@
             });
             currentPlayers = [];
         }
-
+    
         /* ================= 初始化播放器 ================= */
         function initializePlayers(panels) {
             stopAllPlayers();
-
+    
             currentPlayers = panels.map((p) => {
                 return createPlayer(
                     p.id, 
@@ -427,7 +481,7 @@
                 );
             });
         }
-
+    
         /* ================= 播放器函数 ================= */
         function createPlayer(prefix, total, interval, statusEl, statusIndicator) { 
             let idx = 0, t = null;
@@ -471,19 +525,19 @@
                 }
             };
         }
-
+    
         /* ================= 事件监听器设置 ================= */
         function setupEventListeners() {
             // SNR选择器事件
             document.getElementById('snrSelect').addEventListener('change', function(e) {
                 const selectedSnr = e.target.value;
-                if (selectedSnr) {
+                if (selectedSnisr) {
                     stopAllPlayers();
                     currentSnr = selectedSnr;
                     loadVideos(currentSnr);
                 }
             });
-
+    
             // 全局控制按钮事件
             document.getElementById('globalPlay').addEventListener('click', () => {
                 currentPlayers.forEach(p => p && p.start());
@@ -495,9 +549,10 @@
                 currentPlayers.forEach(p => p && p.stop());
             });
         }
-
+    
         /* ================= 页面加载完成后初始化 ================= */
         document.addEventListener('DOMContentLoaded', initializePage);
+
     </script>
 </body>
 </html>
