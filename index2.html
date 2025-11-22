@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIC-RTVST｜实时视频语义传输对比演示</title>
+    <title>实时视频语义传输算法设计(RTVST)</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css ">
     <style>
         /* ====== 全页通用样式 ====== */
@@ -15,15 +15,34 @@
         .subtitle{font-size:1.2rem;opacity:.9;max-width:800px;margin:0 auto;line-height:1.6}
         .global-controls{background:rgba(255,255,255,.1);backdrop-filter:blur(10px);border-radius:15px;padding:20px;margin:30px 0;text-align:center}
         .info-display-row{display:flex;justify-content:space-around;align-items:center;border:2px solid #ccc;border-radius:8px;padding:10px 0;margin:10px 0;background:rgba(255,255,255,.1);color:#000}
+
         .info-display-item{text-align:center;padding:5px 15px}
-        .info-label{font-weight:bold;font-size:18px;color:#fff;margin-right:5px}
-        .info-value{font-size:20px;color:#fdbb2d;font-weight:600}
+        .info-label{font-weight:bold;font-size:24px;color:#000;margin-right:5px} /* 改为黑色，增大字体 */
+        .info-value{font-size:26px;color:#8B0000;font-weight:600} /* 改为深红色，增大字体 */
+        
         .performance-charts{background:rgba(255,255,255,.1);backdrop-filter:blur(10px);border-radius:15px;padding:25px;margin:30px 0;box-shadow:0 10px 30px rgba(0,0,0,.2)}
         .charts-title{font-size:1.5rem;margin-bottom:20px;color:#fdbb2d;display:flex;align-items:center;gap:10px;justify-content:center}
         .charts-container{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
         .chart-item{background:rgba(255,255,255,.05);border-radius:10px;padding:15px;text-align:center;border:1px solid rgba(255,255,255,.1)}
-        .chart-item img{width:100%;height:200px;object-fit:contain;background:rgba(0,0,0,.2);border-radius:8px;padding:10px}
-        .chart-label{margin-top:10px;color:#fdbb2d;font-weight:500;font-size:1rem}
+
+        .chart-item img{
+            width: 100%;
+            height: 350px; /* 增加高度，让图片更大 */
+            object-fit: contain;
+            background: rgba(0,0,0,.2);
+            border-radius: 15px; /* 保持圆角 */
+            padding: 10px; /* 增加内边距，让图片显示区域更大 */
+            border: 2px solid rgba(255,255,255,.3);
+            box-shadow: 0 6px 20px rgba(0,0,0,.3);
+            transition: all 0.3s ease;
+        }
+        
+        .chart-item img:hover{
+            transform: scale(1.03); /* 稍微增强悬停效果 */
+            box-shadow: 0 10px 30px rgba(0,0,0,.4);
+        }
+        
+        .chart-label{margin-top:10px;color:#fdbb2d;font-weight:500;font-size:1.3rem}
         .architecture-image{text-align:center;margin:25px 0;background:rgba(255,255,255,.08);backdrop-filter:blur(10px);border-radius:12px;padding:25px;border:1px solid rgba(253,187,45,.3);box-shadow:0 8px 25px rgba(0,0,0,.2)}
         .architecture-image img{max-width:90%;max-height:450px;object-fit:contain;border-radius:8px;border:1px solid rgba(255,255,255,.2);transition:transform .3s}
         .architecture-image img:hover{transform:scale(1.02)}
@@ -52,8 +71,45 @@
         .btn-stop:hover{background:#ef5350}
         @media(max-width:1400px){.video-container{grid-template-columns:repeat(2,1fr)}}
         @media(max-width:768px){.video-container{grid-template-columns:1fr}h1{font-size:2.2rem}}
-        .abstract{background:rgba(255,255,255,.08);padding:20px;border-radius:10px;line-height:1.8;border-left:4px solid #fdbb2d;color:#fff;}
-        .abstract strong{color:#fdbb2d;font-weight:600;}
+
+        .abstract{
+            background:rgba(255,255,255,.08);
+            padding:20px 0;
+            border-radius:10px;
+            line-height:1.8;
+            border-left:4px solid #fdbb2d;
+            color:#000;
+            font-size:1.2rem;
+            font-weight:500;
+            text-align: justify;
+            text-justify: inter-ideograph;
+            word-break: break-all; /* 允许在任意字符间断行 */
+            text-align-last: justify; /* 最后一行也两端对齐 */
+        }
+        .abstract strong{
+            color:#000; /* 改为黑色，与内容一样 */
+            font-weight:600;
+            font-size: 1.2rem; /* 与内容一样大 */
+        }
+
+
+        
+
+        /* ====== 进度条样式 ====== */
+        .progress-bar-container{
+            width:100%;
+            height:8px;
+            background:rgba(0,0,0,.5);
+            border-radius:4px;
+            margin-bottom:10px; /* 在显示区上方留出空间 */
+            overflow:hidden;
+        }
+        .progress-bar{
+            height:100%;
+            width:0; /* 初始宽度为 0 */
+            background:linear-gradient(90deg,#fdbb2d,#ffcc44);
+            transition:width 0.1s linear; /* 平滑过渡效果 */
+        }
         
                 
     </style>
@@ -61,8 +117,8 @@
 <body>
     <div class="container">
         <header>
-            <h1>AIC-RTVST</h1>
-            <p class="subtitle">实时视频语义传输对比演示平台</p>
+            <h1>实时视频语义传输算法设计</h1>
+            <p class="subtitle"> 第一梯队 </p>
         </header>
 
         <div class="global-controls">
@@ -74,13 +130,16 @@
             <!-- ========== 摘要块（新增，位于架构图上方） ========== -->
             <div class="abstract" style="margin-bottom:20px;">
               <strong>项目摘要：</strong>
-              本 团 队 提 出 了 一 种 实 时 视 频 语 义 传 输 系 统 （ Real-time Video Semantic 
-                Transmission，RTVST）。提出了隐式时态建模及跨通道信息结构化分解与重构方法，将传统运动估计和残差链路融合为统一的前向过程，
-                并在紧致特征空间中执行特征提取操作，从而大幅降低操作复杂度，显著提升单帧
-                编解码速度。此外，该算法通过端到端联合优化，保证高质量重建效果的同时具有
-                较好的噪声鲁棒性。RTVST直击语义视频传输实时性痛点，有望为高带宽、低时延
-                的未来流媒体业务提供方法支撑，推动语义通信从理论研究走向实际部署。本项目将DeepJSCC与H.265+1/3LDPC+16QAM传统视频传输系
-                统作为对比方案。
+            在当前研究中，以DeepWiVe、DVST等为代表的语义视频传输方法虽有效降低了带宽需求，却面临着实时性不足的显著瓶颈。
+                为改善这一状况，SCCVS、SCSC等方法通过模块轻量化设计，在一定程度上提升了模型推理速度，但优化空间有限。
+                经调查研究发现，推理速度主要受操作复杂度制约，而操作复杂度又由潜在表示维度与网络模块数量共同决定。
+                目前，大多数优化工作聚焦于降低计算复杂度，而针对如何降低操作复杂度的研究仍相对欠缺。
+                针对上述问题，本团队提出了一种实时视频语义传输系统（Real-time Video Semantic Transmission, RTVST）。
+                该系统将传统运动估计与残差链路融合为统一的前向过程，在有效节省带宽资源的同时，显著减少了网络模块数量。
+                通过在紧致语义空间中执行特征提取，RTVST进一步压缩了潜在特征维度，从而大幅降低了操作复杂度，显著提升了单帧编解码效率。
+                此外，通过端到端的联合优化，该算法在保证高质量重建性能的同时，展现出优异的噪声鲁棒性。
+                RTVST直击语义视频传输中的实时性瓶颈，为高带宽、低时延需求的未来流媒体业务提供了有效的技术支撑。
+                该系统在具身智能、扩展现实（XR）、自动驾驶等对时延极为敏感的应用场景中具有重要的实用价值，将有力推动语义通信从理论研究迈向实际应用的新阶段。
             </div>
 
             
@@ -108,6 +167,25 @@
             <!-- ====== Origin ====== -->
             <div class="video-panel">
                 <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> Origin</h3><span class="status-indicator status-stopped" id="st4"></span></div>
+                
+                <!-- 加载进度 -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                    <span style="font-size: 15px; color: #000;">加载进度</span>
+                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text4">0%</span>
+                </div>
+                <div class="progress-bar-container" style="margin-bottom: 5px;">
+                    <div class="progress-bar" id="lb4" title="加载进度"></div> 
+                </div>
+                
+                <!-- 播放进度 -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                    <span style="font-size: 15px; color: #000;">播放进度</span>
+                    <span style="font-size: 15px; color: #fdbb2d;" id="play-text4">0%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="pb4" title="播放进度"></div>
+                </div>          
+
                 <div class="display-area" id="da4"><!-- 100 帧固定路径 --></div>
                 <div class="info-panel">
                     <div class="info-item"><span>帧率:</span><span id="fps4">25 FPS</span></div>
@@ -118,6 +196,25 @@
             <!-- ====== H.265 + LDPC ====== -->
             <div class="video-panel">
                 <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> H.265 + LDPC</h3><span class="status-indicator status-stopped" id="st1"></span></div>
+                
+                <!-- 加载进度 -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                    <span style="font-size: 15px; color: #000;">加载进度</span>
+                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text1">0%</span>
+                </div>
+                <div class="progress-bar-container" style="margin-bottom: 5px;">
+                    <div class="progress-bar" id="lb1" title="加载进度"></div> 
+                </div>
+                
+                <!-- 播放进度 -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                    <span style="font-size: 15px; color: #000;">播放进度</span>
+                    <span style="font-size: 15px; color: #fdbb2d;" id="play-text1">0%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="pb1" title="播放进度"></div>
+                </div>
+                
                 <div class="display-area" id="da1"><!-- 100 帧固定路径 --></div>
                 <div class="info-panel">
                     <div class="info-item"><span>帧率:</span><span id="fps1">25 FPS</span></div>
@@ -128,6 +225,25 @@
             <!-- ====== DeepJSCC ====== -->
             <div class="video-panel">
                 <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> DeepJSCC</h3><span class="status-indicator status-stopped" id="st2"></span></div>
+                <!-- 加载进度 -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                    <span style="font-size: 15px; color: #000;">加载进度</span>
+                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text2">0%</span>
+                </div>
+                <div class="progress-bar-container" style="margin-bottom: 5px;">
+                    <div class="progress-bar" id="lb2" title="加载进度"></div> 
+                </div>
+                
+                <!-- 播放进度 -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                    <span style="font-size: 15px; color: #000;">播放进度</span>
+                    <span style="font-size: 15px; color: #fdbb2d;" id="play-text4">0%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="pb2" title="播放进度"></div>
+                </div>
+
+                
                 <div class="display-area" id="da2"><!-- 100 帧固定路径 --></div>
                 <div class="info-panel">
                     <div class="info-item"><span>帧率:</span><span id="fps2">4 FPS</span></div>
@@ -138,6 +254,25 @@
             <!-- ====== RTVST ====== -->
             <div class="video-panel">
                 <div class="panel-header"><h3 class="panel-title"><i class="fas fa-film"></i> RTVST</h3><span class="status-indicator status-stopped" id="st3"></span></div>
+                
+                    <!-- 加载进度 -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                        <span style="font-size: 15px; color: #000;">加载进度</span>
+                        <span style="font-size: 15px; color: #fdbb2d;" id="load-text2">0%</span>
+                    </div>
+                    <div class="progress-bar-container" style="margin-bottom: 5px;">
+                        <div class="progress-bar" id="lb3" title="加载进度"></div> 
+                    </div>
+                    
+                    <!-- 播放进度 -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                        <span style="font-size: 15px; color: #000;">播放进度</span>
+                        <span style="font-size: 15px; color: #fdbb2d;" id="play-text4">0%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="pb3" title="播放进度"></div>
+                    </div>
+                
                 <div class="display-area" id="da3"><!-- 100 帧固定路径 --></div>
                 <div class="info-panel">
                     <div class="info-item"><span>帧率:</span><span id="fps3">25 FPS</span></div>
@@ -151,93 +286,140 @@
 
     <!-- ====================== 固定路径 100 帧生成脚本 ====================== -->
     <script>
-    /* ================= 生成四路视频帧 ================= */
-    const repo = 'https://rtvst-demo.github.io/video-transmission-demo';   // ← 1. 去空格
-    
-    const panels = [
-      { id: 'da4', folder: 'origin-frames',     tpl: i => `img${String(i).padStart(6,'0')}.png`,       count: 10, fps: 25 },
-      { id: 'da1', folder: 'h265+ldpc-frames',  tpl: i => `output_${String(i).padStart(4,'0')}.png`,   count: 10, fps: 25 },
-      { id: 'da2', folder: 'deepjscc-frames',   tpl: i => `${100+i-1}recon_snr8.png`,                  count: 10, fps: 4 },
-      { id: 'da3', folder: 'rtvst-frames',      tpl: i => `${i-1}recon_snr8.png`,                      count: 10, fps: 25 }
-    ];
-    
-    panels.forEach(p=>{
-      const box = document.getElementById(p.id);
-      let html = '';
-      for(let i=1;i<=p.count;i++){
-        const fileName = p.tpl(i);
-        const src = `${repo}/${p.folder}/${fileName}`;
-        html += `<img id="${p.id}-frame-${i}" src="${src}" style="max-width:100%;max-height:100%;object-fit:contain;${i===1?'':'display:none'}" />`;
-      }
-      box.innerHTML = html;
-    });
-    
-    /* ================= 播放器 ================= */
-    function flipper(prefix, total, interval, statusEl, curEl){
-      let idx = 0, t = null;
-      
-      const show = k=>{
-        // 批量操作，减少重绘
-        const frames = document.querySelectorAll(`[id^="${prefix}-frame-"]`);
-        const target = document.getElementById(`${prefix}-frame-${k+1}`);
+        /* ================= 生成四路视频帧配置 ================= */
+        const repo = 'https://rtvst-demo.github.io/video-transmission-demo';
         
-        // 使用 requestAnimationFrame 优化渲染时机
-        requestAnimationFrame(() => {
-          frames.forEach(el => el.style.display = 'none');
-          if(target) target.style.display = 'block';
+        const panels = [
+            { id: 'da4', folder: 'origin-frames', tpl: i => `img${String(i).padStart(6,'0')}.png`, count: 100, fps: 25, loadBarId: 'lb4' },
+            { id: 'da1', folder: 'h265+ldpc-frames', tpl: i => `output_${String(i).padStart(4,'0')}.png`, count: 100, fps: 25, loadBarId: 'lb1' },
+            { id: 'da2', folder: 'deepjscc-frames', tpl: i => `${i-1}recon_snr8.png`, count: 100, fps: 4, loadBarId: 'lb2' },
+            { id: 'da3', folder: 'rtvst-frames', tpl: i => `${i-1}recon_snr8.png`, count: 100, fps: 25, loadBarId: 'lb3' }
+        ];
+    
+        let loadedCount = 0;
+        
+        /* ================= 图片预加载和进度更新 ================= */
+        panels.forEach(p => {
+            const box = document.getElementById(p.id);
+            const loadBar = document.getElementById(p.loadBarId);
+            
+            let loadedFrames = 0;
+            
+            // 动态创建并加载所有图片
+            for(let i=1; i<=p.count; i++){
+                const fileName = p.tpl(i);
+                const src = `${repo}/${p.folder}/${fileName}`;
+                
+                const img = document.createElement('img');
+                img.id = `${p.id}-frame-${i}`;
+                img.src = src;
+                img.style.maxWidth = '100%';
+                img.style.maxHeight = '100%';
+                img.style.objectFit = 'contain';
+                img.style.display = (i === 1 ? 'block' : 'none'); // 仅显示第一帧
+                
+                // 监听图片加载事件
+                img.onload = () => {
+                    loadedFrames++;
+                    
+                    // 更新加载进度条
+                    const progress = (loadedFrames / p.count) * 100;
+                    if(loadBar) {
+                        loadBar.style.width = `${progress}%`;
+                        if (loadedFrames === p.count) {
+                            // 加载完成后，可能需要改变颜色或移除加载进度条
+                            // loadBar.style.background = '#4CAF50'; 
+                        }
+                    }
+                };
+    
+                img.onerror = () => {
+                     console.error(`Error loading frame: ${src}`);
+                };
+    
+                box.appendChild(img);
+            }
+        });
+    
+        /* ================= 播放器 (已修改) ================= */
+        // 进度条参数现在只用于播放进度
+        function flipper(prefix, total, interval, statusEl, playProgressEl){ 
+            let idx = 0, t = null;
+            
+            const show = k=>{
+                // 批量操作，减少重绘
+                const frames = document.querySelectorAll(`[id^="${prefix}-frame-"]`);
+                const target = document.getElementById(`${prefix}-frame-${k+1}`);
+                
+                // --- 【更新：计算并设置播放进度条宽度】 ---
+                const progress = ((k + 1) / total) * 100;
+                if(playProgressEl) playProgressEl.style.width = `${progress}%`;
+                // ----------------------------------------
+                
+                // 使用 requestAnimationFrame 优化渲染时机
+                requestAnimationFrame(() => {
+                    frames.forEach(el => el.style.display = 'none');
+                    if(target) target.style.display = 'block';
+                });
+            };
+            
+            show(0);
+            
+            return {
+                start(){
+                    if(t) return;
+                    // 仅在 start 时重置 idx 和 show，避免暂停后继续播放时闪烁
+                    if(statusEl){ 
+                        statusEl.textContent='播放中'; 
+                        statusEl.previousElementSibling.className='status-indicator status-playing'; 
+                    }
+                    t = setInterval(() => { 
+                        idx = (idx + 1) % total; 
+                        show(idx); 
+                    }, interval);
+                },
+                pause(){
+                    clearInterval(t); 
+                    t = null;
+                    if(statusEl){ 
+                        statusEl.textContent='已暂停'; 
+                        statusEl.previousElementSibling.className='status-indicator status-paused'; 
+                    }
+                },
+                stop(){
+                    clearInterval(t); 
+                    t = null; 
+                    idx = 0; 
+                    show(0); // 停止后回到第一帧，进度条归零
+                    if(statusEl){ 
+                        statusEl.textContent='已停止'; 
+                        statusEl.previousElementSibling.className='status-indicator status-stopped'; 
+                    }
+                }
+            };
+        }
+        
+        /* ================= 四路实例 (已更新，传入播放进度条ID) ================= */
+        const players = panels.map((p)=>{
+            let idSuffix;
+            if(p.id === 'da4') idSuffix = 4; // Origin
+            else if(p.id === 'da1') idSuffix = 1; // H265
+            else if(p.id === 'da2') idSuffix = 2; // DeepJSCC
+            else if(p.id === 'da3') idSuffix = 3; // RTVST
+    
+            return flipper(
+                p.id, 
+                p.count, 
+                1000/p.fps,
+                document.getElementById(`ps${idSuffix}`),   // 状态显示元素
+                document.getElementById(`pb${idSuffix}`)    // 播放进度条元素
+            );
         });
         
-        if(curEl) curEl.textContent = `${k+1} / ${total}`;
-      };
-      
-      show(0);
-      
-      return {
-        start(){
-          if(t) return;
-          show(idx);
-          if(statusEl){ 
-            statusEl.textContent='播放中'; 
-            statusEl.previousElementSibling.className='status-indicator status-playing'; 
-          }
-          t = setInterval(() => { 
-            idx = (idx + 1) % total; 
-            show(idx); 
-          }, interval);
-        },
-        pause(){
-          clearInterval(t); 
-          t = null;
-          if(statusEl){ 
-            statusEl.textContent='已暂停'; 
-            statusEl.previousElementSibling.className='status-indicator status-paused'; 
-          }
-        },
-        stop(){
-          clearInterval(t); 
-          t = null; 
-          idx = 0; 
-          show(0);
-          if(statusEl){ 
-            statusEl.textContent='已停止'; 
-            statusEl.previousElementSibling.className='status-indicator status-stopped'; 
-          }
-        }
-      };
-    }
-    
-    /* ================= 四路实例 ================= */
-    const players = panels.map((p,i)=>
-      flipper(p.id, p.count, 1000/p.fps,
-              document.getElementById(`ps${i+1}`),
-              document.getElementById(`cf${i+1}`))
-    );
-    
-    /* ================= 全局按钮 ================= */
-    document.getElementById('globalPlay').addEventListener('click',()=>players.forEach(p=>p.start()));
-    document.getElementById('globalPause').addEventListener('click',()=>players.forEach(p=>p.pause()));
-    document.getElementById('globalStop').addEventListener('click',()=>players.forEach(p=>p.stop()));
+        /* ================= 全局按钮 ================= */
+        document.getElementById('globalPlay').addEventListener('click',()=>players.forEach(p=>p.start()));
+        document.getElementById('globalPause').addEventListener('click',()=>players.forEach(p=>p.pause()));
+        document.getElementById('globalStop').addEventListener('click',()=>players.forEach(p=>p.stop()));
     </script>
-
 </body>
 </html>
