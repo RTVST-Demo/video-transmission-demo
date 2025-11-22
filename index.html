@@ -63,6 +63,7 @@
         .chart-item{background:rgba(255,255,255,.05);border-radius:10px;padding:15px;text-align:center;border:1px solid rgba(255,255,255,.1)}
 
         .chart-item img{
+            border-radius: 25px;  /* 增加到25px，圆角更明显 */
             width: 100%;
             height: 320px;
             object-fit: contain;
@@ -73,6 +74,7 @@
             box-shadow: 0 6px 20px rgba(0,0,0,.3);
             transition: all 0.3s ease;
         }
+
         
         .chart-item img:hover{
             transform: scale(1.03);
@@ -345,10 +347,10 @@
         /* ================= 配置不同SNR对应的完整路径 ================= */
         const snrConfig = {
             '4': {
-                origin: 'origin-frames-snr4',
-                h265: 'h265+ldpc-frames-snr4', 
-                deepjscc: 'deepjscc-frames-snr4',
-                rtvst: 'rtvst-frames-snr4'
+                origin: 'origin-frames',
+                h265: 'h265+ldpc-frames-4db', 
+                deepjscc: 'deepjscc-frames-4db',
+                rtvst: 'rtvst-frames-4db'
             },
             '8': {
                 origin: 'origin-frames',
@@ -357,10 +359,10 @@
                 rtvst: 'rtvst-frames'
             },
             '12': {
-                origin: 'origin-frames-snr12',
-                h265: 'h265+ldpc-frames-snr12',
-                deepjscc: 'deepjscc-frames-snr12',
-                rtvst: 'rtvst-frames-snr12'
+                origin: 'origin-frames',
+                h265: 'h265+ldpc-frames-12db',
+                deepjscc: 'deepjscc-frames-12db',
+                rtvst: 'rtvst-frames-12db'
             }
         };
         
