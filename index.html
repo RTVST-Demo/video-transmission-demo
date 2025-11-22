@@ -114,17 +114,17 @@
 
         .abstract{
             background:rgba(255,255,255,.08);
-            padding:20px 0;
+            padding:20px 30px;  /* 左右添加内边距，留出1-2字距离 */
             border-radius:10px;
             line-height:1.8;
             border-left:4px solid #fdbb2d;
             color:#000;
             font-size:1.2rem;
             font-weight:500;
-            text-align: justify;
+            text-align: justify;  /* 保持两端对齐 */
             text-justify: inter-ideograph;
             word-break: break-all; /* 允许在任意字符间断行 */
-            text-align-last: justify; /* 最后一行也两端对齐 */
+            /* 移除 text-align-last: justify; 让最后一行自然对齐 */
         }
         .abstract strong{
             color:#000;
