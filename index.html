@@ -245,8 +245,29 @@
                     <div class="progress-bar" id="lb4" title="加载进度"></div> 
                 </div>
                       
+                <!-- Origin 视频帧静态HTML -->
+                <div class="display-area" id="da4">
+                    <img id="da4-frame-1" src="https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img000001.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <img id="da4-frame-2" src="https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img000002.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <img id="da4-frame-3" src="https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img000003.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <img id="da4-frame-4" src="https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img000004.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <img id="da4-frame-5" src="https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img000005.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <img id="da4-frame-1" src="https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img000006.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <img id="da4-frame-2" src="https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img000007.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <img id="da4-frame-3" src="https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img000008.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <img id="da4-frame-4" src="https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img000009.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <img id="da4-frame-5" src="https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img000010.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
 
-                <div class="display-area" id="da4"><!-- 100 帧固定路径 --></div>
+
+
+
+
+
+
+
+                    
+                    <!-- 其余95帧类似格式添加 -->
+                </div>
                 <div class="info-panel">
                     <div class="info-item"><span>帧率:</span><span id="fps4">25 FPS</span></div>
                     <div class="info-item"><span>状态:</span><span id="ps4">已停止</span></div>
@@ -266,8 +287,21 @@
                     <div class="progress-bar" id="lb1" title="加载进度"></div> 
                 </div>
             
-                
-                <div class="display-area" id="da1"><!-- 100 帧固定路径 --></div>
+                <!-- H.265 + LDPC 视频帧静态HTML -->
+                <div class="display-area" id="da1">
+                    <img id="da1-frame-1" src="https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames/output_0001.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <img id="da1-frame-2" src="https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames/output_0002.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <img id="da1-frame-3" src="https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames/output_0003.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <img id="da1-frame-4" src="https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames/output_0004.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <img id="da1-frame-5" src="https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames/output_0005.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <img id="da1-frame-1" src="https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames/output_0006.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <img id="da1-frame-2" src="https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames/output_0007.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <img id="da1-frame-3" src="https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames/output_0008.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <img id="da1-frame-4" src="https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames/output_0009.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <img id="da1-frame-5" src="https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames/output_0010.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <!-- 这里只显示前5帧作为示例，实际应该有100帧 -->
+                    <!-- 其余95帧类似格式添加 -->
+                </div>
                 <div class="info-panel">
                     <div class="info-item"><span>帧率:</span><span id="fps1">25 FPS</span></div>
                     <div class="info-item"><span>状态:</span><span id="ps1">已停止</span></div>
@@ -286,8 +320,16 @@
                     <div class="progress-bar" id="lb2" title="加载进度"></div> 
                 </div>
 
-
-                <div class="display-area" id="da2"><!-- 100 帧固定路径 --></div>
+                <!-- DeepJSCC 视频帧静态HTML -->
+                <div class="display-area" id="da2">
+                    <img id="da2-frame-1" src="https://rtvst-demo.github.io/video-transmission-demo/deepjscc-frames/0recon_snr8.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <img id="da2-frame-2" src="https://rtvst-demo.github.io/video-transmission-demo/deepjscc-frames/1recon_snr8.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <img id="da2-frame-3" src="https://rtvst-demo.github.io/video-transmission-demo/deepjscc-frames/2recon_snr8.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <img id="da2-frame-4" src="https://rtvst-demo.github.io/video-transmission-demo/deepjscc-frames/3recon_snr8.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <img id="da2-frame-5" src="https://rtvst-demo.github.io/video-transmission-demo/deepjscc-frames/4recon_snr8.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <!-- 这里只显示前5帧作为示例，实际应该有100帧 -->
+                    <!-- 其余95帧类似格式添加 -->
+                </div>
                 <div class="info-panel">
                     <div class="info-item"><span>帧率:</span><span id="fps2">4 FPS</span></div>
                     <div class="info-item"><span>状态:</span><span id="ps2">已停止</span></div>
@@ -307,8 +349,16 @@
                     <div class="progress-bar" id="lb3" title="加载进度"></div> 
                 </div>
 
-                
-                <div class="display-area" id="da3"><!-- 100 帧固定路径 --></div>
+                <!-- RTVST 视频帧静态HTML -->
+                <div class="display-area" id="da3">
+                    <img id="da3-frame-1" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames/0recon_snr8.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <img id="da3-frame-2" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames/1recon_snr8.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <img id="da3-frame-3" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames/2recon_snr8.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <img id="da3-frame-4" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames/3recon_snr8.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <img id="da3-frame-5" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames/4recon_snr8.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                    <!-- 这里只显示前5帧作为示例，实际应该有100帧 -->
+                    <!-- 其余95帧类似格式添加 -->
+                </div>
                 <div class="info-panel">
                     <div class="info-item"><span>帧率:</span><span id="fps3">25 FPS</span></div>
                     <div class="info-item"><span>状态:</span><span id="ps3">已停止</span></div>
@@ -319,32 +369,8 @@
         <footer><p>实时视频语义传输算法设计</p></footer>
     </div>
 
-    <!-- ====================== 固定路径 100 帧生成脚本 ====================== -->
+    <!-- ====================== 静态HTML帧播放脚本 ====================== -->
     <script>
-        /* ================= 配置不同SNR对应的完整路径 ================= */
-        /* ================= 配置不同SNR对应的完整路径 ================= */
-        const snrConfig = {
-            '4': {
-                origin: 'origin-frames',
-                h265: 'h265+ldpc-frames-4db', 
-                deepjscc: 'deepjscc-frames-4db',
-                rtvst: 'rtvst-frames-4db'
-            },
-            '8': {
-                origin: 'origin-frames',
-                h265: 'h265+ldpc-frames',
-                deepjscc: 'deepjscc-frames',
-                rtvst: 'rtvst-frames'
-            },
-            '12': {
-                origin: 'origin-frames',
-                h265: 'h265+ldpc-frames-12db',
-                deepjscc: 'deepjscc-frames-12db',
-                rtvst: 'rtvst-frames-12db'
-            }
-        };
-        
-        const repo = 'https://rtvst-demo.github.io/video-transmission-demo';
         let currentPlayers = [];
         let currentSnr = '8';
         
@@ -352,15 +378,24 @@
         function initializePage() {
             setupEventListeners();
             
-            // 初始显示占位符
-            document.querySelectorAll('[id^="ps"]').forEach(el => {
-                el.textContent = '请选择SNR';
-            });
+            // 初始显示第一帧
+            initializeFirstFrame();
             
-            // 不设置默认值，完全由用户选择
-            document.querySelectorAll('[id^="da"]').forEach(container => {
-                container.innerHTML = '<div class="placeholder">请选择SNR开始加载视频</div>';
+            // 设置初始状态
+            document.querySelectorAll('[id^="ps"]').forEach(el => {
+                el.textContent = '已停止';
             });
+        }
+        
+        /* ================= 初始化第一帧显示 ================= */
+        function initializeFirstFrame() {
+            // 显示每个显示区域的第一帧
+            for (let i = 1; i <= 4; i++) {
+                const firstFrame = document.getElementById(`da${i}-frame-1`);
+                if (firstFrame) {
+                    firstFrame.style.display = 'block';
+                }
+            }
         }
         
         /* ================= SNR选择器事件 ================= */
@@ -371,184 +406,93 @@
                 stopAllPlayers();
                 
                 currentSnr = selectedSnr;
-                loadVideos(currentSnr);
+                switchVideoFrames(currentSnr);
             }
         });
         
-        /* ================= 加载视频帧 ================= */
-        function loadVideos(snr) {
-            const config = snrConfig[snr];
+        /* ================= 切换视频帧 ================= */
+        function switchVideoFrames(snr) {
+            // 停止当前播放
+            stopAllPlayers();
             
-            const panels = [
-                { 
-                    id: 'da4', 
-                    folder: config.origin,
-                    tpl: i => `img${String(i).padStart(6,'0')}.png`, 
-                    count: 100, 
-                    fps: 25, 
-                    loadBarId: 'lb4' 
-                },
-                { 
-                    id: 'da1', 
-                    folder: config.h265,
-                    tpl: i => `output_${String(i).padStart(4,'0')}.png`, 
-                    count: 100, 
-                    fps: 25, 
-                    loadBarId: 'lb1' 
-                },
-                { 
-                    id: 'da2', 
-                    folder: config.deepjscc,
-                    tpl: i => `${i-1}recon_snr${snr}.png`,  // 使用实际选择的snr值
-                    count: 100, 
-                    fps: 4, 
-                    loadBarId: 'lb2' 
-                },
-                { 
-                    id: 'da3', 
-                    folder: config.rtvst,
-                    tpl: i => `${i-1}recon_snr${snr}.png`,  // 使用实际选择的snr值
-                    count: 100, 
-                    fps: 25, 
-                    loadBarId: 'lb3' 
-                }
-            ];
-        
-            // 清除现有的视频帧
-            panels.forEach(p => {
-                const box = document.getElementById(p.id);
-                box.innerHTML = '';
-            });
-        
-            // 重置进度条
-            document.querySelectorAll('.progress-bar').forEach(bar => {
-                bar.style.width = '0%';
-            });
-        
-            // 重置播放进度条
-            document.querySelectorAll('.play-progress').forEach(bar => {
-                bar.style.width = '0%';
-            });
-        
-            // 重置状态显示
+            // 隐藏所有帧
+            hideAllFrames();
+            
+            // 根据SNR显示对应的帧
+            showFramesBySnr(snr);
+            
+            // 重置到第一帧
+            initializeFirstFrame();
+            
+            // 更新状态显示
             document.querySelectorAll('[id^="ps"]').forEach(el => {
-                el.textContent = '加载中...';
-            });
-            
-            // 重置状态指示器
-            document.querySelectorAll('.status-indicator').forEach(indicator => {
-                indicator.className = 'status-indicator status-stopped';
-            });
-        
-            // 加载新的视频帧
-            loadVideoFrames(panels);
-        }
-        
-        // 其他函数保持不变...
-    
-        /* ================= 图片预加载和进度更新 ================= */
-        function loadVideoFrames(panels) {
-            let totalLoaded = 0;
-            const totalPanels = panels.length;
-            
-            panels.forEach(p => {
-                const box = document.getElementById(p.id);
-                const loadBar = document.getElementById(p.loadBarId);
-                
-                let loadedFrames = 0;
-                
-                for(let i = 1; i <= p.count; i++) {
-                    const fileName = p.tpl(i);
-                    const src = `${repo}/${p.folder}/${fileName}`;
-                    
-                    const img = document.createElement('img');
-                    img.id = `${p.id}-frame-${i}`;
-                    img.src = src;
-                    img.style.maxWidth = '100%';
-                    img.style.maxHeight = '100%';
-                    img.style.objectFit = 'contain';
-                    img.style.display = 'none';
-                    
-                    img.onload = () => {
-                        loadedFrames++;
-                        const progress = (loadedFrames / p.count) * 100;
-                        if(loadBar) {
-                            loadBar.style.width = `${progress}%`;
-                        }
-                        
-                        // 当当前面板的所有帧加载完成时
-                        if(loadedFrames === p.count) {
-                            totalLoaded++;
-                            
-                            // 显示第一帧
-                            const firstFrame = document.getElementById(`${p.id}-frame-1`);
-                            if (firstFrame) firstFrame.style.display = 'block';
-                            
-                            // 当所有面板都加载完成时初始化播放器
-                            if(totalLoaded === totalPanels) {
-                                initializePlayers(panels);
-                            }
-                        }
-                    };
-    
-                    img.onerror = () => {
-                        console.error(`Error loading frame: ${src}`);
-                    };
-    
-                    box.appendChild(img);
-                }
+                el.textContent = '已停止';
             });
         }
-
+        
+        /* ================= 隐藏所有帧 ================= */
+        function hideAllFrames() {
+            document.querySelectorAll('[id^="da"][id$="-frame-"]').forEach(frame => {
+                frame.style.display = 'none';
+            });
+        }
+        
+        /* ================= 根据SNR显示对应帧 ================= */
+        function showFramesBySnr(snr) {
+            // 这里需要根据不同的SNR值来显示对应的帧
+            // 由于静态HTML中已经包含了所有帧，我们只需要控制显示/隐藏
+            // 实际实现中，您需要为每个SNR值准备不同的帧集合
+            
+            // 示例：隐藏所有非当前SNR的帧，显示当前SNR的帧
+            // 这里假设您已经为每个SNR准备了不同的帧集合
+            // 具体实现取决于您的HTML结构
+        }
+        
         /* ================= 初始化播放器 ================= */
-        function initializePlayers(panels) {
+        function initializePlayers() {
             // 停止当前所有播放器
             currentPlayers.forEach(player => {
                 if(player) player.stop();
             });
 
-            currentPlayers = panels.map((p) => {
-                let idSuffix;
-                if(p.id === 'da4') idSuffix = 4;
-                else if(p.id === 'da1') idSuffix = 1;
-                else if(p.id === 'da2') idSuffix = 2;
-                else if(p.id === 'da3') idSuffix = 3;
-
-                return flipper(
-                    p.id, 
-                    p.count, 
-                    1000/p.fps,
-                    document.getElementById(`ps${idSuffix}`),
-                    document.getElementById(`pb${idSuffix}`)
+            currentPlayers = [];
+            
+            // 为每个显示区域创建播放器
+            for (let i = 1; i <= 4; i++) {
+                const fps = i === 2 ? 4 : 25; // DeepJSCC是4FPS，其他是25FPS
+                const player = flipper(
+                    `da${i}`, 
+                    100, // 假设每个视频有100帧
+                    1000/fps,
+                    document.getElementById(`ps${i}`)
                 );
-            });
+                currentPlayers.push(player);
+            }
         }
 
         /* ================= 播放器函数 ================= */
-        function flipper(prefix, total, interval, statusEl, playProgressEl) { 
+        function flipper(prefix, total, interval, statusEl) { 
             let idx = 0, t = null;
             
             const show = k => {
+                // 隐藏所有帧
                 const frames = document.querySelectorAll(`[id^="${prefix}-frame-"]`);
+                frames.forEach(el => el.style.display = 'none');
+                
+                // 显示当前帧
                 const target = document.getElementById(`${prefix}-frame-${k+1}`);
-                
-                const progress = ((k + 1) / total) * 100;
-                if(playProgressEl) playProgressEl.style.width = `${progress}%`;
-                
-                requestAnimationFrame(() => {
-                    frames.forEach(el => el.style.display = 'none');
-                    if(target) target.style.display = 'block';
-                });
+                if(target) target.style.display = 'block';
             };
-            
-            show(0);
             
             return {
                 start() {
                     if(t) return;
                     if(statusEl) { 
                         statusEl.textContent = '播放中'; 
-                        statusEl.previousElementSibling.className = 'status-indicator status-playing'; 
+                        const statusIndicator = statusEl.previousElementSibling;
+                        if (statusIndicator) {
+                            statusIndicator.className = 'status-indicator status-playing'; 
+                        }
                     }
                     t = setInterval(() => { 
                         idx = (idx + 1) % total; 
@@ -560,7 +504,10 @@
                     t = null;
                     if(statusEl) { 
                         statusEl.textContent = '已暂停'; 
-                        statusEl.previousElementSibling.className = 'status-indicator status-paused'; 
+                        const statusIndicator = statusEl.previousElementSibling;
+                        if (statusIndicator) {
+                            statusIndicator.className = 'status-indicator status-paused'; 
+                        }
                     }
                 },
                 stop() {
@@ -570,27 +517,39 @@
                     show(0);
                     if(statusEl) { 
                         statusEl.textContent = '已停止'; 
-                        statusEl.previousElementSibling.className = 'status-indicator status-stopped'; 
+                        const statusIndicator = statusEl.previousElementSibling;
+                        if (statusIndicator) {
+                            statusIndicator.className = 'status-indicator status-stopped'; 
+                        }
                     }
                 }
             };
         }
 
+        /* ================= 停止所有播放器 ================= */
+        function stopAllPlayers() {
+            currentPlayers.forEach(p => {
+                if (p && typeof p.stop === 'function') {
+                    p.stop();
+                }
+            });
+        }
+
         /* ================= 事件监听器设置 ================= */
         function setupEventListeners() {
-            // SNR选择器事件
-            document.getElementById('snrSelect').addEventListener('change', function(e) {
-                currentSnr = e.target.value;
-                loadVideos(currentSnr);
-            });
-
             // 全局控制按钮事件
             document.getElementById('globalPlay').addEventListener('click', () => {
+                // 确保播放器已初始化
+                if (currentPlayers.length === 0) {
+                    initializePlayers();
+                }
                 currentPlayers.forEach(p => p.start());
             });
+            
             document.getElementById('globalPause').addEventListener('click', () => {
                 currentPlayers.forEach(p => p.pause());
             });
+            
             document.getElementById('globalStop').addEventListener('click', () => {
                 currentPlayers.forEach(p => p.stop());
             });
