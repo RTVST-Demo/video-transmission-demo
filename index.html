@@ -12,7 +12,7 @@
         .container{max-width:1800px;margin:0 auto;padding:10px}
         header{text-align:center;padding:30px 0}
         h1{font-size:2.8rem;margin-bottom:10px;text-shadow:2px 2px 4px rgba(0,0,0,.3)}
-        .subtitle{font-size:1.2rem;opacity:.9;max-width:800px;margin:0 auto;line-height:1.6}
+        .subtitle{font-size:1.5rem;opacity:.9;max-width:800px;margin:0 auto;line-height:1.6}
         .global-controls{background:rgba(255,255,255,.1);backdrop-filter:blur(10px);border-radius:15px;padding:20px;margin:30px 0;text-align:center}
         
         /* SNR选择器样式 */
@@ -119,6 +119,10 @@
             color:#000;
             font-size:1.2rem;
             font-weight:500;
+            text-align: justify;
+            text-justify: inter-ideograph;
+            word-break: break-all; /* 允许在任意字符间断行 */
+            text-align-last: justify; /* 最后一行也两端对齐 */
         }
         .abstract strong{
             color:#000;
@@ -141,6 +145,12 @@
             background:linear-gradient(90deg,#fdbb2d,#ffcc44);
             transition:width 0.1s linear;
         }
+        .control-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
     </style>
 </head>
 <body>
@@ -151,15 +161,7 @@
         </header>
 
         <div class="global-controls">
-            <!-- ========== SNR选择器 ========== -->
-            <div class="snr-selector">
-                <label for="snrSelect">选择SNR:</label>
-                <select id="snrSelect">
-                    <option value="4">4 dB</option>
-                    <option value="8" selected>8 dB</option>
-                    <option value="12">12 dB</option>
-                </select>
-            </div>
+
 
             <!-- ========== 摘要块 ========== -->
             <div class="abstract" style="margin-bottom:20px;">
@@ -191,11 +193,24 @@
             </div>
             
             <!-- ========== 信息显示行移动到性能曲线下方 ========== -->
-            <div class="info-display-row">
-                <div class="info-display-item"><span class="info-label">SNR:</span><span class="info-value" id="currentSnr">8 dB</span></div>
-                <div class="info-display-item"><span class="info-label">CBR:</span><span class="info-value">0.012</span></div>
-            </div>
-            
+            <!-- 并行布局容器 -->
+            <div class="control-row">
+                <!-- SNR选择器 -->
+                <div class="snr-selector">
+                    <label for="snrSelect">选择SNR:</label>
+                    <select id="snrSelect">
+                        <option value="4">4 dB</option>
+                        <option value="8" selected>8 dB</option>
+                        <option value="12">12 dB</option>
+                    </select>
+                </div>
+                
+                <!-- 信息显示 -->
+                <div class="info-display-item">
+                    <span class="info-label">CBR:</span>
+                    <span class="info-value">0.012</span>
+                </div>
+            </div> 
             <!-- ========== 控制按钮移动到信息显示行下方 ========== -->
             <div class="controls">
                 <button class="btn btn-global" id="globalPlay"><i class="fas fa-play"></i> 开始</button>
@@ -212,7 +227,7 @@
                 <!-- 加载进度 -->
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                     <span style="font-size: 15px; color: #000;">加载进度</span>
-                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text4">0%</span>
+                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text4"></span>
                 </div>
                 <div class="progress-bar-container" style="margin-bottom: 5px;">
                     <div class="progress-bar" id="lb4" title="加载进度"></div> 
@@ -221,7 +236,7 @@
                 <!-- 播放进度 -->
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                     <span style="font-size: 15px; color: #000;">播放进度</span>
-                    <span style="font-size: 15px; color: #fdbb2d;" id="play-text4">0%</span>
+                    <span style="font-size: 15px; color: #fdbb2d;" id="play-text4"></span>
                 </div>
                 <div class="progress-bar-container">
                     <div class="progress-bar" id="pb4" title="播放进度"></div>
@@ -241,7 +256,7 @@
                 <!-- 加载进度 -->
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                     <span style="font-size: 15px; color: #000;">加载进度</span>
-                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text1">0%</span>
+                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text1"></span>
                 </div>
                 <div class="progress-bar-container" style="margin-bottom: 5px;">
                     <div class="progress-bar" id="lb1" title="加载进度"></div> 
@@ -250,7 +265,7 @@
                 <!-- 播放进度 -->
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                     <span style="font-size: 15px; color: #000;">播放进度</span>
-                    <span style="font-size: 15px; color: #fdbb2d;" id="play-text1">0%</span>
+                    <span style="font-size: 15px; color: #fdbb2d;" id="play-text1"></span>
                 </div>
                 <div class="progress-bar-container">
                     <div class="progress-bar" id="pb1" title="播放进度"></div>
@@ -269,7 +284,7 @@
                 <!-- 加载进度 -->
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                     <span style="font-size: 15px; color: #000;">加载进度</span>
-                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text2">0%</span>
+                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text2"></span>
                 </div>
                 <div class="progress-bar-container" style="margin-bottom: 5px;">
                     <div class="progress-bar" id="lb2" title="加载进度"></div> 
@@ -278,7 +293,7 @@
                 <!-- 播放进度 -->
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                     <span style="font-size: 15px; color: #000;">播放进度</span>
-                    <span style="font-size: 15px; color: #fdbb2d;" id="play-text2">0%</span>
+                    <span style="font-size: 15px; color: #fdbb2d;" id="play-text2"></span>
                 </div>
                 <div class="progress-bar-container">
                     <div class="progress-bar" id="pb2" title="播放进度"></div>
@@ -298,7 +313,7 @@
                 <!-- 加载进度 -->
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                     <span style="font-size: 15px; color: #000;">加载进度</span>
-                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text3">0%</span>
+                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text3"></span>
                 </div>
                 <div class="progress-bar-container" style="margin-bottom: 5px;">
                     <div class="progress-bar" id="lb3" title="加载进度"></div> 
@@ -307,7 +322,7 @@
                 <!-- 播放进度 -->
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                     <span style="font-size: 15px; color: #000;">播放进度</span>
-                    <span style="font-size: 15px; color: #fdbb2d;" id="play-text3">0%</span>
+                    <span style="font-size: 15px; color: #fdbb2d;" id="play-text3"></span>
                 </div>
                 <div class="progress-bar-container">
                     <div class="progress-bar" id="pb3" title="播放进度"></div>
@@ -353,10 +368,25 @@
         let currentSnr = '8';
     
         /* ================= 初始化页面 ================= */
+        /* ================= 初始化页面 ================= */
         function initializePage() {
-            loadVideos(currentSnr);
+            // 移除这行：loadVideos(currentSnr);
             setupEventListeners();
+            
+            // 初始显示占位符
+            document.querySelectorAll('[id^="ps"]').forEach(el => {
+                el.textContent = '请选择SNR';
+            });
         }
+        
+        /* ================= SNR选择器事件 ================= */
+        document.getElementById('snrSelect').addEventListener('change', function(e) {
+            const selectedSnr = e.target.value;
+            if (selectedSnr) {
+                currentSnr = selectedSnr;
+                loadVideos(currentSnr);  // ← 只有选择SNR后才开始加载
+            }
+        });
     
         /* ================= 加载视频帧 ================= */
         function loadVideos(snr) {
