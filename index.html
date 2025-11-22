@@ -4,15 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>实时视频语义传输算法设计(RTVST)</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css ">
     <style>
         /* ====== 全页通用样式 ====== */
         *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
-        body {
-          background: #fff;
-          color: #000;
-          min-height: 100vh;
-        }
+        body{background:linear-gradient(135deg,#a1c4fd,#c2e9fb,#e0f7fa);color:#000;min-height:100vh}
         .container{max-width:1800px;margin:0 auto;padding:10px}
         header{text-align:center;padding:30px 0}
         h1{font-size:2.8rem;margin-bottom:10px;text-shadow:2px 2px 4px rgba(0,0,0,.3)}
@@ -96,8 +92,8 @@
         .panel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.2)}
         .panel-title{font-size:1.2rem;display:flex;align-items:center;gap:8px}
         .panel-title i{color:#fdbb2d}
-        .display-area{width:100%;height:200px;border:2px solid rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3);overflow:hidden;margin-bottom:12px;position:relative}
-        .display-area img{max-width:100%;max-height:100%;object-fit:contain;transition: opacity 0.1s ease}
+        .display-area{width:100%;height:200px;border:2px solid rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3);overflow:hidden;margin-bottom:12px}
+        .display-area img{max-width:100%;max-height:100%;object-fit:contain}
         .controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;justify-content:center}
         .info-panel{background:rgba(0,0,0,.2);padding:10px;border-radius:8px;margin-top:8px;font-size:.8rem}
         .info-item{display:flex;justify-content:space-between;margin-bottom:4px}
@@ -157,20 +153,6 @@
             justify-content: center;
             width: 100%;
             margin: 20px 0;
-        }
-        
-        /* 预加载指示器 */
-        .preload-status {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0,0,0,0.7);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 14px;
-            z-index: 10;
         }
                 
     </style>
@@ -253,7 +235,7 @@
                 <!-- 加载进度 -->
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                     <span style="font-size: 15px; color: #000;">加载进度</span>
-                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text4">0%</span>
+                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text4"></span>
                 </div>
                 <div class="progress-bar-container" style="margin-bottom: 5px;">
                     <div class="progress-bar" id="lb4" title="加载进度"></div> 
@@ -261,17 +243,12 @@
                       
                 <!-- Origin 视频帧静态HTML - 所有SNR的帧都在这里 -->
                 <div class="display-area" id="da4">
-                    <div class="preload-status" id="preload-status-4">预加载中...</div>
                     <!-- 4dB SNR 帧 -->
                     <div class="snr-frames" data-snr="4" style="display: none;">
                         <!-- 这里放置4dB的100帧 -->
                         <img id="da4-frame-4-1" src="https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img000001.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
                         <img id="da4-frame-4-2" src="https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img000002.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
                         <!-- ... 其余98帧 -->
-                        <img id="da4-frame-4-3" src="https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img000003.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da4-frame-4-4" src="https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img000004.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da4-frame-4-5" src="https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img000005.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <!-- 为简洁起见，省略了部分重复的图片标签 -->
                     </div>
                     
                     <!-- 8dB SNR 帧 -->
@@ -279,20 +256,13 @@
                         <img id="da4-frame-8-1" src="https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img000001.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
                         <img id="da4-frame-8-2" src="https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img000002.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
                         <!-- ... 其余98帧 -->
-                        <img id="da4-frame-8-3" src="https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img000003.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da4-frame-8-4" src="https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img000004.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da4-frame-8-5" src="https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img000005.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <!-- 为简洁起见，省略了部分重复的图片标签 -->
                     </div>
                     
                     <!-- 12dB SNR 帧 -->
                     <div class="snr-frames" data-snr="12" style="display: none;">
                         <img id="da4-frame-12-1" src="https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img000001.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
                         <img id="da4-frame-12-2" src="https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img000002.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da4-frame-12-3" src="https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img000003.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da4-frame-12-4" src="https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img000004.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da4-frame-12-5" src="https://rtvst-demo.github.io/video-transmission-demo/origin-frames/img000005.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <!-- 为简洁起见，省略了部分重复的图片标签 -->
+                        <!-- ... 其余98帧 -->
                     </div>
                 </div>
 
@@ -309,7 +279,7 @@
                 <!-- 加载进度 -->
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                     <span style="font-size: 15px; color: #000;">加载进度</span>
-                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text1">0%</span>
+                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text1"></span>
                 </div>
                 <div class="progress-bar-container" style="margin-bottom: 5px;">
                     <div class="progress-bar" id="lb1" title="加载进度"></div> 
@@ -317,15 +287,11 @@
             
                 <!-- H.265 + LDPC 视频帧静态HTML -->
                 <div class="display-area" id="da1">
-                    <div class="preload-status" id="preload-status-1">预加载中...</div>
                     <!-- 4dB SNR 帧 -->
                     <div class="snr-frames" data-snr="4" style="display: none;">
                         <img id="da1-frame-4-1" src="https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames-4db/output_0001.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
                         <img id="da1-frame-4-2" src="https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames-4db/output_0002.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da1-frame-4-3" src="https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames-4db/output_0003.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da1-frame-4-4" src="https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames-4db/output_0004.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da1-frame-4-5" src="https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames-4db/output_0005.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <!-- 为简洁起见，省略了部分重复的图片标签 -->
+                        <!-- ... 其余98帧 -->
                     </div>
                     
                     <!-- 8dB SNR 帧 -->
@@ -333,10 +299,6 @@
                         <img id="da1-frame-8-1" src="https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames/output_0001.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
                         <img id="da1-frame-8-2" src="https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames/output_0002.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
                         <!-- ... 其余98帧 -->
-                        <img id="da1-frame-8-3" src="https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames/output_0003.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da1-frame-8-4" src="https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames/output_0004.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da1-frame-8-5" src="https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames/output_0005.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <!-- 为简洁起见，省略了部分重复的图片标签 -->
                     </div>
                     
                     <!-- 12dB SNR 帧 -->
@@ -344,10 +306,6 @@
                         <img id="da1-frame-12-1" src="https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames-12db/output_0001.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
                         <img id="da1-frame-12-2" src="https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames-12db/output_0002.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
                         <!-- ... 其余98帧 -->
-                        <img id="da1-frame-12-3" src="https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames-12db/output_0003.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da1-frame-12-4" src="https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames-12db/output_0004.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da1-frame-12-5" src="https://rtvst-demo.github.io/video-transmission-demo/h265+ldpc-frames-12db/output_0005.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <!-- 为简洁起见，省略了部分重复的图片标签 -->
                     </div>
                 </div>
                 <div class="info-panel">
@@ -362,7 +320,7 @@
                 <!-- 加载进度 -->
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                     <span style="font-size: 15px; color: #000;">加载进度</span>
-                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text2">0%</span>
+                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text2"></span>
                 </div>
                 <div class="progress-bar-container" style="margin-bottom: 5px;">
                     <div class="progress-bar" id="lb2" title="加载进度"></div> 
@@ -370,35 +328,25 @@
 
                 <!-- DeepJSCC 视频帧静态HTML -->
                 <div class="display-area" id="da2">
-                    <div class="preload-status" id="preload-status-2">预加载中...</div>
                     <!-- 4dB SNR 帧 -->
                     <div class="snr-frames" data-snr="4" style="display: none;">
                         <img id="da2-frame-4-1" src="https://rtvst-demo.github.io/video-transmission-demo/deepjscc-frames-4db/0recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
                         <img id="da2-frame-4-2" src="https://rtvst-demo.github.io/video-transmission-demo/deepjscc-frames-4db/1recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da2-frame-4-3" src="https://rtvst-demo.github.io/video-transmission-demo/deepjscc-frames-4db/2recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da2-frame-4-4" src="https://rtvst-demo.github.io/video-transmission-demo/deepjscc-frames-4db/3recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da2-frame-4-5" src="https://rtvst-demo.github.io/video-transmission-demo/deepjscc-frames-4db/4recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <!-- 为简洁起见，省略了部分重复的图片标签 -->
+                        <!-- ... 其余98帧 -->
                     </div>
                     
                     <!-- 8dB SNR 帧 -->
                     <div class="snr-frames" data-snr="8" style="display: none;">
                         <img id="da2-frame-8-1" src="https://rtvst-demo.github.io/video-transmission-demo/deepjscc-frames/0recon_snr8.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
                         <img id="da2-frame-8-2" src="https://rtvst-demo.github.io/video-transmission-demo/deepjscc-frames/1recon_snr8.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da2-frame-8-3" src="https://rtvst-demo.github.io/video-transmission-demo/deepjscc-frames/2recon_snr8.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da2-frame-8-4" src="https://rtvst-demo.github.io/video-transmission-demo/deepjscc-frames/3recon_snr8.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da2-frame-8-5" src="https://rtvst-demo.github.io/video-transmission-demo/deepjscc-frames/4recon_snr8.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <!-- 为简洁起见，省略了部分重复的图片标签 -->
+                        <!-- ... 其余98帧 -->
                     </div>
                     
                     <!-- 12dB SNR 帧 -->
                     <div class="snr-frames" data-snr="12" style="display: none;">
                         <img id="da2-frame-12-1" src="https://rtvst-demo.github.io/video-transmission-demo/deepjscc-frames-12db/0recon_snr12.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
                         <img id="da2-frame-12-2" src="https://rtvst-demo.github.io/video-transmission-demo/deepjscc-frames-12db/1recon_snr12.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da2-frame-12-3" src="https://rtvst-demo.github.io/video-transmission-demo/deepjscc-frames-12db/2recon_snr12.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da2-frame-12-4" src="https://rtvst-demo.github.io/video-transmission-demo/deepjscc-frames-12db/3recon_snr12.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da2-frame-12-5" src="https://rtvst-demo.github.io/video-transmission-demo/deepjscc-frames-12db/4recon_snr12.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <!-- 为简洁起见，省略了部分重复的图片标签 -->
+                        <!-- ... 其余98帧 -->
                     </div>
                 </div>
                 <div class="info-panel">
@@ -414,7 +362,7 @@
                 <!-- 加载进度 -->
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                     <span style="font-size: 15px; color: #000;">加载进度</span>
-                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text3">0%</span>
+                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text3"></span>
                 </div>
                 <div class="progress-bar-container" style="margin-bottom: 5px;">
                     <div class="progress-bar" id="lb3" title="加载进度"></div> 
@@ -422,7 +370,6 @@
 
                 <!-- RTVST 视频帧静态HTML -->
                 <div class="display-area" id="da3">
-                    <div class="preload-status" id="preload-status-3">预加载中...</div>
                     <!-- 4dB SNR 帧 -->
                     <div class="snr-frames" data-snr="4" style="display: none;">
                         <img id="da3-frame-4-1" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/0recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
@@ -430,7 +377,102 @@
                         <img id="da3-frame-4-3" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/2recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
                         <img id="da3-frame-4-4" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/3recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
                         <img id="da3-frame-4-5" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/4recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <!-- 为简洁起见，省略了部分重复的图片标签 -->
+                        <img id="da3-frame-4-6" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/5recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-7" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/6recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-8" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/7recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-9" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/8recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-10" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/9recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-11" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/10recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-12" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/11recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-13" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/12recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-14" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/13recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-15" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/14recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-16" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/15recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-17" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/16recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-18" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/17recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-19" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/18recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-20" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/19recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-21" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/20recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-22" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/21recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-23" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/22recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-24" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/23recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-25" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/24recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-26" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/25recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-27" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/26recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-28" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/27recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-29" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/28recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-30" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/29recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-31" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/30recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-32" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/31recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-33" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/32recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-34" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/33recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-35" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/34recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-36" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/35recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-37" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/36recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-38" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/37recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-39" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/38recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-40" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/39recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-41" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/40recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-42" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/41recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-43" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/42recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-44" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/43recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-45" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/44recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-46" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/45recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-47" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/46recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-48" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/47recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-49" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/48recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-50" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/49recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-51" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/50recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-52" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/51recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-53" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/52recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-54" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/53recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-55" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/54recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-56" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/55recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-57" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/56recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-58" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/57recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-59" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/58recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-60" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/59recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-61" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/60recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-62" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/61recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-63" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/62recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-64" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/63recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-65" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/64recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-66" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/65recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-67" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/66recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-68" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/67recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-69" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/68recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-70" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/69recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-71" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/70recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-72" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/71recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-73" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/72recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-74" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/73recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-75" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/74recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-76" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/75recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-77" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/76recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-78" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/77recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-79" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/78recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-80" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/79recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-81" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/80recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-82" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/81recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-83" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/82recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-84" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/83recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-85" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/84recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-86" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/85recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-87" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/86recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-88" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/87recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-89" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/88recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-90" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/89recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-91" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/90recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-92" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/91recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-93" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/92recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-94" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/93recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-95" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/94recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-96" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/95recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-97" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/96recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-98" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/97recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-99" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/98recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        <img id="da3-frame-4-100" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-4db/99recon_snr4.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                        
                     </div>
                     
                     <!-- 8dB SNR 帧 -->
@@ -438,10 +480,6 @@
                         <img id="da3-frame-8-1" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames/0recon_snr8.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
                         <img id="da3-frame-8-2" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames/1recon_snr8.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
                         <!-- ... 其余98帧 -->
-                        <img id="da3-frame-8-3" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames/2recon_snr8.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da3-frame-8-4" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames/3recon_snr8.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da3-frame-8-5" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames/4recon_snr8.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <!-- 为简洁起见，省略了部分重复的图片标签 -->
                     </div>
                     
                     <!-- 12dB SNR 帧 -->
@@ -449,10 +487,6 @@
                         <img id="da3-frame-12-1" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-12db/0recon_snr12.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
                         <img id="da3-frame-12-2" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-12db/1recon_snr12.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
                         <!-- ... 其余98帧 -->
-                        <img id="da3-frame-12-3" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-12db/2recon_snr12.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da3-frame-12-4" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-12db/3recon_snr12.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <img id="da3-frame-12-5" src="https://rtvst-demo.github.io/video-transmission-demo/rtvst-frames-12db/4recon_snr12.png" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
-                        <!-- 为简洁起见，省略了部分重复的图片标签 -->
                     </div>
                 </div>
                 <div class="info-panel">
@@ -465,12 +499,10 @@
         <footer><p>实时视频语义传输算法设计</p></footer>
     </div>
 
-    <!-- ====================== 优化后的静态HTML帧播放脚本 ====================== -->
+    <!-- ====================== 静态HTML帧播放脚本 ====================== -->
     <script>
         let currentPlayers = [];
         let currentSnr = '8';
-        let preloadedFrames = {}; // 缓存预加载的图片
-        let frameCache = {}; // 缓存DOM元素引用
         
         /* ================= 初始化页面 ================= */
         function initializePage() {
@@ -483,68 +515,6 @@
             document.querySelectorAll('[id^="ps"]').forEach(el => {
                 el.textContent = '已停止';
             });
-            
-            // 预加载所有SNR的图片
-            preloadAllFrames();
-        }
-        
-        /* ================= 预加载所有帧 ================= */
-        function preloadAllFrames() {
-            const snrValues = ['4', '8', '12'];
-            const videoTypes = ['1', '2', '3', '4'];
-            
-            // 为每个视频类型预加载所有SNR的帧
-            videoTypes.forEach(videoType => {
-                snrValues.forEach(snr => {
-                    preloadFramesForVideo(videoType, snr);
-                });
-            });
-        }
-        
-        /* ================= 预加载特定视频的帧 ================= */
-        function preloadFramesForVideo(videoType, snr) {
-            const totalFrames = 100;
-            let loadedCount = 0;
-            const cacheKey = `da${videoType}-${snr}`;
-            
-            // 初始化缓存
-            if (!preloadedFrames[cacheKey]) {
-                preloadedFrames[cacheKey] = new Array(totalFrames);
-            }
-            
-            // 预加载所有帧
-            for (let i = 1; i <= totalFrames; i++) {
-                const frameId = `da${videoType}-frame-${snr}-${i}`;
-                const frameElement = document.getElementById(frameId);
-                
-                if (frameElement) {
-                    // 缓存DOM元素引用
-                    frameCache[frameId] = frameElement;
-                    
-                    // 创建Image对象预加载
-                    const img = new Image();
-                    img.onload = () => {
-                        loadedCount++;
-                        updatePreloadProgress(videoType, loadedCount, totalFrames);
-                        
-                        // 当所有帧加载完成时，隐藏预加载指示器
-                        if (loadedCount === totalFrames) {
-                            document.getElementById(`preload-status-${videoType}`).style.display = 'none';
-                        }
-                    };
-                    img.src = frameElement.src;
-                    
-                    // 缓存预加载的图片
-                    preloadedFrames[cacheKey][i-1] = img;
-                }
-            }
-        }
-        
-        /* ================= 更新预加载进度 ================= */
-        function updatePreloadProgress(videoType, loaded, total) {
-            const progress = Math.round((loaded / total) * 100);
-            document.getElementById(`load-text${videoType}`).textContent = `${progress}%`;
-            document.getElementById(`lb${videoType}`).style.width = `${progress}%`;
         }
         
         /* ================= 初始化第一帧显示 ================= */
@@ -629,7 +599,7 @@
             // 为每个显示区域创建播放器
             for (let i = 1; i <= 4; i++) {
                 const fps = i === 2 ? 4 : 25; // DeepJSCC是4FPS，其他是25FPS
-                const player = createFlipper(
+                const player = flipper(
                     `da${i}`, 
                     100, // 每个视频有100帧
                     1000/fps,
@@ -639,23 +609,21 @@
             }
         }
 
-        /* ================= 优化的播放器函数 ================= */
-        function createFlipper(prefix, total, interval, statusEl) { 
+        /* ================= 播放器函数 ================= */
+        function flipper(prefix, total, interval, statusEl) { 
             let idx = 0, t = null;
-            let currentFrame = null;
             
             const show = k => {
-                // 隐藏当前帧
-                if (currentFrame) {
-                    currentFrame.style.display = 'none';
-                }
-                
-                // 显示新帧 - 使用缓存提高性能
-                const frameId = `${prefix}-frame-${currentSnr}-${k+1}`;
-                currentFrame = frameCache[frameId];
-                
-                if (currentFrame) {
-                    currentFrame.style.display = 'block';
+                // 隐藏当前显示区域的所有帧
+                const displayArea = document.getElementById(prefix);
+                const currentSnrFrames = displayArea.querySelector(`.snr-frames[data-snr="${currentSnr}"]`);
+                if (currentSnrFrames) {
+                    const frames = currentSnrFrames.querySelectorAll('img');
+                    frames.forEach(el => el.style.display = 'none');
+                    
+                    // 显示当前帧
+                    const target = document.getElementById(`${prefix}-frame-${currentSnr}-${k+1}`);
+                    if(target) target.style.display = 'block';
                 }
             };
             
