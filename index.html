@@ -342,6 +342,7 @@
     <!-- ====================== 固定路径 100 帧生成脚本 ====================== -->
     <script>
         /* ================= 配置不同SNR对应的完整路径 ================= */
+        /* ================= 配置不同SNR对应的完整路径 ================= */
         const snrConfig = {
             '4': {
                 origin: 'origin-frames-snr4',
@@ -362,20 +363,23 @@
                 rtvst: 'rtvst-frames-snr12'
             }
         };
-    
+        
         const repo = 'https://rtvst-demo.github.io/video-transmission-demo';
         let currentPlayers = [];
         let currentSnr = '8';
-    
-        /* ================= 初始化页面 ================= */
+        
         /* ================= 初始化页面 ================= */
         function initializePage() {
-            // 移除这行：loadVideos(currentSnr);
             setupEventListeners();
             
             // 初始显示占位符
             document.querySelectorAll('[id^="ps"]').forEach(el => {
                 el.textContent = '请选择SNR';
+            });
+            
+            // 不设置默认值，完全由用户选择
+            document.querySelectorAll('[id^="da"]').forEach(container => {
+                container.innerHTML = '<div class="placeholder">请选择SNR开始加载视频</div>';
             });
         }
         
@@ -383,11 +387,14 @@
         document.getElementById('snrSelect').addEventListener('change', function(e) {
             const selectedSnr = e.target.value;
             if (selectedSnr) {
+                // 立即停止所有播放器
+                stopAllPlayers();
+                
                 currentSnr = selectedSnr;
-                loadVideos(currentSnr);  // ← 只有选择SNR后才开始加载
+                loadVideos(currentSnr);
             }
         });
-    
+        
         /* ================= 加载视频帧 ================= */
         function loadVideos(snr) {
             const config = snrConfig[snr];
@@ -395,7 +402,7 @@
             const panels = [
                 { 
                     id: 'da4', 
-                    folder: config.origin,  // 根据SNR动态变化
+                    folder: config.origin,
                     tpl: i => `img${String(i).padStart(6,'0')}.png`, 
                     count: 100, 
                     fps: 25, 
@@ -403,7 +410,7 @@
                 },
                 { 
                     id: 'da1', 
-                    folder: config.h265,  // 根据SNR动态变化
+                    folder: config.h265,
                     tpl: i => `output_${String(i).padStart(4,'0')}.png`, 
                     count: 100, 
                     fps: 25, 
@@ -411,41 +418,53 @@
                 },
                 { 
                     id: 'da2', 
-                    folder: config.deepjscc,  // 根据SNR动态变化
-                    tpl: i => `${i-1}recon_snr${snr}.png`, 
+                    folder: config.deepjscc,
+                    tpl: i => `${i-1}recon_snr${snr}.png`,  // 使用实际选择的snr值
                     count: 100, 
                     fps: 4, 
                     loadBarId: 'lb2' 
                 },
                 { 
                     id: 'da3', 
-                    folder: config.rtvst,  // 根据SNR动态变化
-                    tpl: i => `${i-1}recon_snr${snr}.png`, 
+                    folder: config.rtvst,
+                    tpl: i => `${i-1}recon_snr${snr}.png`,  // 使用实际选择的snr值
                     count: 100, 
                     fps: 25, 
                     loadBarId: 'lb3' 
                 }
             ];
-    
+        
             // 清除现有的视频帧
             panels.forEach(p => {
                 const box = document.getElementById(p.id);
                 box.innerHTML = '';
             });
-    
+        
             // 重置进度条
             document.querySelectorAll('.progress-bar').forEach(bar => {
                 bar.style.width = '0%';
             });
-    
+        
+            // 重置播放进度条
+            document.querySelectorAll('.play-progress').forEach(bar => {
+                bar.style.width = '0%';
+            });
+        
             // 重置状态显示
             document.querySelectorAll('[id^="ps"]').forEach(el => {
                 el.textContent = '加载中...';
             });
-    
+            
+            // 重置状态指示器
+            document.querySelectorAll('.status-indicator').forEach(indicator => {
+                indicator.className = 'status-indicator status-stopped';
+            });
+        
             // 加载新的视频帧
             loadVideoFrames(panels);
         }
+        
+        // 其他函数保持不变...
     
         /* ================= 图片预加载和进度更新 ================= */
         function loadVideoFrames(panels) {
