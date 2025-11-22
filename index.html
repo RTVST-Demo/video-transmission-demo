@@ -154,6 +154,14 @@
             width: 100%;
             margin: 20px 0;
         }
+        
+        /* 预加载状态提示 */
+        .preload-status {
+            text-align: center;
+            margin: 10px 0;
+            font-size: 1rem;
+            color: #fdbb2d;
+        }
                 
     </style>
 </head>
@@ -220,6 +228,11 @@
                 </div>
             </div> 
             
+            <!-- 预加载状态 -->
+            <div class="preload-status" id="preloadStatus">
+                请选择SNR开始预加载视频帧...
+            </div>
+            
             <!-- ========== 控制按钮移动到信息显示行下方 ========== -->
             <div class="controls">
                 <button class="btn btn-global" id="globalPlay"><i class="fas fa-play"></i> 开始</button>
@@ -236,7 +249,7 @@
                 <!-- 加载进度 -->
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                     <span style="font-size: 15px; color: #000;">加载进度</span>
-                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text4"></span>
+                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text4">0/100</span>
                 </div>
                 <div class="progress-bar-container" style="margin-bottom: 5px;">
                     <div class="progress-bar" id="lb4" title="加载进度"></div> 
@@ -256,7 +269,7 @@
                 <!-- 加载进度 -->
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                     <span style="font-size: 15px; color: #000;">加载进度</span>
-                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text1"></span>
+                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text1">0/100</span>
                 </div>
                 <div class="progress-bar-container" style="margin-bottom: 5px;">
                     <div class="progress-bar" id="lb1" title="加载进度"></div> 
@@ -275,7 +288,7 @@
                 <!-- 加载进度 -->
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                     <span style="font-size: 15px; color: #000;">加载进度</span>
-                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text2"></span>
+                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text2">0/100</span>
                 </div>
                 <div class="progress-bar-container" style="margin-bottom: 5px;">
                     <div class="progress-bar" id="lb2" title="加载进度"></div> 
@@ -295,7 +308,7 @@
                 <!-- 加载进度 -->
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                     <span style="font-size: 15px; color: #000;">加载进度</span>
-                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text3"></span>
+                    <span style="font-size: 15px; color: #fdbb2d;" id="load-text3">0/100</span>
                 </div>
                 <div class="progress-bar-container" style="margin-bottom: 5px;">
                     <div class="progress-bar" id="lb3" title="加载进度"></div> 
@@ -312,7 +325,7 @@
         <footer><p>实时视频语义传输算法设计</p></footer>
     </div>
 
-    <!-- ====================== 简化版脚本 - 直接使用完整地址 ====================== -->
+    <!-- ====================== 使用Image对象预加载到缓存 ====================== -->
     <script>
         // 直接定义每个SNR对应的完整图片地址数组
         const videoFrames = {
@@ -350,6 +363,7 @@
 
         let currentPlayers = [];
         let currentSnr = '8';
+        let imageCache = {}; // 缓存所有预加载的Image对象
         
         // 初始化页面
         function initializePage() {
@@ -371,22 +385,26 @@
             if (selectedSnr) {
                 stopAllPlayers();
                 currentSnr = selectedSnr;
-                loadVideos(currentSnr);
+                preloadAndDisplayVideos(currentSnr);
             }
         });
         
-        // 加载视频帧
-        function loadVideos(snr) {
+        // 预加载并显示视频帧
+        function preloadAndDisplayVideos(snr) {
             const frames = videoFrames[snr];
+            const cacheKey = `snr_${snr}`;
+            
+            // 更新预加载状态
+            document.getElementById('preloadStatus').textContent = '正在预加载视频帧到缓存...';
             
             const panels = [
-                { id: 'da4', frames: frames.origin, fps: 25, loadBarId: 'lb4' },
-                { id: 'da1', frames: frames.h265, fps: 25, loadBarId: 'lb1' },
-                { id: 'da2', frames: frames.deepjscc, fps: 4, loadBarId: 'lb2' },
-                { id: 'da3', frames: frames.rtvst, fps: 25, loadBarId: 'lb3' }
+                { id: 'da4', type: 'origin', fps: 25, loadBarId: 'lb4', loadTextId: 'load-text4' },
+                { id: 'da1', type: 'h265', fps: 25, loadBarId: 'lb1', loadTextId: 'load-text1' },
+                { id: 'da2', type: 'deepjscc', fps: 4, loadBarId: 'lb2', loadTextId: 'load-text2' },
+                { id: 'da3', type: 'rtvst', fps: 25, loadBarId: 'lb3', loadTextId: 'load-text3' }
             ];
         
-            // 清除现有的视频帧
+            // 清除现有的显示区域
             panels.forEach(p => {
                 const box = document.getElementById(p.id);
                 box.innerHTML = '';
@@ -395,6 +413,11 @@
             // 重置进度条
             document.querySelectorAll('.progress-bar').forEach(bar => {
                 bar.style.width = '0%';
+            });
+            
+            // 重置加载文本
+            document.querySelectorAll('[id^="load-text"]').forEach(el => {
+                el.textContent = '0/100';
             });
         
             // 重置状态显示
@@ -407,99 +430,134 @@
                 indicator.className = 'status-indicator status-stopped';
             });
         
-            // 加载新的视频帧
-            loadVideoFrames(panels);
+            // 初始化缓存
+            if (!imageCache[cacheKey]) {
+                imageCache[cacheKey] = {};
+            }
+            
+            // 预加载所有图像到缓存
+            preloadAllFrames(frames, panels, cacheKey);
         }
     
-        // 图片预加载和进度更新
-        function loadVideoFrames(panels) {
-            let totalLoaded = 0;
-            const totalPanels = panels.length;
+        // 预加载所有帧到缓存
+        function preloadAllFrames(frames, panels, cacheKey) {
+            let totalFramesToLoad = 0;
+            let totalFramesLoaded = 0;
             
-            panels.forEach(p => {
-                const box = document.getElementById(p.id);
-                const loadBar = document.getElementById(p.loadBarId);
+            // 计算总帧数
+            panels.forEach(panel => {
+                totalFramesToLoad += frames[panel.type].length;
+            });
+            
+            panels.forEach(panel => {
+                const frameUrls = frames[panel.type];
+                const loadBar = document.getElementById(panel.loadBarId);
+                const loadText = document.getElementById(panel.loadTextId);
+                const displayArea = document.getElementById(panel.id);
                 
-                let loadedFrames = 0;
-                const totalFrames = p.frames.length;
+                let panelFramesLoaded = 0;
+                const totalPanelFrames = frameUrls.length;
                 
-                p.frames.forEach((src, index) => {
-                    const img = document.createElement('img');
-                    img.id = `${p.id}-frame-${index + 1}`;
-                    img.src = src;
-                    img.style.maxWidth = '100%';
-                    img.style.maxHeight = '100%';
-                    img.style.objectFit = 'contain';
-                    img.style.display = 'none';
+                // 预加载该面板的所有帧
+                frameUrls.forEach((src, index) => {
+                    const frameKey = `${panel.type}_${index}`;
                     
-                    img.onload = () => {
-                        loadedFrames++;
-                        const progress = (loadedFrames / totalFrames) * 100;
-                        if(loadBar) {
-                            loadBar.style.width = `${progress}%`;
-                        }
+                    // 如果缓存中还没有这个图像，就创建新的Image对象
+                    if (!imageCache[cacheKey][frameKey]) {
+                        const img = new Image();
+                        imageCache[cacheKey][frameKey] = img;
                         
-                        // 当当前面板的所有帧加载完成时
-                        if(loadedFrames === totalFrames) {
-                            totalLoaded++;
+                        img.onload = () => {
+                            panelFramesLoaded++;
+                            totalFramesLoaded++;
                             
-                            // 显示第一帧
-                            const firstFrame = document.getElementById(`${p.id}-frame-1`);
-                            if (firstFrame) firstFrame.style.display = 'block';
-                            
-                            // 当所有面板都加载完成时初始化播放器
-                            if(totalLoaded === totalPanels) {
-                                initializePlayers(panels);
+                            // 更新面板进度
+                            const panelProgress = (panelFramesLoaded / totalPanelFrames) * 100;
+                            if (loadBar) {
+                                loadBar.style.width = `${panelProgress}%`;
                             }
-                        }
-                    };
-
-                    img.onerror = () => {
-                        console.error(`Error loading frame: ${src}`);
-                    };
-
-                    box.appendChild(img);
+                            if (loadText) {
+                                loadText.textContent = `${panelFramesLoaded}/${totalPanelFrames}`;
+                            }
+                            
+                            // 如果是该面板的第一帧，立即显示
+                            if (panelFramesLoaded === 1) {
+                                displayArea.appendChild(img.cloneNode());
+                            }
+                            
+                            // 更新总进度
+                            const totalProgress = (totalFramesLoaded / totalFramesToLoad) * 100;
+                            document.getElementById('preloadStatus').textContent = 
+                                `预加载进度: ${Math.round(totalProgress)}% (${totalFramesLoaded}/${totalFramesToLoad} 帧)`;
+                            
+                            // 当所有帧都加载完成时
+                            if (totalFramesLoaded === totalFramesToLoad) {
+                                document.getElementById('preloadStatus').textContent = 
+                                    '✅ 所有视频帧已预加载完成！可以开始播放';
+                                initializePlayers(panels, cacheKey);
+                            }
+                        };
+                        
+                        img.onerror = () => {
+                            console.error(`Error preloading frame: ${src}`);
+                            panelFramesLoaded++;
+                            totalFramesLoaded++;
+                        };
+                        
+                        // 开始加载
+                        img.src = src;
+                    } else {
+                        // 如果已经在缓存中，直接计数
+                        panelFramesLoaded++;
+                        totalFramesLoaded++;
+                    }
                 });
             });
         }
 
-        // 初始化播放器
-        function initializePlayers(panels) {
+        // 初始化播放器（使用缓存的Image对象）
+        function initializePlayers(panels, cacheKey) {
             // 停止当前所有播放器
             currentPlayers.forEach(player => {
                 if(player) player.stop();
             });
 
-            currentPlayers = panels.map((p) => {
+            currentPlayers = panels.map((panel) => {
                 let idSuffix;
-                if(p.id === 'da4') idSuffix = 4;
-                else if(p.id === 'da1') idSuffix = 1;
-                else if(p.id === 'da2') idSuffix = 2;
-                else if(p.id === 'da3') idSuffix = 3;
+                if(panel.id === 'da4') idSuffix = 4;
+                else if(panel.id === 'da1') idSuffix = 1;
+                else if(panel.id === 'da2') idSuffix = 2;
+                else if(panel.id === 'da3') idSuffix = 3;
 
-                return flipper(
-                    p.id, 
-                    p.frames.length, 
-                    1000/p.fps,
+                return createPlayer(
+                    panel.id, 
+                    panel.type, 
+                    cacheKey,
+                    panel.fps,
                     document.getElementById(`ps${idSuffix}`)
                 );
             });
         }
 
-        // 播放器函数
-        function flipper(prefix, total, interval, statusEl) { 
+        // 创建播放器（使用缓存的图像）
+        function createPlayer(containerId, frameType, cacheKey, fps, statusEl) { 
             let idx = 0, t = null;
+            const displayArea = document.getElementById(containerId);
+            const totalFrames = 100; // 每个视频都是100帧
             
             const show = k => {
-                const frames = document.querySelectorAll(`[id^="${prefix}-frame-"]`);
-                const target = document.getElementById(`${prefix}-frame-${k+1}`);
+                const frameKey = `${frameType}_${k}`;
+                const cachedImg = imageCache[cacheKey][frameKey];
                 
-                requestAnimationFrame(() => {
-                    frames.forEach(el => el.style.display = 'none');
-                    if(target) target.style.display = 'block';
-                });
+                if (cachedImg) {
+                    // 清空显示区域
+                    displayArea.innerHTML = '';
+                    // 添加缓存的图像副本
+                    displayArea.appendChild(cachedImg.cloneNode());
+                }
             };
             
+            // 显示第一帧
             show(0);
             
             return {
@@ -510,9 +568,9 @@
                         statusEl.previousElementSibling.className = 'status-indicator status-playing'; 
                     }
                     t = setInterval(() => { 
-                        idx = (idx + 1) % total; 
+                        idx = (idx + 1) % totalFrames; 
                         show(idx); 
-                    }, interval);
+                    }, 1000/fps);
                 },
                 pause() {
                     clearInterval(t); 
