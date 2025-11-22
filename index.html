@@ -62,10 +62,10 @@
         .charts-container{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
         .chart-item{background:rgba(255,255,255,.05);border-radius:10px;padding:15px;text-align:center;border:1px solid rgba(255,255,255,.1)}
 
-        .chart-item img{
-            border-radius: 25px;  /* 增加到25px，圆角更明显 */
+        .chart-item img {
+            border-radius: 25px;
             width: 100%;
-            height: 320px;
+            height: 400px;  /* 从320px增加到380px */
             object-fit: contain;
             background: rgba(0,0,0,.2);
             border-radius: 15px;
@@ -74,12 +74,12 @@
             box-shadow: 0 6px 20px rgba(0,0,0,.3);
             transition: all 0.3s ease;
         }
-
         
         .chart-item img:hover{
             transform: scale(1.03);
             box-shadow: 0 10px 30px rgba(0,0,0,.4);
         }
+
         
         .chart-label{margin-top:10px;color:#fdbb2d;font-weight:500;font-size:1.3rem}
         .architecture-image{text-align:center;margin:25px 0;background:rgba(255,255,255,.08);backdrop-filter:blur(10px);border-radius:12px;padding:25px;border:1px solid rgba(253,187,45,.3);box-shadow:0 8px 25px rgba(0,0,0,.2)}
@@ -151,8 +151,11 @@
             display: flex;
             align-items: center;
             gap: 20px;
+            justify-content: center; /* 关键：水平居中 */
+            width: 100%;
+            margin: 20px 0; /* 添加上下边距 */
         }
-        
+                
     </style>
 </head>
 <body>
