@@ -1992,60 +1992,134 @@
     let currentPlayers = [];
     let currentSnr = '8';
     let modalVideoPlayer = null;
+    let isInitialized = false; // 添加初始化标志
 
     // 初始化页面
     function initializePage() {
-        setupEventListeners();
+        if (isInitialized) return;
+        isInitialized = true;
+
+        console.log("开始初始化页面");
         setupModalEvents();
 
-        // 首先显示8dB的图片
-        switchSnrFrames(currentSnr);
+        // 优先加载和显示当前SNR的图片
+        preloadCurrentSnrImages().then(() => {
+            console.log("当前SNR图片预加载完成");
+            // 显示当前SNR的图片
+            switchSnrFrames(currentSnr);
 
-        // 然后初始化播放器并开始播放
+            // 初始化播放器并开始播放
+            setTimeout(() => {
+                startAllPlayers();
+                console.log("所有播放器已启动");
+            }, 200); // 增加延迟确保DOM已完全更新
+        });
+
+        // 延迟加载其他SNR的图片
         setTimeout(() => {
-            startAllPlayers();
-        }, 100); // 小延迟确保DOM已更新
+            preloadOtherSnrImages();
+        }, 1000);
+    }
+
+    // 预加载当前SNR的图片
+    function preloadCurrentSnrImages() {
+        return new Promise((resolve) => {
+            console.log("开始预加载当前SNR图片:", currentSnr);
+            const framesToLoad = Array.from(document.querySelectorAll(`.snr-${currentSnr} .video-frame`));
+            let loadedCount = 0;
+
+            if (framesToLoad.length === 0) {
+                resolve();
+                return;
+            }
+
+            framesToLoad.forEach(frame => {
+                if (frame.complete) {
+                    loadedCount++;
+                    if (loadedCount === framesToLoad.length) {
+                        resolve();
+                    }
+                } else {
+                    frame.onload = () => {
+                        loadedCount++;
+                        if (loadedCount === framesToLoad.length) {
+                            resolve();
+                        }
+                    };
+                    frame.onerror = () => {
+                        loadedCount++;
+                        if (loadedCount === framesToLoad.length) {
+                            resolve();
+                        }
+                    };
+                }
+            });
+        });
+    }
+
+    // 预加载其他SNR的图片
+    function preloadOtherSnrImages() {
+        console.log("开始预加载其他SNR图片");
+        const otherSnrs = ['4', '12'].filter(snr => snr !== currentSnr);
+
+        otherSnrs.forEach(snr => {
+            const frames = Array.from(document.querySelectorAll(`.snr-${snr} .video-frame`));
+            frames.forEach(frame => {
+                // 创建Image对象预加载，但不插入DOM
+                const img = new Image();
+                img.src = frame.src;
+            });
+        });
     }
 
     // SNR选择器事件
     document.getElementById('snrSelect').addEventListener('change', function(e) {
         const selectedSnr = e.target.value;
-        if (selectedSnr) {
+        if (selectedSnr && selectedSnr !== currentSnr) {
+            console.log("切换SNR到:", selectedSnr);
             stopAllPlayers();
             currentSnr = selectedSnr;
-            // 切换SNR时显示对应的图片
-            switchSnrFrames(currentSnr);
-            // 重新开始播放
-            setTimeout(() => {
-                startAllPlayers();
-            }, 100);
+
+            // 预加载新SNR的图片，然后切换
+            preloadCurrentSnrImages().then(() => {
+                switchSnrFrames(currentSnr);
+                setTimeout(() => {
+                    startAllPlayers();
+                }, 100);
+            });
         }
     });
 
     // 切换SNR时显示对应的图片
     function switchSnrFrames(snr) {
-        console.log("切换SNR到:", snr);
+        console.log("切换SNR帧到:", snr);
 
-        // 移除所有激活状态
-        document.querySelectorAll('.snr-frames').forEach(container => {
-            container.classList.remove('active');
-        });
+        // 使用requestAnimationFrame确保平滑过渡
+        requestAnimationFrame(() => {
+            // 移除所有激活状态
+            document.querySelectorAll('.snr-frames').forEach(container => {
+                container.classList.remove('active');
+            });
 
-        // 激活当前SNR的图片容器
-        document.querySelectorAll(`.snr-${snr}`).forEach(container => {
-            container.classList.add('active');
-        });
+            // 激活当前SNR的图片容器
+            document.querySelectorAll(`.snr-${snr}`).forEach(container => {
+                container.classList.add('active');
+            });
 
-        // 隐藏所有帧
-        document.querySelectorAll('.video-frame').forEach(frame => {
-            frame.classList.remove('show');
-        });
+            // 隐藏所有帧
+            document.querySelectorAll('.video-frame').forEach(frame => {
+                frame.classList.remove('show');
+            });
 
-        // 显示每个容器的第一张图片
-        document.querySelectorAll(`.snr-${snr}.active .video-frame`).forEach((img, index) => {
-            if (index === 0) {
-                img.classList.add('show');
-            }
+            // 显示每个容器的第一张图片
+            document.querySelectorAll(`.snr-${snr}.active .video-frame`).forEach((img, index) => {
+                if (index === 0) {
+                    // 使用setTimeout确保DOM更新
+                    setTimeout(() => {
+                        img.classList.add('show');
+                    }, 10);
+                }
+            });
         });
     }
 
@@ -2053,7 +2127,9 @@
     function initializePlayers() {
         // 停止当前所有播放器
         currentPlayers.forEach(player => {
-            if(player) player.stop();
+            if(player && typeof player.stop === 'function') {
+                player.stop();
+            }
         });
 
         // 为每个视频面板创建播放器
@@ -2083,15 +2159,18 @@
         console.log(`创建播放器 ${panelId}, 帧数: ${totalFrames}, 帧率: ${fps}`);
 
         const showFrame = (index) => {
-            // 隐藏所有帧
-            frames.forEach(frame => {
-                frame.classList.remove('show');
-            });
+            // 使用requestAnimationFrame确保平滑过渡
+            requestAnimationFrame(() => {
+                // 隐藏所有帧
+                frames.forEach(frame => {
+                    frame.classList.remove('show');
+                });
 
-            // 显示当前帧
-            if (frames[index]) {
-                frames[index].classList.add('show');
-            }
+                // 显示当前帧
+                if (frames[index]) {
+                    frames[index].classList.add('show');
+                }
+            });
         };
 
         // 显示第一帧
@@ -2106,10 +2185,13 @@
                     return;
                 }
                 console.log(`启动播放器 ${panelId}`);
-                t = setInterval(() => {
-                    idx = (idx + 1) % totalFrames;
-                    showFrame(idx);
-                }, interval);
+                // 使用setTimeout确保在下一帧开始
+                setTimeout(() => {
+                    t = setInterval(() => {
+                        idx = (idx + 1) % totalFrames;
+                        showFrame(idx);
+                    }, interval);
+                }, 0);
             },
             pause() {
                 if (t) {
@@ -2145,19 +2227,24 @@
     function startAllPlayers() {
         console.log("开始所有播放器");
         initializePlayers();
-        currentPlayers.forEach((player, index) => {
-            if (player) {
-                console.log(`启动播放器 ${index}`);
-                player.start();
-            }
-        });
+        // 延迟启动播放器，确保DOM已更新
+        setTimeout(() => {
+            currentPlayers.forEach((player, index) => {
+                if (player && typeof player.start === 'function') {
+                    console.log(`启动播放器 ${index}`);
+                    player.start();
+                }
+            });
+        }, 50);
     }
 
     // 停止所有播放器
     function stopAllPlayers() {
         console.log("停止所有播放器");
         currentPlayers.forEach(player => {
-            if (player) player.stop();
+            if (player && typeof player.stop === 'function') {
+                player.stop();
+            }
         });
         currentPlayers = [];
     }
@@ -2311,13 +2398,11 @@
         };
     }
 
-    // 事件监听器设置
-    function setupEventListeners() {
-        // 无需设置其他事件监听器
-    }
-
     // 页面加载完成后初始化
-    document.addEventListener('DOMContentLoaded', initializePage);
+    document.addEventListener('DOMContentLoaded', function() {
+        // 添加一个小的延迟，确保DOM完全加载
+        setTimeout(initializePage, 100);
+    });
 </script>
 </body>
 </html>
