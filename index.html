@@ -270,27 +270,6 @@
             color: #3498db;
         }
 
-        .status-indicator {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            margin-right: 6px;
-        }
-
-        .status-playing {
-            background: #2ecc71;
-            animation: pulse 1.5s infinite;
-        }
-
-        .status-paused {
-            background: #f39c12;
-        }
-
-        .status-stopped {
-            background: #e74c3c;
-        }
-
         @keyframes pulse {
             0%, 100% {
                 opacity: 1;
@@ -542,346 +521,345 @@
         </div>
     </div>
 
-    <div class="content-section">
-        <div class="control-row">
-            <div class="snr-selector">
-                <label for="snrSelect">选择SNR:</label>
-                <select id="snrSelect">
-                    <option value="4">4 dB</option>
-                    <option value="8" selected>8 dB</option>
-                    <option value="12">12 dB</option>
-                </select>
+        <div class="content-section">
+            <div class="control-row">
+                <div class="snr-selector">
+                    <label for="snrSelect">选择SNR:</label>
+                    <select id="snrSelect">
+                        <option value="4">4 dB</option>
+                        <option value="8" selected>8 dB</option>
+                        <option value="12">12 dB</option>
+                    </select>
+                </div>
+
+                <div class="info-display-item">
+                    <span class="info-label">CBR:</span>
+                    <span class="info-value">0.012</span>
+                </div>
             </div>
 
-            <div class="info-display-item">
-                <span class="info-label">CBR:</span>
-                <span class="info-value">0.012</span>
-            </div>
-        </div>
-
-        <div class="video-container">
-            <!-- Origin -->
-            <div class="video-panel">
-                <div class="panel-header">
-                    <h3 class="panel-title"><i class="fas fa-film"></i> Origin</h3>
-                    <span class="status-indicator status-playing" id="st4"></span>
-                </div>
-                <div class="display-area" id="da4">
-                    <!-- 4dB图片 -->
-                    <div class="snr-frames snr-4">
-                        <!-- 这里放置4dB的Origin图片 -->
-                        <img id="da4-frame-1-4" src="./origin-frames/img000001.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-2-4" src="./origin-frames/img000002.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-3-4" src="./origin-frames/img000003.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-4-4" src="./origin-frames/img000004.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-5-4" src="./origin-frames/img000005.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-6-4" src="./origin-frames/img000006.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-7-4" src="./origin-frames/img000007.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-8-4" src="./origin-frames/img000008.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-9-4" src="./origin-frames/img000009.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-10-4" src="./origin-frames/img000010.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-11-4" src="./origin-frames/img000011.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-12-4" src="./origin-frames/img000012.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-13-4" src="./origin-frames/img000013.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-14-4" src="./origin-frames/img000014.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-15-4" src="./origin-frames/img000015.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-16-4" src="./origin-frames/img000016.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-17-4" src="./origin-frames/img000017.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-18-4" src="./origin-frames/img000018.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-19-4" src="./origin-frames/img000019.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-20-4" src="./origin-frames/img000020.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-21-4" src="./origin-frames/img000021.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-22-4" src="./origin-frames/img000022.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-23-4" src="./origin-frames/img000023.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-24-4" src="./origin-frames/img000024.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-25-4" src="./origin-frames/img000025.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-26-4" src="./origin-frames/img000026.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-27-4" src="./origin-frames/img000027.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-28-4" src="./origin-frames/img000028.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-29-4" src="./origin-frames/img000029.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-30-4" src="./origin-frames/img000030.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-31-4" src="./origin-frames/img000031.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-32-4" src="./origin-frames/img000032.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-33-4" src="./origin-frames/img000033.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-34-4" src="./origin-frames/img000034.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-35-4" src="./origin-frames/img000035.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-36-4" src="./origin-frames/img000036.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-37-4" src="./origin-frames/img000037.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-38-4" src="./origin-frames/img000038.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-39-4" src="./origin-frames/img000039.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-40-4" src="./origin-frames/img000040.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-41-4" src="./origin-frames/img000041.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-42-4" src="./origin-frames/img000042.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-43-4" src="./origin-frames/img000043.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-44-4" src="./origin-frames/img000044.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-45-4" src="./origin-frames/img000045.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-46-4" src="./origin-frames/img000046.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-47-4" src="./origin-frames/img000047.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-48-4" src="./origin-frames/img000048.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-49-4" src="./origin-frames/img000049.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-50-4" src="./origin-frames/img000050.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-51-4" src="./origin-frames/img000051.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-52-4" src="./origin-frames/img000052.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-53-4" src="./origin-frames/img000053.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-54-4" src="./origin-frames/img000054.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-55-4" src="./origin-frames/img000055.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-56-4" src="./origin-frames/img000056.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-57-4" src="./origin-frames/img000057.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-58-4" src="./origin-frames/img000058.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-59-4" src="./origin-frames/img000059.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-60-4" src="./origin-frames/img000060.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-61-4" src="./origin-frames/img000061.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-62-4" src="./origin-frames/img000062.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-63-4" src="./origin-frames/img000063.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-64-4" src="./origin-frames/img000064.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-65-4" src="./origin-frames/img000065.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-66-4" src="./origin-frames/img000066.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-67-4" src="./origin-frames/img000067.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-68-4" src="./origin-frames/img000068.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-69-4" src="./origin-frames/img000069.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-70-4" src="./origin-frames/img000070.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-71-4" src="./origin-frames/img000071.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-72-4" src="./origin-frames/img000072.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-73-4" src="./origin-frames/img000073.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-74-4" src="./origin-frames/img000074.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-75-4" src="./origin-frames/img000075.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-76-4" src="./origin-frames/img000076.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-77-4" src="./origin-frames/img000077.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-78-4" src="./origin-frames/img000078.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-79-4" src="./origin-frames/img000079.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-80-4" src="./origin-frames/img000080.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-81-4" src="./origin-frames/img000081.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-82-4" src="./origin-frames/img000082.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-83-4" src="./origin-frames/img000083.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-84-4" src="./origin-frames/img000084.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-85-4" src="./origin-frames/img000085.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-86-4" src="./origin-frames/img000086.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-87-4" src="./origin-frames/img000087.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-88-4" src="./origin-frames/img000088.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-89-4" src="./origin-frames/img000089.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-90-4" src="./origin-frames/img000090.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-91-4" src="./origin-frames/img000091.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-92-4" src="./origin-frames/img000092.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-93-4" src="./origin-frames/img000093.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-94-4" src="./origin-frames/img000094.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-95-4" src="./origin-frames/img000095.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-96-4" src="./origin-frames/img000096.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-97-4" src="./origin-frames/img000097.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-98-4" src="./origin-frames/img000098.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-99-4" src="./origin-frames/img000099.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-100-4" src="./origin-frames/img000100.png" data-title="Origin" class="video-frame">t
+            <div class="video-container">
+                <!-- Origin -->
+                <div class="video-panel">
+                    <div class="panel-header">
+                        <h3 class="panel-title"><i class="fas fa-film"></i> Origin</h3>
                     </div>
+                    <div class="display-area" id="da4">
+                        <!-- 8dB图片 -->
+                        <div class="snr-frames snr-8 active" >
+                            <!-- 这里放置8dB的Origin图片 -->
+                            <img id="da4-frame-1-8" src="./origin-frames/img000001.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-2-8" src="./origin-frames/img000002.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-3-8" src="./origin-frames/img000003.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-4-8" src="./origin-frames/img000004.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-5-8" src="./origin-frames/img000005.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-6-8" src="./origin-frames/img000006.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-7-8" src="./origin-frames/img000007.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-8-8" src="./origin-frames/img000008.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-9-8" src="./origin-frames/img000009.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-10-8" src="./origin-frames/img000010.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-11-8" src="./origin-frames/img000011.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-12-8" src="./origin-frames/img000012.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-13-8" src="./origin-frames/img000013.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-14-8" src="./origin-frames/img000014.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-15-8" src="./origin-frames/img000015.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-16-8" src="./origin-frames/img000016.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-17-8" src="./origin-frames/img000017.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-18-8" src="./origin-frames/img000018.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-19-8" src="./origin-frames/img000019.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-20-8" src="./origin-frames/img000020.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-21-8" src="./origin-frames/img000021.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-22-8" src="./origin-frames/img000022.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-23-8" src="./origin-frames/img000023.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-24-8" src="./origin-frames/img000024.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-25-8" src="./origin-frames/img000025.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-26-8" src="./origin-frames/img000026.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-27-8" src="./origin-frames/img000027.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-28-8" src="./origin-frames/img000028.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-29-8" src="./origin-frames/img000029.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-30-8" src="./origin-frames/img000030.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-31-8" src="./origin-frames/img000031.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-32-8" src="./origin-frames/img000032.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-33-8" src="./origin-frames/img000033.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-34-8" src="./origin-frames/img000034.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-35-8" src="./origin-frames/img000035.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-36-8" src="./origin-frames/img000036.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-37-8" src="./origin-frames/img000037.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-38-8" src="./origin-frames/img000038.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-39-8" src="./origin-frames/img000039.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-40-8" src="./origin-frames/img000040.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-41-8" src="./origin-frames/img000041.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-42-8" src="./origin-frames/img000042.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-43-8" src="./origin-frames/img000043.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-44-8" src="./origin-frames/img000044.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-45-8" src="./origin-frames/img000045.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-46-8" src="./origin-frames/img000046.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-47-8" src="./origin-frames/img000047.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-48-8" src="./origin-frames/img000048.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-49-8" src="./origin-frames/img000049.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-50-8" src="./origin-frames/img000050.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-51-8" src="./origin-frames/img000051.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-52-8" src="./origin-frames/img000052.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-53-8" src="./origin-frames/img000053.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-54-8" src="./origin-frames/img000054.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-55-8" src="./origin-frames/img000055.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-56-8" src="./origin-frames/img000056.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-57-8" src="./origin-frames/img000057.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-58-8" src="./origin-frames/img000058.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-59-8" src="./origin-frames/img000059.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-60-8" src="./origin-frames/img000060.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-61-8" src="./origin-frames/img000061.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-62-8" src="./origin-frames/img000062.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-63-8" src="./origin-frames/img000063.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-64-8" src="./origin-frames/img000064.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-65-8" src="./origin-frames/img000065.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-66-8" src="./origin-frames/img000066.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-67-8" src="./origin-frames/img000067.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-68-8" src="./origin-frames/img000068.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-69-8" src="./origin-frames/img000069.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-70-8" src="./origin-frames/img000070.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-71-8" src="./origin-frames/img000071.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-72-8" src="./origin-frames/img000072.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-73-8" src="./origin-frames/img000073.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-74-8" src="./origin-frames/img000074.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-75-8" src="./origin-frames/img000075.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-76-8" src="./origin-frames/img000076.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-77-8" src="./origin-frames/img000077.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-78-8" src="./origin-frames/img000078.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-79-8" src="./origin-frames/img000079.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-80-8" src="./origin-frames/img000080.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-81-8" src="./origin-frames/img000081.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-82-8" src="./origin-frames/img000082.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-83-8" src="./origin-frames/img000083.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-84-8" src="./origin-frames/img000084.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-85-8" src="./origin-frames/img000085.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-86-8" src="./origin-frames/img000086.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-87-8" src="./origin-frames/img000087.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-88-8" src="./origin-frames/img000088.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-89-8" src="./origin-frames/img000089.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-90-8" src="./origin-frames/img000090.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-91-8" src="./origin-frames/img000091.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-92-8" src="./origin-frames/img000092.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-93-8" src="./origin-frames/img000093.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-94-8" src="./origin-frames/img000094.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-95-8" src="./origin-frames/img000095.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-96-8" src="./origin-frames/img000096.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-97-8" src="./origin-frames/img000097.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-98-8" src="./origin-frames/img000098.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-99-8" src="./origin-frames/img000099.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-100-8" src="./origin-frames/img000100.png" data-title="Origin" class="video-frame">
+                        </div>
 
-                    <!-- 8dB图片 -->
-                    <div class="snr-frames snr-8 active" >
-                        <!-- 这里放置8dB的Origin图片 -->
-                        <img id="da4-frame-1-8" src="./origin-frames/img000001.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-2-8" src="./origin-frames/img000002.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-3-8" src="./origin-frames/img000003.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-4-8" src="./origin-frames/img000004.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-5-8" src="./origin-frames/img000005.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-6-8" src="./origin-frames/img000006.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-7-8" src="./origin-frames/img000007.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-8-8" src="./origin-frames/img000008.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-9-8" src="./origin-frames/img000009.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-10-8" src="./origin-frames/img000010.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-11-8" src="./origin-frames/img000011.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-12-8" src="./origin-frames/img000012.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-13-8" src="./origin-frames/img000013.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-14-8" src="./origin-frames/img000014.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-15-8" src="./origin-frames/img000015.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-16-8" src="./origin-frames/img000016.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-17-8" src="./origin-frames/img000017.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-18-8" src="./origin-frames/img000018.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-19-8" src="./origin-frames/img000019.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-20-8" src="./origin-frames/img000020.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-21-8" src="./origin-frames/img000021.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-22-8" src="./origin-frames/img000022.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-23-8" src="./origin-frames/img000023.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-24-8" src="./origin-frames/img000024.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-25-8" src="./origin-frames/img000025.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-26-8" src="./origin-frames/img000026.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-27-8" src="./origin-frames/img000027.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-28-8" src="./origin-frames/img000028.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-29-8" src="./origin-frames/img000029.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-30-8" src="./origin-frames/img000030.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-31-8" src="./origin-frames/img000031.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-32-8" src="./origin-frames/img000032.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-33-8" src="./origin-frames/img000033.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-34-8" src="./origin-frames/img000034.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-35-8" src="./origin-frames/img000035.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-36-8" src="./origin-frames/img000036.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-37-8" src="./origin-frames/img000037.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-38-8" src="./origin-frames/img000038.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-39-8" src="./origin-frames/img000039.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-40-8" src="./origin-frames/img000040.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-41-8" src="./origin-frames/img000041.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-42-8" src="./origin-frames/img000042.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-43-8" src="./origin-frames/img000043.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-44-8" src="./origin-frames/img000044.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-45-8" src="./origin-frames/img000045.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-46-8" src="./origin-frames/img000046.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-47-8" src="./origin-frames/img000047.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-48-8" src="./origin-frames/img000048.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-49-8" src="./origin-frames/img000049.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-50-8" src="./origin-frames/img000050.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-51-8" src="./origin-frames/img000051.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-52-8" src="./origin-frames/img000052.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-53-8" src="./origin-frames/img000053.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-54-8" src="./origin-frames/img000054.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-55-8" src="./origin-frames/img000055.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-56-8" src="./origin-frames/img000056.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-57-8" src="./origin-frames/img000057.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-58-8" src="./origin-frames/img000058.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-59-8" src="./origin-frames/img000059.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-60-8" src="./origin-frames/img000060.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-61-8" src="./origin-frames/img000061.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-62-8" src="./origin-frames/img000062.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-63-8" src="./origin-frames/img000063.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-64-8" src="./origin-frames/img000064.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-65-8" src="./origin-frames/img000065.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-66-8" src="./origin-frames/img000066.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-67-8" src="./origin-frames/img000067.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-68-8" src="./origin-frames/img000068.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-69-8" src="./origin-frames/img000069.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-70-8" src="./origin-frames/img000070.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-71-8" src="./origin-frames/img000071.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-72-8" src="./origin-frames/img000072.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-73-8" src="./origin-frames/img000073.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-74-8" src="./origin-frames/img000074.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-75-8" src="./origin-frames/img000075.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-76-8" src="./origin-frames/img000076.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-77-8" src="./origin-frames/img000077.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-78-8" src="./origin-frames/img000078.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-79-8" src="./origin-frames/img000079.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-80-8" src="./origin-frames/img000080.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-81-8" src="./origin-frames/img000081.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-82-8" src="./origin-frames/img000082.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-83-8" src="./origin-frames/img000083.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-84-8" src="./origin-frames/img000084.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-85-8" src="./origin-frames/img000085.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-86-8" src="./origin-frames/img000086.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-87-8" src="./origin-frames/img000087.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-88-8" src="./origin-frames/img000088.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-89-8" src="./origin-frames/img000089.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-90-8" src="./origin-frames/img000090.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-91-8" src="./origin-frames/img000091.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-92-8" src="./origin-frames/img000092.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-93-8" src="./origin-frames/img000093.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-94-8" src="./origin-frames/img000094.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-95-8" src="./origin-frames/img000095.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-96-8" src="./origin-frames/img000096.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-97-8" src="./origin-frames/img000097.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-98-8" src="./origin-frames/img000098.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-99-8" src="./origin-frames/img000099.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-100-8" src="./origin-frames/img000100.png" data-title="Origin" class="video-frame">
-                    </div>
+                        <!-- 4dB图片 -->
+                        <div class="snr-frames snr-4">
+                            <!-- 这里放置4dB的Origin图片 -->
+                            <img id="da4-frame-1-4" src="./origin-frames/img000001.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-2-4" src="./origin-frames/img000002.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-3-4" src="./origin-frames/img000003.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-4-4" src="./origin-frames/img000004.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-5-4" src="./origin-frames/img000005.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-6-4" src="./origin-frames/img000006.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-7-4" src="./origin-frames/img000007.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-8-4" src="./origin-frames/img000008.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-9-4" src="./origin-frames/img000009.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-10-4" src="./origin-frames/img000010.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-11-4" src="./origin-frames/img000011.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-12-4" src="./origin-frames/img000012.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-13-4" src="./origin-frames/img000013.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-14-4" src="./origin-frames/img000014.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-15-4" src="./origin-frames/img000015.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-16-4" src="./origin-frames/img000016.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-17-4" src="./origin-frames/img000017.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-18-4" src="./origin-frames/img000018.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-19-4" src="./origin-frames/img000019.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-20-4" src="./origin-frames/img000020.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-21-4" src="./origin-frames/img000021.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-22-4" src="./origin-frames/img000022.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-23-4" src="./origin-frames/img000023.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-24-4" src="./origin-frames/img000024.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-25-4" src="./origin-frames/img000025.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-26-4" src="./origin-frames/img000026.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-27-4" src="./origin-frames/img000027.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-28-4" src="./origin-frames/img000028.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-29-4" src="./origin-frames/img000029.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-30-4" src="./origin-frames/img000030.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-31-4" src="./origin-frames/img000031.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-32-4" src="./origin-frames/img000032.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-33-4" src="./origin-frames/img000033.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-34-4" src="./origin-frames/img000034.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-35-4" src="./origin-frames/img000035.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-36-4" src="./origin-frames/img000036.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-37-4" src="./origin-frames/img000037.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-38-4" src="./origin-frames/img000038.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-39-4" src="./origin-frames/img000039.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-40-4" src="./origin-frames/img000040.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-41-4" src="./origin-frames/img000041.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-42-4" src="./origin-frames/img000042.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-43-4" src="./origin-frames/img000043.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-44-4" src="./origin-frames/img000044.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-45-4" src="./origin-frames/img000045.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-46-4" src="./origin-frames/img000046.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-47-4" src="./origin-frames/img000047.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-48-4" src="./origin-frames/img000048.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-49-4" src="./origin-frames/img000049.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-50-4" src="./origin-frames/img000050.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-51-4" src="./origin-frames/img000051.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-52-4" src="./origin-frames/img000052.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-53-4" src="./origin-frames/img000053.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-54-4" src="./origin-frames/img000054.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-55-4" src="./origin-frames/img000055.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-56-4" src="./origin-frames/img000056.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-57-4" src="./origin-frames/img000057.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-58-4" src="./origin-frames/img000058.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-59-4" src="./origin-frames/img000059.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-60-4" src="./origin-frames/img000060.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-61-4" src="./origin-frames/img000061.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-62-4" src="./origin-frames/img000062.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-63-4" src="./origin-frames/img000063.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-64-4" src="./origin-frames/img000064.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-65-4" src="./origin-frames/img000065.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-66-4" src="./origin-frames/img000066.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-67-4" src="./origin-frames/img000067.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-68-4" src="./origin-frames/img000068.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-69-4" src="./origin-frames/img000069.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-70-4" src="./origin-frames/img000070.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-71-4" src="./origin-frames/img000071.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-72-4" src="./origin-frames/img000072.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-73-4" src="./origin-frames/img000073.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-74-4" src="./origin-frames/img000074.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-75-4" src="./origin-frames/img000075.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-76-4" src="./origin-frames/img000076.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-77-4" src="./origin-frames/img000077.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-78-4" src="./origin-frames/img000078.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-79-4" src="./origin-frames/img000079.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-80-4" src="./origin-frames/img000080.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-81-4" src="./origin-frames/img000081.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-82-4" src="./origin-frames/img000082.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-83-4" src="./origin-frames/img000083.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-84-4" src="./origin-frames/img000084.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-85-4" src="./origin-frames/img000085.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-86-4" src="./origin-frames/img000086.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-87-4" src="./origin-frames/img000087.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-88-4" src="./origin-frames/img000088.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-89-4" src="./origin-frames/img000089.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-90-4" src="./origin-frames/img000090.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-91-4" src="./origin-frames/img000091.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-92-4" src="./origin-frames/img000092.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-93-4" src="./origin-frames/img000093.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-94-4" src="./origin-frames/img000094.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-95-4" src="./origin-frames/img000095.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-96-4" src="./origin-frames/img000096.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-97-4" src="./origin-frames/img000097.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-98-4" src="./origin-frames/img000098.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-99-4" src="./origin-frames/img000099.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-100-4" src="./origin-frames/img000100.png" data-title="Origin" class="video-frame">t
+                        </div>
 
-                    <!-- 12dB图片 -->
-                    <div class="snr-frames snr-12">
-                        <!-- 这里放置12dB的Origin图片 -->
-                        <img id="da4-frame-1-12" src="./origin-frames/img000001.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-2-12" src="./origin-frames/img000002.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-3-12" src="./origin-frames/img000003.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-4-12" src="./origin-frames/img000004.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-5-12" src="./origin-frames/img000005.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-6-12" src="./origin-frames/img000006.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-7-12" src="./origin-frames/img000007.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-8-12" src="./origin-frames/img000008.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-9-12" src="./origin-frames/img000009.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-10-12" src="./origin-frames/img000010.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-11-12" src="./origin-frames/img000011.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-12-12" src="./origin-frames/img000012.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-13-12" src="./origin-frames/img000013.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-14-12" src="./origin-frames/img000014.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-15-12" src="./origin-frames/img000015.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-16-12" src="./origin-frames/img000016.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-17-12" src="./origin-frames/img000017.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-18-12" src="./origin-frames/img000018.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-19-12" src="./origin-frames/img000019.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-20-12" src="./origin-frames/img000020.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-21-12" src="./origin-frames/img000021.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-22-12" src="./origin-frames/img000022.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-23-12" src="./origin-frames/img000023.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-24-12" src="./origin-frames/img000024.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-25-12" src="./origin-frames/img000025.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-26-12" src="./origin-frames/img000026.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-27-12" src="./origin-frames/img000027.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-28-12" src="./origin-frames/img000028.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-29-12" src="./origin-frames/img000029.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-30-12" src="./origin-frames/img000030.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-31-12" src="./origin-frames/img000031.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-32-12" src="./origin-frames/img000032.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-33-12" src="./origin-frames/img000033.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-34-12" src="./origin-frames/img000034.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-35-12" src="./origin-frames/img000035.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-36-12" src="./origin-frames/img000036.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-37-12" src="./origin-frames/img000037.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-38-12" src="./origin-frames/img000038.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-39-12" src="./origin-frames/img000039.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-40-12" src="./origin-frames/img000040.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-41-12" src="./origin-frames/img000041.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-42-12" src="./origin-frames/img000042.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-43-12" src="./origin-frames/img000043.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-44-12" src="./origin-frames/img000044.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-45-12" src="./origin-frames/img000045.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-46-12" src="./origin-frames/img000046.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-47-12" src="./origin-frames/img000047.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-48-12" src="./origin-frames/img000048.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-49-12" src="./origin-frames/img000049.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-50-12" src="./origin-frames/img000050.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-51-12" src="./origin-frames/img000051.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-52-12" src="./origin-frames/img000052.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-53-12" src="./origin-frames/img000053.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-54-12" src="./origin-frames/img000054.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-55-12" src="./origin-frames/img000055.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-56-12" src="./origin-frames/img000056.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-57-12" src="./origin-frames/img000057.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-58-12" src="./origin-frames/img000058.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-59-12" src="./origin-frames/img000059.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-60-12" src="./origin-frames/img000060.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-61-12" src="./origin-frames/img000061.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-62-12" src="./origin-frames/img000062.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-63-12" src="./origin-frames/img000063.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-64-12" src="./origin-frames/img000064.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-65-12" src="./origin-frames/img000065.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-66-12" src="./origin-frames/img000066.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-67-12" src="./origin-frames/img000067.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-68-12" src="./origin-frames/img000068.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-69-12" src="./origin-frames/img000069.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-70-12" src="./origin-frames/img000070.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-71-12" src="./origin-frames/img000071.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-72-12" src="./origin-frames/img000072.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-73-12" src="./origin-frames/img000073.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-74-12" src="./origin-frames/img000074.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-75-12" src="./origin-frames/img000075.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-76-12" src="./origin-frames/img000076.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-77-12" src="./origin-frames/img000077.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-78-12" src="./origin-frames/img000078.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-79-12" src="./origin-frames/img000079.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-80-12" src="./origin-frames/img000080.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-81-12" src="./origin-frames/img000081.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-82-12" src="./origin-frames/img000082.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-83-12" src="./origin-frames/img000083.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-84-12" src="./origin-frames/img000084.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-85-12" src="./origin-frames/img000085.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-86-12" src="./origin-frames/img000086.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-87-12" src="./origin-frames/img000087.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-88-12" src="./origin-frames/img000088.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-89-12" src="./origin-frames/img000089.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-90-12" src="./origin-frames/img000090.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-91-12" src="./origin-frames/img000091.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-92-12" src="./origin-frames/img000092.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-93-12" src="./origin-frames/img000093.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-94-12" src="./origin-frames/img000094.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-95-12" src="./origin-frames/img000095.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-96-12" src="./origin-frames/img000096.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-97-12" src="./origin-frames/img000097.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-98-12" src="./origin-frames/img000098.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-99-12" src="./origin-frames/img000099.png" data-title="Origin" class="video-frame">
-                        <img id="da4-frame-100-12" src="./origin-frames/img000100.png" data-title="Origin" class="video-frame">
+                        <!-- 12dB图片 -->
+                        <div class="snr-frames snr-12">
+                            <!-- 这里放置12dB的Origin图片 -->
+                            <img id="da4-frame-1-12" src="./origin-frames/img000001.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-2-12" src="./origin-frames/img000002.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-3-12" src="./origin-frames/img000003.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-4-12" src="./origin-frames/img000004.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-5-12" src="./origin-frames/img000005.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-6-12" src="./origin-frames/img000006.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-7-12" src="./origin-frames/img000007.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-8-12" src="./origin-frames/img000008.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-9-12" src="./origin-frames/img000009.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-10-12" src="./origin-frames/img000010.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-11-12" src="./origin-frames/img000011.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-12-12" src="./origin-frames/img000012.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-13-12" src="./origin-frames/img000013.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-14-12" src="./origin-frames/img000014.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-15-12" src="./origin-frames/img000015.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-16-12" src="./origin-frames/img000016.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-17-12" src="./origin-frames/img000017.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-18-12" src="./origin-frames/img000018.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-19-12" src="./origin-frames/img000019.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-20-12" src="./origin-frames/img000020.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-21-12" src="./origin-frames/img000021.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-22-12" src="./origin-frames/img000022.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-23-12" src="./origin-frames/img000023.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-24-12" src="./origin-frames/img000024.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-25-12" src="./origin-frames/img000025.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-26-12" src="./origin-frames/img000026.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-27-12" src="./origin-frames/img000027.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-28-12" src="./origin-frames/img000028.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-29-12" src="./origin-frames/img000029.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-30-12" src="./origin-frames/img000030.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-31-12" src="./origin-frames/img000031.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-32-12" src="./origin-frames/img000032.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-33-12" src="./origin-frames/img000033.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-34-12" src="./origin-frames/img000034.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-35-12" src="./origin-frames/img000035.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-36-12" src="./origin-frames/img000036.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-37-12" src="./origin-frames/img000037.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-38-12" src="./origin-frames/img000038.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-39-12" src="./origin-frames/img000039.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-40-12" src="./origin-frames/img000040.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-41-12" src="./origin-frames/img000041.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-42-12" src="./origin-frames/img000042.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-43-12" src="./origin-frames/img000043.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-44-12" src="./origin-frames/img000044.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-45-12" src="./origin-frames/img000045.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-46-12" src="./origin-frames/img000046.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-47-12" src="./origin-frames/img000047.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-48-12" src="./origin-frames/img000048.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-49-12" src="./origin-frames/img000049.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-50-12" src="./origin-frames/img000050.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-51-12" src="./origin-frames/img000051.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-52-12" src="./origin-frames/img000052.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-53-12" src="./origin-frames/img000053.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-54-12" src="./origin-frames/img000054.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-55-12" src="./origin-frames/img000055.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-56-12" src="./origin-frames/img000056.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-57-12" src="./origin-frames/img000057.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-58-12" src="./origin-frames/img000058.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-59-12" src="./origin-frames/img000059.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-60-12" src="./origin-frames/img000060.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-61-12" src="./origin-frames/img000061.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-62-12" src="./origin-frames/img000062.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-63-12" src="./origin-frames/img000063.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-64-12" src="./origin-frames/img000064.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-65-12" src="./origin-frames/img000065.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-66-12" src="./origin-frames/img000066.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-67-12" src="./origin-frames/img000067.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-68-12" src="./origin-frames/img000068.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-69-12" src="./origin-frames/img000069.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-70-12" src="./origin-frames/img000070.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-71-12" src="./origin-frames/img000071.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-72-12" src="./origin-frames/img000072.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-73-12" src="./origin-frames/img000073.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-74-12" src="./origin-frames/img000074.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-75-12" src="./origin-frames/img000075.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-76-12" src="./origin-frames/img000076.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-77-12" src="./origin-frames/img000077.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-78-12" src="./origin-frames/img000078.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-79-12" src="./origin-frames/img000079.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-80-12" src="./origin-frames/img000080.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-81-12" src="./origin-frames/img000081.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-82-12" src="./origin-frames/img000082.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-83-12" src="./origin-frames/img000083.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-84-12" src="./origin-frames/img000084.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-85-12" src="./origin-frames/img000085.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-86-12" src="./origin-frames/img000086.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-87-12" src="./origin-frames/img000087.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-88-12" src="./origin-frames/img000088.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-89-12" src="./origin-frames/img000089.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-90-12" src="./origin-frames/img000090.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-91-12" src="./origin-frames/img000091.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-92-12" src="./origin-frames/img000092.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-93-12" src="./origin-frames/img000093.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-94-12" src="./origin-frames/img000094.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-95-12" src="./origin-frames/img000095.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-96-12" src="./origin-frames/img000096.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-97-12" src="./origin-frames/img000097.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-98-12" src="./origin-frames/img000098.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-99-12" src="./origin-frames/img000099.png" data-title="Origin" class="video-frame">
+                            <img id="da4-frame-100-12" src="./origin-frames/img000100.png" data-title="Origin" class="video-frame">
+                        </div>
                     </div>
-                </div>
                 <div class="info-panel">
                     <div class="info-item"><span>帧率:</span><span id="fps4">25 FPS</span></div>
                 </div>
@@ -891,114 +869,8 @@
             <div class="video-panel">
                 <div class="panel-header">
                     <h3 class="panel-title"><i class="fas fa-film"></i> H.265 + LDPC</h3>
-                    <span class="status-indicator status-playing" id="st1"></span>
                 </div>
                 <div class="display-area" id="da1">
-                    <!-- 4dB图片 -->
-                    <div class="snr-frames snr-4">
-                        <!-- 这里放置4dB的H.265图片 -->
-                        <img id="da1-frame-1-4" src="./h265+ldpc-frames-4db/output_0001.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-2-4" src="./h265+ldpc-frames-4db/output_0002.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-3-4" src="./h265+ldpc-frames-4db/output_0003.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-4-4" src="./h265+ldpc-frames-4db/output_0004.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-5-4" src="./h265+ldpc-frames-4db/output_0005.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-6-4" src="./h265+ldpc-frames-4db/output_0006.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-7-4" src="./h265+ldpc-frames-4db/output_0007.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-8-4" src="./h265+ldpc-frames-4db/output_0008.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-9-4" src="./h265+ldpc-frames-4db/output_0009.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-10-4" src="./h265+ldpc-frames-4db/output_0010.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-11-4" src="./h265+ldpc-frames-4db/output_0011.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-12-4" src="./h265+ldpc-frames-4db/output_0012.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-13-4" src="./h265+ldpc-frames-4db/output_0013.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-14-4" src="./h265+ldpc-frames-4db/output_0014.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-15-4" src="./h265+ldpc-frames-4db/output_0015.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-16-4" src="./h265+ldpc-frames-4db/output_0016.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-17-4" src="./h265+ldpc-frames-4db/output_0017.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-18-4" src="./h265+ldpc-frames-4db/output_0018.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-19-4" src="./h265+ldpc-frames-4db/output_0019.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-20-4" src="./h265+ldpc-frames-4db/output_0020.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-21-4" src="./h265+ldpc-frames-4db/output_0021.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-22-4" src="./h265+ldpc-frames-4db/output_0022.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-23-4" src="./h265+ldpc-frames-4db/output_0023.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-24-4" src="./h265+ldpc-frames-4db/output_0024.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-25-4" src="./h265+ldpc-frames-4db/output_0025.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-26-4" src="./h265+ldpc-frames-4db/output_0026.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-27-4" src="./h265+ldpc-frames-4db/output_0027.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-28-4" src="./h265+ldpc-frames-4db/output_0028.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-29-4" src="./h265+ldpc-frames-4db/output_0029.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-30-4" src="./h265+ldpc-frames-4db/output_0030.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-31-4" src="./h265+ldpc-frames-4db/output_0031.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-32-4" src="./h265+ldpc-frames-4db/output_0032.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-33-4" src="./h265+ldpc-frames-4db/output_0033.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-34-4" src="./h265+ldpc-frames-4db/output_0034.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-35-4" src="./h265+ldpc-frames-4db/output_0035.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-36-4" src="./h265+ldpc-frames-4db/output_0036.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-37-4" src="./h265+ldpc-frames-4db/output_0037.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-38-4" src="./h265+ldpc-frames-4db/output_0038.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-39-4" src="./h265+ldpc-frames-4db/output_0039.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-40-4" src="./h265+ldpc-frames-4db/output_0040.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-41-4" src="./h265+ldpc-frames-4db/output_0041.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-42-4" src="./h265+ldpc-frames-4db/output_0042.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-43-4" src="./h265+ldpc-frames-4db/output_0043.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-44-4" src="./h265+ldpc-frames-4db/output_0044.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-45-4" src="./h265+ldpc-frames-4db/output_0045.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-46-4" src="./h265+ldpc-frames-4db/output_0046.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-47-4" src="./h265+ldpc-frames-4db/output_0047.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-48-4" src="./h265+ldpc-frames-4db/output_0048.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-49-4" src="./h265+ldpc-frames-4db/output_0049.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-50-4" src="./h265+ldpc-frames-4db/output_0050.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-51-4" src="./h265+ldpc-frames-4db/output_0051.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-52-4" src="./h265+ldpc-frames-4db/output_0052.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-53-4" src="./h265+ldpc-frames-4db/output_0053.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-54-4" src="./h265+ldpc-frames-4db/output_0054.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-55-4" src="./h265+ldpc-frames-4db/output_0055.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-56-4" src="./h265+ldpc-frames-4db/output_0056.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-57-4" src="./h265+ldpc-frames-4db/output_0057.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-58-4" src="./h265+ldpc-frames-4db/output_0058.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-59-4" src="./h265+ldpc-frames-4db/output_0059.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-60-4" src="./h265+ldpc-frames-4db/output_0060.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-61-4" src="./h265+ldpc-frames-4db/output_0061.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-62-4" src="./h265+ldpc-frames-4db/output_0062.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-63-4" src="./h265+ldpc-frames-4db/output_0063.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-64-4" src="./h265+ldpc-frames-4db/output_0064.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-65-4" src="./h265+ldpc-frames-4db/output_0065.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-66-4" src="./h265+ldpc-frames-4db/output_0066.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-67-4" src="./h265+ldpc-frames-4db/output_0067.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-68-4" src="./h265+ldpc-frames-4db/output_0068.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-69-4" src="./h265+ldpc-frames-4db/output_0069.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-70-4" src="./h265+ldpc-frames-4db/output_0070.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-71-4" src="./h265+ldpc-frames-4db/output_0071.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-72-4" src="./h265+ldpc-frames-4db/output_0072.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-73-4" src="./h265+ldpc-frames-4db/output_0073.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-74-4" src="./h265+ldpc-frames-4db/output_0074.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-75-4" src="./h265+ldpc-frames-4db/output_0075.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-76-4" src="./h265+ldpc-frames-4db/output_0076.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-77-4" src="./h265+ldpc-frames-4db/output_0077.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-78-4" src="./h265+ldpc-frames-4db/output_0078.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-79-4" src="./h265+ldpc-frames-4db/output_0079.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-80-4" src="./h265+ldpc-frames-4db/output_0080.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-81-4" src="./h265+ldpc-frames-4db/output_0081.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-82-4" src="./h265+ldpc-frames-4db/output_0082.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-83-4" src="./h265+ldpc-frames-4db/output_0083.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-84-4" src="./h265+ldpc-frames-4db/output_0084.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-85-4" src="./h265+ldpc-frames-4db/output_0085.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-86-4" src="./h265+ldpc-frames-4db/output_0086.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-87-4" src="./h265+ldpc-frames-4db/output_0087.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-88-4" src="./h265+ldpc-frames-4db/output_0088.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-89-4" src="./h265+ldpc-frames-4db/output_0089.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-90-4" src="./h265+ldpc-frames-4db/output_0090.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-91-4" src="./h265+ldpc-frames-4db/output_0091.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-92-4" src="./h265+ldpc-frames-4db/output_0092.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-93-4" src="./h265+ldpc-frames-4db/output_0093.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-94-4" src="./h265+ldpc-frames-4db/output_0094.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-95-4" src="./h265+ldpc-frames-4db/output_0095.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-96-4" src="./h265+ldpc-frames-4db/output_0096.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-97-4" src="./h265+ldpc-frames-4db/output_0097.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-98-4" src="./h265+ldpc-frames-4db/output_0098.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-99-4" src="./h265+ldpc-frames-4db/output_0099.png" data-title="H.265 + LDPC" class="video-frame">
-                        <img id="da1-frame-100-4" src="./h265+ldpc-frames-4db/output_0100.png" data-title="H.265 + LDPC" class="video-frame">
-                    </div>
-
                     <!-- 8dB图片 -->
                     <div class="snr-frames snr-8 active" >
                         <!-- 这里放置8dB的H.265图片 -->
@@ -1102,6 +974,111 @@
                         <img id="da1-frame-98-8" src="./h265+ldpc-frames/output_0098.png" data-title="H.265 + LDPC" class="video-frame">
                         <img id="da1-frame-99-8" src="./h265+ldpc-frames/output_0099.png" data-title="H.265 + LDPC" class="video-frame">
                         <img id="da1-frame-100-8" src="./h265+ldpc-frames/output_0100.png" data-title="H.265 + LDPC" class="video-frame">
+                    </div>
+
+                    <!-- 4dB图片 -->
+                    <div class="snr-frames snr-4">
+                        <!-- 这里放置4dB的H.265图片 -->
+                        <img id="da1-frame-1-4" src="./h265+ldpc-frames-4db/output_0001.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-2-4" src="./h265+ldpc-frames-4db/output_0002.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-3-4" src="./h265+ldpc-frames-4db/output_0003.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-4-4" src="./h265+ldpc-frames-4db/output_0004.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-5-4" src="./h265+ldpc-frames-4db/output_0005.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-6-4" src="./h265+ldpc-frames-4db/output_0006.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-7-4" src="./h265+ldpc-frames-4db/output_0007.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-8-4" src="./h265+ldpc-frames-4db/output_0008.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-9-4" src="./h265+ldpc-frames-4db/output_0009.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-10-4" src="./h265+ldpc-frames-4db/output_0010.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-11-4" src="./h265+ldpc-frames-4db/output_0011.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-12-4" src="./h265+ldpc-frames-4db/output_0012.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-13-4" src="./h265+ldpc-frames-4db/output_0013.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-14-4" src="./h265+ldpc-frames-4db/output_0014.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-15-4" src="./h265+ldpc-frames-4db/output_0015.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-16-4" src="./h265+ldpc-frames-4db/output_0016.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-17-4" src="./h265+ldpc-frames-4db/output_0017.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-18-4" src="./h265+ldpc-frames-4db/output_0018.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-19-4" src="./h265+ldpc-frames-4db/output_0019.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-20-4" src="./h265+ldpc-frames-4db/output_0020.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-21-4" src="./h265+ldpc-frames-4db/output_0021.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-22-4" src="./h265+ldpc-frames-4db/output_0022.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-23-4" src="./h265+ldpc-frames-4db/output_0023.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-24-4" src="./h265+ldpc-frames-4db/output_0024.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-25-4" src="./h265+ldpc-frames-4db/output_0025.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-26-4" src="./h265+ldpc-frames-4db/output_0026.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-27-4" src="./h265+ldpc-frames-4db/output_0027.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-28-4" src="./h265+ldpc-frames-4db/output_0028.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-29-4" src="./h265+ldpc-frames-4db/output_0029.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-30-4" src="./h265+ldpc-frames-4db/output_0030.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-31-4" src="./h265+ldpc-frames-4db/output_0031.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-32-4" src="./h265+ldpc-frames-4db/output_0032.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-33-4" src="./h265+ldpc-frames-4db/output_0033.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-34-4" src="./h265+ldpc-frames-4db/output_0034.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-35-4" src="./h265+ldpc-frames-4db/output_0035.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-36-4" src="./h265+ldpc-frames-4db/output_0036.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-37-4" src="./h265+ldpc-frames-4db/output_0037.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-38-4" src="./h265+ldpc-frames-4db/output_0038.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-39-4" src="./h265+ldpc-frames-4db/output_0039.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-40-4" src="./h265+ldpc-frames-4db/output_0040.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-41-4" src="./h265+ldpc-frames-4db/output_0041.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-42-4" src="./h265+ldpc-frames-4db/output_0042.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-43-4" src="./h265+ldpc-frames-4db/output_0043.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-44-4" src="./h265+ldpc-frames-4db/output_0044.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-45-4" src="./h265+ldpc-frames-4db/output_0045.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-46-4" src="./h265+ldpc-frames-4db/output_0046.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-47-4" src="./h265+ldpc-frames-4db/output_0047.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-48-4" src="./h265+ldpc-frames-4db/output_0048.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-49-4" src="./h265+ldpc-frames-4db/output_0049.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-50-4" src="./h265+ldpc-frames-4db/output_0050.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-51-4" src="./h265+ldpc-frames-4db/output_0051.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-52-4" src="./h265+ldpc-frames-4db/output_0052.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-53-4" src="./h265+ldpc-frames-4db/output_0053.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-54-4" src="./h265+ldpc-frames-4db/output_0054.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-55-4" src="./h265+ldpc-frames-4db/output_0055.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-56-4" src="./h265+ldpc-frames-4db/output_0056.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-57-4" src="./h265+ldpc-frames-4db/output_0057.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-58-4" src="./h265+ldpc-frames-4db/output_0058.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-59-4" src="./h265+ldpc-frames-4db/output_0059.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-60-4" src="./h265+ldpc-frames-4db/output_0060.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-61-4" src="./h265+ldpc-frames-4db/output_0061.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-62-4" src="./h265+ldpc-frames-4db/output_0062.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-63-4" src="./h265+ldpc-frames-4db/output_0063.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-64-4" src="./h265+ldpc-frames-4db/output_0064.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-65-4" src="./h265+ldpc-frames-4db/output_0065.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-66-4" src="./h265+ldpc-frames-4db/output_0066.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-67-4" src="./h265+ldpc-frames-4db/output_0067.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-68-4" src="./h265+ldpc-frames-4db/output_0068.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-69-4" src="./h265+ldpc-frames-4db/output_0069.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-70-4" src="./h265+ldpc-frames-4db/output_0070.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-71-4" src="./h265+ldpc-frames-4db/output_0071.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-72-4" src="./h265+ldpc-frames-4db/output_0072.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-73-4" src="./h265+ldpc-frames-4db/output_0073.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-74-4" src="./h265+ldpc-frames-4db/output_0074.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-75-4" src="./h265+ldpc-frames-4db/output_0075.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-76-4" src="./h265+ldpc-frames-4db/output_0076.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-77-4" src="./h265+ldpc-frames-4db/output_0077.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-78-4" src="./h265+ldpc-frames-4db/output_0078.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-79-4" src="./h265+ldpc-frames-4db/output_0079.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-80-4" src="./h265+ldpc-frames-4db/output_0080.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-81-4" src="./h265+ldpc-frames-4db/output_0081.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-82-4" src="./h265+ldpc-frames-4db/output_0082.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-83-4" src="./h265+ldpc-frames-4db/output_0083.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-84-4" src="./h265+ldpc-frames-4db/output_0084.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-85-4" src="./h265+ldpc-frames-4db/output_0085.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-86-4" src="./h265+ldpc-frames-4db/output_0086.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-87-4" src="./h265+ldpc-frames-4db/output_0087.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-88-4" src="./h265+ldpc-frames-4db/output_0088.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-89-4" src="./h265+ldpc-frames-4db/output_0089.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-90-4" src="./h265+ldpc-frames-4db/output_0090.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-91-4" src="./h265+ldpc-frames-4db/output_0091.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-92-4" src="./h265+ldpc-frames-4db/output_0092.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-93-4" src="./h265+ldpc-frames-4db/output_0093.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-94-4" src="./h265+ldpc-frames-4db/output_0094.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-95-4" src="./h265+ldpc-frames-4db/output_0095.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-96-4" src="./h265+ldpc-frames-4db/output_0096.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-97-4" src="./h265+ldpc-frames-4db/output_0097.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-98-4" src="./h265+ldpc-frames-4db/output_0098.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-99-4" src="./h265+ldpc-frames-4db/output_0099.png" data-title="H.265 + LDPC" class="video-frame">
+                        <img id="da1-frame-100-4" src="./h265+ldpc-frames-4db/output_0100.png" data-title="H.265 + LDPC" class="video-frame">
                     </div>
 
                     <!-- 12dB图片 -->
@@ -1309,114 +1286,8 @@
             <div class="video-panel">
                 <div class="panel-header">
                     <h3 class="panel-title"><i class="fas fa-film"></i> DeepJSCC</h3>
-                    <span class="status-indicator status-playing" id="st2"></span>
                 </div>
                 <div class="display-area" id="da2">
-                    <!-- 4dB图片 -->
-                    <div class="snr-frames snr-4">
-                        <!-- 这里放置4dB的DeepJSCC图片 -->
-                        <img id="da2-frame-1-4" src="./deepjscc-frames-4db/0recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-2-4" src="./deepjscc-frames-4db/1recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-3-4" src="./deepjscc-frames-4db/2recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-4-4" src="./deepjscc-frames-4db/3recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-5-4" src="./deepjscc-frames-4db/4recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-6-4" src="./deepjscc-frames-4db/5recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-7-4" src="./deepjscc-frames-4db/6recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-8-4" src="./deepjscc-frames-4db/7recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-9-4" src="./deepjscc-frames-4db/8recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-10-4" src="./deepjscc-frames-4db/9recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-11-4" src="./deepjscc-frames-4db/10recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-12-4" src="./deepjscc-frames-4db/11recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-13-4" src="./deepjscc-frames-4db/12recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-14-4" src="./deepjscc-frames-4db/13recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-15-4" src="./deepjscc-frames-4db/14recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-16-4" src="./deepjscc-frames-4db/15recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-17-4" src="./deepjscc-frames-4db/16recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-18-4" src="./deepjscc-frames-4db/17recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-19-4" src="./deepjscc-frames-4db/18recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-20-4" src="./deepjscc-frames-4db/19recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-21-4" src="./deepjscc-frames-4db/20recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-22-4" src="./deepjscc-frames-4db/21recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-23-4" src="./deepjscc-frames-4db/22recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-24-4" src="./deepjscc-frames-4db/23recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-25-4" src="./deepjscc-frames-4db/24recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-26-4" src="./deepjscc-frames-4db/25recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-27-4" src="./deepjscc-frames-4db/26recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-28-4" src="./deepjscc-frames-4db/27recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-29-4" src="./deepjscc-frames-4db/28recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-30-4" src="./deepjscc-frames-4db/29recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-31-4" src="./deepjscc-frames-4db/30recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-32-4" src="./deepjscc-frames-4db/31recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-33-4" src="./deepjscc-frames-4db/32recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-34-4" src="./deepjscc-frames-4db/33recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-35-4" src="./deepjscc-frames-4db/34recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-36-4" src="./deepjscc-frames-4db/35recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-37-4" src="./deepjscc-frames-4db/36recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-38-4" src="./deepjscc-frames-4db/37recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-39-4" src="./deepjscc-frames-4db/38recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-40-4" src="./deepjscc-frames-4db/39recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-41-4" src="./deepjscc-frames-4db/40recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-42-4" src="./deepjscc-frames-4db/41recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-43-4" src="./deepjscc-frames-4db/42recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-44-4" src="./deepjscc-frames-4db/43recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-45-4" src="./deepjscc-frames-4db/44recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-46-4" src="./deepjscc-frames-4db/45recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-47-4" src="./deepjscc-frames-4db/46recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-48-4" src="./deepjscc-frames-4db/47recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-49-4" src="./deepjscc-frames-4db/48recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-50-4" src="./deepjscc-frames-4db/49recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-51-4" src="./deepjscc-frames-4db/50recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-52-4" src="./deepjscc-frames-4db/51recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-53-4" src="./deepjscc-frames-4db/52recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-54-4" src="./deepjscc-frames-4db/53recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-55-4" src="./deepjscc-frames-4db/54recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-56-4" src="./deepjscc-frames-4db/55recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-57-4" src="./deepjscc-frames-4db/56recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-58-4" src="./deepjscc-frames-4db/57recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-59-4" src="./deepjscc-frames-4db/58recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-60-4" src="./deepjscc-frames-4db/59recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-61-4" src="./deepjscc-frames-4db/60recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-62-4" src="./deepjscc-frames-4db/61recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-63-4" src="./deepjscc-frames-4db/62recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-64-4" src="./deepjscc-frames-4db/63recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-65-4" src="./deepjscc-frames-4db/64recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-66-4" src="./deepjscc-frames-4db/65recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-67-4" src="./deepjscc-frames-4db/66recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-68-4" src="./deepjscc-frames-4db/67recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-69-4" src="./deepjscc-frames-4db/68recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-70-4" src="./deepjscc-frames-4db/69recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-71-4" src="./deepjscc-frames-4db/70recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-72-4" src="./deepjscc-frames-4db/71recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-73-4" src="./deepjscc-frames-4db/72recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-74-4" src="./deepjscc-frames-4db/73recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-75-4" src="./deepjscc-frames-4db/74recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-76-4" src="./deepjscc-frames-4db/75recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-77-4" src="./deepjscc-frames-4db/76recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-78-4" src="./deepjscc-frames-4db/77recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-79-4" src="./deepjscc-frames-4db/78recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-80-4" src="./deepjscc-frames-4db/79recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-81-4" src="./deepjscc-frames-4db/80recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-82-4" src="./deepjscc-frames-4db/81recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-83-4" src="./deepjscc-frames-4db/82recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-84-4" src="./deepjscc-frames-4db/83recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-85-4" src="./deepjscc-frames-4db/84recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-86-4" src="./deepjscc-frames-4db/85recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-87-4" src="./deepjscc-frames-4db/86recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-88-4" src="./deepjscc-frames-4db/87recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-89-4" src="./deepjscc-frames-4db/88recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-90-4" src="./deepjscc-frames-4db/89recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-91-4" src="./deepjscc-frames-4db/90recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-92-4" src="./deepjscc-frames-4db/91recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-93-4" src="./deepjscc-frames-4db/92recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-94-4" src="./deepjscc-frames-4db/93recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-95-4" src="./deepjscc-frames-4db/94recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-96-4" src="./deepjscc-frames-4db/95recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-97-4" src="./deepjscc-frames-4db/96recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-98-4" src="./deepjscc-frames-4db/97recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-99-4" src="./deepjscc-frames-4db/98recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                        <img id="da2-frame-100-4" src="./deepjscc-frames-4db/99recon_snr4.png" data-title="DeepJSCC" class="video-frame">
-                    </div>
-
                     <!-- 8dB图片 -->
                     <div class="snr-frames snr-8 active">
                         <!-- 这里放置8dB的DeepJSCC图片 -->
@@ -1520,6 +1391,111 @@
                         <img id="da2-frame-98-8" src="./deepjscc-frames/97recon_snr8.png" data-title="DeepJSCC" class="video-frame">
                         <img id="da2-frame-99-8" src="./deepjscc-frames/98recon_snr8.png" data-title="DeepJSCC" class="video-frame">
                         <img id="da2-frame-100-8" src="./deepjscc-frames/99recon_snr8.png" data-title="DeepJSCC" class="video-frame">
+                    </div>
+
+                    <!-- 4dB图片 -->
+                    <div class="snr-frames snr-4">
+                        <!-- 这里放置4dB的DeepJSCC图片 -->
+                        <img id="da2-frame-1-4" src="./deepjscc-frames-4db/0recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-2-4" src="./deepjscc-frames-4db/1recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-3-4" src="./deepjscc-frames-4db/2recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-4-4" src="./deepjscc-frames-4db/3recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-5-4" src="./deepjscc-frames-4db/4recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-6-4" src="./deepjscc-frames-4db/5recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-7-4" src="./deepjscc-frames-4db/6recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-8-4" src="./deepjscc-frames-4db/7recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-9-4" src="./deepjscc-frames-4db/8recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-10-4" src="./deepjscc-frames-4db/9recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-11-4" src="./deepjscc-frames-4db/10recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-12-4" src="./deepjscc-frames-4db/11recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-13-4" src="./deepjscc-frames-4db/12recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-14-4" src="./deepjscc-frames-4db/13recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-15-4" src="./deepjscc-frames-4db/14recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-16-4" src="./deepjscc-frames-4db/15recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-17-4" src="./deepjscc-frames-4db/16recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-18-4" src="./deepjscc-frames-4db/17recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-19-4" src="./deepjscc-frames-4db/18recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-20-4" src="./deepjscc-frames-4db/19recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-21-4" src="./deepjscc-frames-4db/20recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-22-4" src="./deepjscc-frames-4db/21recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-23-4" src="./deepjscc-frames-4db/22recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-24-4" src="./deepjscc-frames-4db/23recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-25-4" src="./deepjscc-frames-4db/24recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-26-4" src="./deepjscc-frames-4db/25recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-27-4" src="./deepjscc-frames-4db/26recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-28-4" src="./deepjscc-frames-4db/27recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-29-4" src="./deepjscc-frames-4db/28recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-30-4" src="./deepjscc-frames-4db/29recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-31-4" src="./deepjscc-frames-4db/30recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-32-4" src="./deepjscc-frames-4db/31recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-33-4" src="./deepjscc-frames-4db/32recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-34-4" src="./deepjscc-frames-4db/33recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-35-4" src="./deepjscc-frames-4db/34recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-36-4" src="./deepjscc-frames-4db/35recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-37-4" src="./deepjscc-frames-4db/36recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-38-4" src="./deepjscc-frames-4db/37recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-39-4" src="./deepjscc-frames-4db/38recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-40-4" src="./deepjscc-frames-4db/39recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-41-4" src="./deepjscc-frames-4db/40recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-42-4" src="./deepjscc-frames-4db/41recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-43-4" src="./deepjscc-frames-4db/42recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-44-4" src="./deepjscc-frames-4db/43recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-45-4" src="./deepjscc-frames-4db/44recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-46-4" src="./deepjscc-frames-4db/45recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-47-4" src="./deepjscc-frames-4db/46recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-48-4" src="./deepjscc-frames-4db/47recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-49-4" src="./deepjscc-frames-4db/48recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-50-4" src="./deepjscc-frames-4db/49recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-51-4" src="./deepjscc-frames-4db/50recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-52-4" src="./deepjscc-frames-4db/51recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-53-4" src="./deepjscc-frames-4db/52recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-54-4" src="./deepjscc-frames-4db/53recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-55-4" src="./deepjscc-frames-4db/54recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-56-4" src="./deepjscc-frames-4db/55recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-57-4" src="./deepjscc-frames-4db/56recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-58-4" src="./deepjscc-frames-4db/57recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-59-4" src="./deepjscc-frames-4db/58recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-60-4" src="./deepjscc-frames-4db/59recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-61-4" src="./deepjscc-frames-4db/60recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-62-4" src="./deepjscc-frames-4db/61recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-63-4" src="./deepjscc-frames-4db/62recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-64-4" src="./deepjscc-frames-4db/63recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-65-4" src="./deepjscc-frames-4db/64recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-66-4" src="./deepjscc-frames-4db/65recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-67-4" src="./deepjscc-frames-4db/66recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-68-4" src="./deepjscc-frames-4db/67recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-69-4" src="./deepjscc-frames-4db/68recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-70-4" src="./deepjscc-frames-4db/69recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-71-4" src="./deepjscc-frames-4db/70recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-72-4" src="./deepjscc-frames-4db/71recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-73-4" src="./deepjscc-frames-4db/72recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-74-4" src="./deepjscc-frames-4db/73recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-75-4" src="./deepjscc-frames-4db/74recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-76-4" src="./deepjscc-frames-4db/75recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-77-4" src="./deepjscc-frames-4db/76recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-78-4" src="./deepjscc-frames-4db/77recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-79-4" src="./deepjscc-frames-4db/78recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-80-4" src="./deepjscc-frames-4db/79recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-81-4" src="./deepjscc-frames-4db/80recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-82-4" src="./deepjscc-frames-4db/81recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-83-4" src="./deepjscc-frames-4db/82recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-84-4" src="./deepjscc-frames-4db/83recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-85-4" src="./deepjscc-frames-4db/84recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-86-4" src="./deepjscc-frames-4db/85recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-87-4" src="./deepjscc-frames-4db/86recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-88-4" src="./deepjscc-frames-4db/87recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-89-4" src="./deepjscc-frames-4db/88recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-90-4" src="./deepjscc-frames-4db/89recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-91-4" src="./deepjscc-frames-4db/90recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-92-4" src="./deepjscc-frames-4db/91recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-93-4" src="./deepjscc-frames-4db/92recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-94-4" src="./deepjscc-frames-4db/93recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-95-4" src="./deepjscc-frames-4db/94recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-96-4" src="./deepjscc-frames-4db/95recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-97-4" src="./deepjscc-frames-4db/96recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-98-4" src="./deepjscc-frames-4db/97recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-99-4" src="./deepjscc-frames-4db/98recon_snr4.png" data-title="DeepJSCC" class="video-frame">
+                        <img id="da2-frame-100-4" src="./deepjscc-frames-4db/99recon_snr4.png" data-title="DeepJSCC" class="video-frame">
                     </div>
 
                     <!-- 12dB图片 -->
@@ -1636,114 +1612,8 @@
             <div class="video-panel">
                 <div class="panel-header">
                     <h3 class="panel-title"><i class="fas fa-film"></i> RTVST</h3>
-                    <span class="status-indicator status-playing" id="st3"></span>
                 </div>
                 <div class="display-area" id="da3">
-                    <!-- 4dB图片 -->
-                    <div class="snr-frames snr-4">
-                        <!-- 这里放置4dB的RTVST图片 -->
-                        <img id="da3-frame-1-4" src="./rtvst-frames-4db/0recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-2-4" src="./rtvst-frames-4db/1recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-3-4" src="./rtvst-frames-4db/2recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-4-4" src="./rtvst-frames-4db/3recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-5-4" src="./rtvst-frames-4db/4recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-6-4" src="./rtvst-frames-4db/5recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-7-4" src="./rtvst-frames-4db/6recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-8-4" src="./rtvst-frames-4db/7recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-9-4" src="./rtvst-frames-4db/8recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-10-4" src="./rtvst-frames-4db/9recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-11-4" src="./rtvst-frames-4db/10recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-12-4" src="./rtvst-frames-4db/11recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-13-4" src="./rtvst-frames-4db/12recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-14-4" src="./rtvst-frames-4db/13recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-15-4" src="./rtvst-frames-4db/14recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-16-4" src="./rtvst-frames-4db/15recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-17-4" src="./rtvst-frames-4db/16recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-18-4" src="./rtvst-frames-4db/17recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-19-4" src="./rtvst-frames-4db/18recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-20-4" src="./rtvst-frames-4db/19recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-21-4" src="./rtvst-frames-4db/20recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-22-4" src="./rtvst-frames-4db/21recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-23-4" src="./rtvst-frames-4db/22recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-24-4" src="./rtvst-frames-4db/23recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-25-4" src="./rtvst-frames-4db/24recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-26-4" src="./rtvst-frames-4db/25recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-27-4" src="./rtvst-frames-4db/26recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-28-4" src="./rtvst-frames-4db/27recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-29-4" src="./rtvst-frames-4db/28recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-30-4" src="./rtvst-frames-4db/29recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-31-4" src="./rtvst-frames-4db/30recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-32-4" src="./rtvst-frames-4db/31recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-33-4" src="./rtvst-frames-4db/32recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-34-4" src="./rtvst-frames-4db/33recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-35-4" src="./rtvst-frames-4db/34recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-36-4" src="./rtvst-frames-4db/35recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-37-4" src="./rtvst-frames-4db/36recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-38-4" src="./rtvst-frames-4db/37recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-39-4" src="./rtvst-frames-4db/38recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-40-4" src="./rtvst-frames-4db/39recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-41-4" src="./rtvst-frames-4db/40recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-42-4" src="./rtvst-frames-4db/41recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-43-4" src="./rtvst-frames-4db/42recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-44-4" src="./rtvst-frames-4db/43recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-45-4" src="./rtvst-frames-4db/44recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-46-4" src="./rtvst-frames-4db/45recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-47-4" src="./rtvst-frames-4db/46recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-48-4" src="./rtvst-frames-4db/47recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-49-4" src="./rtvst-frames-4db/48recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-50-4" src="./rtvst-frames-4db/49recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-51-4" src="./rtvst-frames-4db/50recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-52-4" src="./rtvst-frames-4db/51recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-53-4" src="./rtvst-frames-4db/52recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-54-4" src="./rtvst-frames-4db/53recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-55-4" src="./rtvst-frames-4db/54recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-56-4" src="./rtvst-frames-4db/55recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-57-4" src="./rtvst-frames-4db/56recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-58-4" src="./rtvst-frames-4db/57recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-59-4" src="./rtvst-frames-4db/58recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-60-4" src="./rtvst-frames-4db/59recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-61-4" src="./rtvst-frames-4db/60recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-62-4" src="./rtvst-frames-4db/61recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-63-4" src="./rtvst-frames-4db/62recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-64-4" src="./rtvst-frames-4db/63recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-65-4" src="./rtvst-frames-4db/64recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-66-4" src="./rtvst-frames-4db/65recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-67-4" src="./rtvst-frames-4db/66recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-68-4" src="./rtvst-frames-4db/67recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-69-4" src="./rtvst-frames-4db/68recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-70-4" src="./rtvst-frames-4db/69recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-71-4" src="./rtvst-frames-4db/70recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-72-4" src="./rtvst-frames-4db/71recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-73-4" src="./rtvst-frames-4db/72recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-74-4" src="./rtvst-frames-4db/73recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-75-4" src="./rtvst-frames-4db/74recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-76-4" src="./rtvst-frames-4db/75recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-77-4" src="./rtvst-frames-4db/76recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-78-4" src="./rtvst-frames-4db/77recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-79-4" src="./rtvst-frames-4db/78recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-80-4" src="./rtvst-frames-4db/79recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-81-4" src="./rtvst-frames-4db/80recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-82-4" src="./rtvst-frames-4db/81recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-83-4" src="./rtvst-frames-4db/82recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-84-4" src="./rtvst-frames-4db/83recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-85-4" src="./rtvst-frames-4db/84recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-86-4" src="./rtvst-frames-4db/85recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-87-4" src="./rtvst-frames-4db/86recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-88-4" src="./rtvst-frames-4db/87recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-89-4" src="./rtvst-frames-4db/88recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-90-4" src="./rtvst-frames-4db/89recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-91-4" src="./rtvst-frames-4db/90recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-92-4" src="./rtvst-frames-4db/91recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-93-4" src="./rtvst-frames-4db/92recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-94-4" src="./rtvst-frames-4db/93recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-95-4" src="./rtvst-frames-4db/94recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-96-4" src="./rtvst-frames-4db/95recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-97-4" src="./rtvst-frames-4db/96recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-98-4" src="./rtvst-frames-4db/97recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-99-4" src="./rtvst-frames-4db/98recon_snr4.png" data-title="RTVST" class="video-frame">
-                        <img id="da3-frame-100-4" src="./rtvst-frames-4db/99recon_snr4.png" data-title="RTVST" class="video-frame">
-                    </div>
-
                     <!-- 8dB图片 -->
                     <div class="snr-frames snr-8 active">
                         <!-- 这里放置8dB的RTVST图片 -->
@@ -1847,6 +1717,111 @@
                         <img id="da3-frame-98-8" src="./rtvst-frames/97recon_snr8.png" data-title="RTVST" class="video-frame">
                         <img id="da3-frame-99-8" src="./rtvst-frames/98recon_snr8.png" data-title="RTVST" class="video-frame">
                         <img id="da3-frame-100-8" src="./rtvst-frames/99recon_snr8.png" data-title="RTVST" class="video-frame">
+                    </div>
+
+                    <!-- 4dB图片 -->
+                    <div class="snr-frames snr-4">
+                        <!-- 这里放置4dB的RTVST图片 -->
+                        <img id="da3-frame-1-4" src="./rtvst-frames-4db/0recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-2-4" src="./rtvst-frames-4db/1recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-3-4" src="./rtvst-frames-4db/2recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-4-4" src="./rtvst-frames-4db/3recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-5-4" src="./rtvst-frames-4db/4recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-6-4" src="./rtvst-frames-4db/5recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-7-4" src="./rtvst-frames-4db/6recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-8-4" src="./rtvst-frames-4db/7recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-9-4" src="./rtvst-frames-4db/8recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-10-4" src="./rtvst-frames-4db/9recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-11-4" src="./rtvst-frames-4db/10recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-12-4" src="./rtvst-frames-4db/11recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-13-4" src="./rtvst-frames-4db/12recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-14-4" src="./rtvst-frames-4db/13recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-15-4" src="./rtvst-frames-4db/14recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-16-4" src="./rtvst-frames-4db/15recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-17-4" src="./rtvst-frames-4db/16recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-18-4" src="./rtvst-frames-4db/17recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-19-4" src="./rtvst-frames-4db/18recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-20-4" src="./rtvst-frames-4db/19recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-21-4" src="./rtvst-frames-4db/20recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-22-4" src="./rtvst-frames-4db/21recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-23-4" src="./rtvst-frames-4db/22recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-24-4" src="./rtvst-frames-4db/23recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-25-4" src="./rtvst-frames-4db/24recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-26-4" src="./rtvst-frames-4db/25recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-27-4" src="./rtvst-frames-4db/26recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-28-4" src="./rtvst-frames-4db/27recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-29-4" src="./rtvst-frames-4db/28recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-30-4" src="./rtvst-frames-4db/29recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-31-4" src="./rtvst-frames-4db/30recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-32-4" src="./rtvst-frames-4db/31recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-33-4" src="./rtvst-frames-4db/32recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-34-4" src="./rtvst-frames-4db/33recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-35-4" src="./rtvst-frames-4db/34recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-36-4" src="./rtvst-frames-4db/35recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-37-4" src="./rtvst-frames-4db/36recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-38-4" src="./rtvst-frames-4db/37recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-39-4" src="./rtvst-frames-4db/38recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-40-4" src="./rtvst-frames-4db/39recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-41-4" src="./rtvst-frames-4db/40recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-42-4" src="./rtvst-frames-4db/41recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-43-4" src="./rtvst-frames-4db/42recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-44-4" src="./rtvst-frames-4db/43recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-45-4" src="./rtvst-frames-4db/44recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-46-4" src="./rtvst-frames-4db/45recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-47-4" src="./rtvst-frames-4db/46recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-48-4" src="./rtvst-frames-4db/47recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-49-4" src="./rtvst-frames-4db/48recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-50-4" src="./rtvst-frames-4db/49recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-51-4" src="./rtvst-frames-4db/50recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-52-4" src="./rtvst-frames-4db/51recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-53-4" src="./rtvst-frames-4db/52recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-54-4" src="./rtvst-frames-4db/53recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-55-4" src="./rtvst-frames-4db/54recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-56-4" src="./rtvst-frames-4db/55recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-57-4" src="./rtvst-frames-4db/56recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-58-4" src="./rtvst-frames-4db/57recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-59-4" src="./rtvst-frames-4db/58recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-60-4" src="./rtvst-frames-4db/59recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-61-4" src="./rtvst-frames-4db/60recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-62-4" src="./rtvst-frames-4db/61recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-63-4" src="./rtvst-frames-4db/62recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-64-4" src="./rtvst-frames-4db/63recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-65-4" src="./rtvst-frames-4db/64recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-66-4" src="./rtvst-frames-4db/65recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-67-4" src="./rtvst-frames-4db/66recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-68-4" src="./rtvst-frames-4db/67recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-69-4" src="./rtvst-frames-4db/68recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-70-4" src="./rtvst-frames-4db/69recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-71-4" src="./rtvst-frames-4db/70recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-72-4" src="./rtvst-frames-4db/71recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-73-4" src="./rtvst-frames-4db/72recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-74-4" src="./rtvst-frames-4db/73recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-75-4" src="./rtvst-frames-4db/74recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-76-4" src="./rtvst-frames-4db/75recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-77-4" src="./rtvst-frames-4db/76recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-78-4" src="./rtvst-frames-4db/77recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-79-4" src="./rtvst-frames-4db/78recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-80-4" src="./rtvst-frames-4db/79recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-81-4" src="./rtvst-frames-4db/80recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-82-4" src="./rtvst-frames-4db/81recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-83-4" src="./rtvst-frames-4db/82recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-84-4" src="./rtvst-frames-4db/83recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-85-4" src="./rtvst-frames-4db/84recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-86-4" src="./rtvst-frames-4db/85recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-87-4" src="./rtvst-frames-4db/86recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-88-4" src="./rtvst-frames-4db/87recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-89-4" src="./rtvst-frames-4db/88recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-90-4" src="./rtvst-frames-4db/89recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-91-4" src="./rtvst-frames-4db/90recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-92-4" src="./rtvst-frames-4db/91recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-93-4" src="./rtvst-frames-4db/92recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-94-4" src="./rtvst-frames-4db/93recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-95-4" src="./rtvst-frames-4db/94recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-96-4" src="./rtvst-frames-4db/95recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-97-4" src="./rtvst-frames-4db/96recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-98-4" src="./rtvst-frames-4db/97recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-99-4" src="./rtvst-frames-4db/98recon_snr4.png" data-title="RTVST" class="video-frame">
+                        <img id="da3-frame-100-4" src="./rtvst-frames-4db/99recon_snr4.png" data-title="RTVST" class="video-frame">
                     </div>
 
                     <!-- 12dB图片 -->
@@ -1994,84 +1969,12 @@
     let currentPlayers = [];
     let currentSnr = '8';
     let modalVideoPlayer = null;
-    let isInitialized = false; // 添加初始化标志
 
     // 初始化页面
     function initializePage() {
-        if (isInitialized) return;
-        isInitialized = true;
-
-        console.log("开始初始化页面");
+        console.log("初始化页面");
         setupModalEvents();
-
-        // 优先加载和显示当前SNR的图片
-        preloadCurrentSnrImages().then(() => {
-            console.log("当前SNR图片预加载完成");
-            // 显示当前SNR的图片
-            switchSnrFrames(currentSnr);
-
-            // 初始化播放器并开始播放
-            setTimeout(() => {
-                startAllPlayers();
-                console.log("所有播放器已启动");
-            }, 200); // 增加延迟确保DOM已完全更新
-        });
-
-        // 延迟加载其他SNR的图片
-        setTimeout(() => {
-            preloadOtherSnrImages();
-        }, 1000);
-    }
-
-    // 预加载当前SNR的图片
-    function preloadCurrentSnrImages() {
-        return new Promise((resolve) => {
-            console.log("开始预加载当前SNR图片:", currentSnr);
-            const framesToLoad = Array.from(document.querySelectorAll(`.snr-${currentSnr} .video-frame`));
-            let loadedCount = 0;
-
-            if (framesToLoad.length === 0) {
-                resolve();
-                return;
-            }
-
-            framesToLoad.forEach(frame => {
-                if (frame.complete) {
-                    loadedCount++;
-                    if (loadedCount === framesToLoad.length) {
-                        resolve();
-                    }
-                } else {
-                    frame.onload = () => {
-                        loadedCount++;
-                        if (loadedCount === framesToLoad.length) {
-                            resolve();
-                        }
-                    };
-                    frame.onerror = () => {
-                        loadedCount++;
-                        if (loadedCount === framesToLoad.length) {
-                            resolve();
-                        }
-                    };
-                }
-            });
-        });
-    }
-
-    // 预加载其他SNR的图片
-    function preloadOtherSnrImages() {
-        console.log("开始预加载其他SNR图片");
-        const otherSnrs = ['4', '12'].filter(snr => snr !== currentSnr);
-
-        otherSnrs.forEach(snr => {
-            const frames = Array.from(document.querySelectorAll(`.snr-${snr} .video-frame`));
-            frames.forEach(frame => {
-                // 创建Image对象预加载，但不插入DOM
-                const img = new Image();
-                img.src = frame.src;
-            });
-        });
+        startAllPlayers();
     }
 
     // SNR选择器事件
@@ -2081,57 +1984,94 @@
             console.log("切换SNR到:", selectedSnr);
             stopAllPlayers();
             currentSnr = selectedSnr;
-
-            // 预加载新SNR的图片，然后切换
-            preloadCurrentSnrImages().then(() => {
-                switchSnrFrames(currentSnr);
-                setTimeout(() => {
-                    startAllPlayers();
-                }, 100);
-            });
+            switchSnrFrames(currentSnr);
+            startAllPlayers();
         }
     });
 
     // 切换SNR时显示对应的图片
     function switchSnrFrames(snr) {
-        console.log("切换SNR帧到:", snr);
+        // 移除所有激活状态
+        document.querySelectorAll('.snr-frames').forEach(container => {
+            container.classList.remove('active');
+        });
 
-        // 使用requestAnimationFrame确保平滑过渡
-        requestAnimationFrame(() => {
-            // 移除所有激活状态
-            document.querySelectorAll('.snr-frames').forEach(container => {
-                container.classList.remove('active');
-            });
+        // 激活当前SNR的图片容器
+        document.querySelectorAll(`.snr-${snr}`).forEach(container => {
+            container.classList.add('active');
+        });
 
-            // 激活当前SNR的图片容器
-            document.querySelectorAll(`.snr-${snr}`).forEach(container => {
-                container.classList.add('active');
-            });
+        // 隐藏所有帧
+        document.querySelectorAll('.video-frame').forEach(frame => {
+            frame.classList.remove('show');
+        });
 
-            // 隐藏所有帧
-            document.querySelectorAll('.video-frame').forEach(frame => {
-                frame.classList.remove('show');
-            });
-
-            // 显示每个容器的第一张图片
-            document.querySelectorAll(`.snr-${snr}.active .video-frame`).forEach((img, index) => {
-                if (index === 0) {
-                    // 使用setTimeout确保DOM更新
-                    setTimeout(() => {
-                        img.classList.add('show');
-                    }, 10);
-                }
-            });
+        // 显示每个容器的第一张图片
+        document.querySelectorAll(`.snr-${snr}.active .video-frame`).forEach((img, index) => {
+            if (index === 0) {
+                img.classList.add('show');
+            }
         });
     }
 
-    // 初始化播放器
-    function initializePlayers() {
+    // 创建播放器
+    function createPlayer(panelId, fps) {
+        let idx = 0, t = null;
+
+        // 获取当前SNR对应的图片
+        const frames = Array.from(document.querySelectorAll(`#${panelId} .snr-${currentSnr}.active .video-frame`));
+        const totalFrames = frames.length;
+        const interval = 1000 / fps;
+
+        const showFrame = (index) => {
+            // 隐藏所有帧
+            frames.forEach(frame => {
+                frame.classList.remove('show');
+            });
+
+            // 显示当前帧
+            if (frames[index]) {
+                frames[index].classList.add('show');
+            }
+        };
+
+        return {
+            start() {
+                if (t || totalFrames === 0) return;
+                t = setInterval(() => {
+                    idx = (idx + 1) % totalFrames;
+                    showFrame(idx);
+                }, interval);
+            },
+            pause() {
+                if (t) {
+                    clearInterval(t);
+                    t = null;
+                }
+            },
+            stop() {
+                if (t) {
+                    clearInterval(t);
+                    t = null;
+                }
+                idx = 0;
+                if (frames.length > 0) {
+                    showFrame(0);
+                }
+            },
+            getCurrentFrame() {
+                return frames[idx] || (frames.length > 0 ? frames[0] : null);
+            }
+        };
+    }
+
+    // 开始所有播放器
+    function startAllPlayers() {
+        console.log("开始所有播放器");
+
         // 停止当前所有播放器
         currentPlayers.forEach(player => {
-            if(player && typeof player.stop === 'function') {
-                player.stop();
-            }
+            if (player) player.stop();
         });
 
         // 为每个视频面板创建播放器
@@ -2146,107 +2086,16 @@
             return createPlayer(p.id, p.fps);
         });
 
-        console.log("播放器初始化完成，数量:", currentPlayers.length);
-    }
-
-    // 创建播放器
-    function createPlayer(panelId, fps) {
-        let idx = 0, t = null;
-
-        // 获取当前SNR对应的图片
-        const frames = Array.from(document.querySelectorAll(`#${panelId} .snr-${currentSnr}.active .video-frame`));
-        const totalFrames = frames.length;
-        const interval = 1000 / fps;
-
-        console.log(`创建播放器 ${panelId}, 帧数: ${totalFrames}, 帧率: ${fps}`);
-
-        const showFrame = (index) => {
-            // 使用requestAnimationFrame确保平滑过渡
-            requestAnimationFrame(() => {
-                // 隐藏所有帧
-                frames.forEach(frame => {
-                    frame.classList.remove('show');
-                });
-
-                // 显示当前帧
-                if (frames[index]) {
-                    frames[index].classList.add('show');
-                }
-            });
-        };
-
-        // 显示第一帧
-        if (frames.length > 0) {
-            showFrame(0);
-        }
-
-        return {
-            start() {
-                if (t || totalFrames === 0) {
-                    console.log(`播放器 ${panelId} 无法启动，总帧数: ${totalFrames}`);
-                    return;
-                }
-                console.log(`启动播放器 ${panelId}`);
-                // 使用setTimeout确保在下一帧开始
-                setTimeout(() => {
-                    t = setInterval(() => {
-                        idx = (idx + 1) % totalFrames;
-                        showFrame(idx);
-                    }, interval);
-                }, 0);
-            },
-            pause() {
-                if (t) {
-                    console.log(`暂停播放器 ${panelId}`);
-                    clearInterval(t);
-                    t = null;
-                }
-            },
-            stop() {
-                if (t) {
-                    console.log(`停止播放器 ${panelId}`);
-                    clearInterval(t);
-                    t = null;
-                }
-                idx = 0;
-                if (frames.length > 0) {
-                    showFrame(0);
-                }
-            },
-            getCurrentFrame() {
-                return frames[idx] || (frames.length > 0 ? frames[0] : null);
-            },
-            getTotalFrames() {
-                return totalFrames;
-            },
-            getCurrentIndex() {
-                return idx;
-            }
-        };
-    }
-
-    // 开始所有播放器
-    function startAllPlayers() {
-        console.log("开始所有播放器");
-        initializePlayers();
-        // 延迟启动播放器，确保DOM已更新
-        setTimeout(() => {
-            currentPlayers.forEach((player, index) => {
-                if (player && typeof player.start === 'function') {
-                    console.log(`启动播放器 ${index}`);
-                    player.start();
-                }
-            });
-        }, 50);
+        // 启动播放器
+        currentPlayers.forEach(player => {
+            if (player) player.start();
+        });
     }
 
     // 停止所有播放器
     function stopAllPlayers() {
-        console.log("停止所有播放器");
         currentPlayers.forEach(player => {
-            if (player && typeof player.stop === 'function') {
-                player.stop();
-            }
+            if (player) player.stop();
         });
         currentPlayers = [];
     }
@@ -2293,7 +2142,7 @@
                         document.getElementById('modalVideoFrame').src = currentFrame.src;
 
                         // 启动模态框视频播放器
-                        startModalVideoPlayer(panelId, currentPlayer);
+                        startModalVideoPlayer(panelId);
                     }
                 }
 
@@ -2307,7 +2156,6 @@
                 imageModal.style.display = 'none';
                 videoModal.style.display = 'none';
 
-                // 停止模态框视频播放器
                 if (modalVideoPlayer) {
                     modalVideoPlayer.stop();
                     modalVideoPlayer = null;
@@ -2323,7 +2171,6 @@
             if (event.target === videoModal) {
                 videoModal.style.display = 'none';
 
-                // 停止模态框视频播放器
                 if (modalVideoPlayer) {
                     modalVideoPlayer.stop();
                     modalVideoPlayer = null;
@@ -2346,11 +2193,11 @@
     }
 
     // 启动模态框视频播放器
-    function startModalVideoPlayer(panelId, originalPlayer) {
+    function startModalVideoPlayer(panelId) {
         // 获取当前SNR对应的所有图片
         const frames = Array.from(document.querySelectorAll(`#${panelId} .snr-${currentSnr}.active .video-frame`));
 
-        const fps = panelId === 'da2' ? 4 : 25; // DeepJSCC帧率较低
+        const fps = panelId === 'da2' ? 4 : 25;
         const interval = 1000 / fps;
 
         modalVideoPlayer = createModalPlayer(frames, interval, document.getElementById('modalVideoFrame'));
@@ -2367,11 +2214,6 @@
                 targetElement.src = frames[index].src;
             }
         };
-
-        // 从第一帧开始
-        if (frames.length > 0) {
-            showFrame(0);
-        }
 
         return {
             start() {
@@ -2401,10 +2243,7 @@
     }
 
     // 页面加载完成后初始化
-    document.addEventListener('DOMContentLoaded', function() {
-        // 添加一个小的延迟，确保DOM完全加载
-        setTimeout(initializePage, 100);
-    });
+    document.addEventListener('DOMContentLoaded', initializePage);
 </script>
 </body>
 </html>
