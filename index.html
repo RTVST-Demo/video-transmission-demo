@@ -593,7 +593,7 @@
         <span class="close">&times;</span>
         <div class="modal-content">
             <h3 class="modal-title" id="modalImageTitle"></h3>
-
+            <img class="modal-image" id="modalImage" src="./images_metrics/ssim.svg" alt="">
         </div>
     </div>
 
@@ -613,7 +613,7 @@
         </div>
     </div>
 
-    <script>
+<script>
     // 当前选中的SNR
     let currentSnr = '8';
     let modalVideoPlayer = null;
@@ -646,8 +646,8 @@
             // 暂停当前视频
             video.pause();
 
-            // 对于Origin视频，只需要重新开始播放
-            if (video.hasAttribute('data-snr4')) {
+            // 对于有data-snr属性的视频，更新视频源
+            if (video.hasAttribute('data-snr2')) {
                 // 对于其他视频，更新视频源
                 const videoSrc = video.getAttribute(`data-snr${snr}`);
                 if (videoSrc) {
@@ -695,6 +695,7 @@
                 document.getElementById('modalImageTitle').textContent = this.alt;
                 document.getElementById('modalImage').src = this.src;
                 imageModal.style.display = 'block';
+                console.log("打开图片模态框:", this.alt);
             });
         });
 
