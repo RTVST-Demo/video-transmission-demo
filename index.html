@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -84,6 +83,18 @@
             font-weight: 600;
         }
 
+        /* ====== 统一标题样式 ====== */
+        .section-title {
+            font-size: 1.6rem;
+            margin-bottom: 25px;
+            color: #3498db;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+            font-weight: 600;
+        }
+
         /* ====== 架构图区域 ====== */
         .architecture-image {
             text-align: center;
@@ -104,25 +115,7 @@
             transform: scale(1.02);
         }
 
-        .image-caption {
-            margin-top: 15px;
-            color: #3498db;
-            font-weight: 600;
-            font-size: 1.3rem;
-        }
-
         /* ====== 性能图表区域 ====== */
-        .charts-title {
-            font-size: 1.6rem;
-            margin-bottom: 25px;
-            color: #3498db;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            justify-content: center;
-            font-weight: 600;
-        }
-
         .charts-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -464,14 +457,14 @@
         </div>
 
         <div class="content-section">
+            <div class="section-title"><i class="fas fa-project-diagram"></i> RTVST模型架构图</div>
             <div class="architecture-image">
                 <img src="./rtvst_Architecture.jpg" alt="RTVST架构图">
-                <div class="image-caption">RTVST模型架构图</div>
             </div>
         </div>
 
         <div class="content-section">
-            <div class="charts-title"><i class="fas fa-chart-line"></i> 性能指标对比曲线</div>
+            <div class="section-title"><i class="fas fa-chart-line"></i> 性能指标对比曲线</div>
             <div class="charts-container">
                 <div class="chart-item">
                     <img src="./images_metrics/psnr.svg" alt="PSNR">
@@ -488,14 +481,17 @@
             </div>
         </div>
 
-<div class="content-section">
+        <div class="content-section">
+            <div class="section-title"><i class="fas fa-video"></i> 编解码视频展示</div>
             <div class="control-row">
                 <div class="snr-selector">
                     <label for="snrSelect">选择SNR:</label>
                     <select id="snrSelect">
+                        <option value="2">2 dB</option>
                         <option value="4">4 dB</option>
+                        <option value="6">6 dB</option>
                         <option value="8" selected>8 dB</option>
-                        <option value="12">12 dB</option>
+                        <option value="10">10 dB</option>
                     </select>
                 </div>
 
@@ -513,7 +509,7 @@
                     </div>
                     <div class="display-area" id="da4">
                         <video class="video-player" muted loop>
-                            <source src="./rtvst-12db.mp4" type="video/mp4">
+                            <source src="./videos/origin.mp4" type="video/mp4">
                             您的浏览器不支持视频播放
                         </video>
                     </div>
@@ -528,8 +524,13 @@
                         <h3 class="panel-title"><i class="fas fa-film"></i> H.265 + LDPC</h3>
                     </div>
                     <div class="display-area" id="da1">
-                        <video class="video-player" muted loop data-snr4="./rtvst-12db.mp4" data-snr8="./rtvst-12db.mp4" data-snr12="./rtvst-12db.mp4">
-                            <source src="./rtvst-12db.mp4" type="video/mp4">
+                        <video class="video-player" muted loop
+                               data-snr2="./videos/syntax_2db.mp4"
+                               data-snr4="./videos/syntax_4db.mp4"
+                               data-snr6="./videos/syntax_6db.mp4"
+                               data-snr8="./videos/syntax_8db.mp4"
+                               data-snr10="./videos/syntax_10db.mp4">
+                            <source src="./videos/syntax_8db.mp4" type="video/mp4">
                             您的浏览器不支持视频播放
                         </video>
                     </div>
@@ -544,8 +545,13 @@
                         <h3 class="panel-title"><i class="fas fa-film"></i> DeepJSCC</h3>
                     </div>
                     <div class="display-area" id="da2">
-                        <video class="video-player" muted loop data-snr4="./rtvst-12db.mp4" data-snr8="./rtvst-12db.mp4" data-snr12="./rtvst-12db.mp4">
-                            <source src="./rtvst-12db.mp4" type="video/mp4">
+                        <video class="video-player" muted loop
+                               data-snr2="./videos/deepjscc_2db.mp4"
+                               data-snr4="./videos/deepjscc_4db.mp4"
+                               data-snr6="./videos/deepjscc_6db.mp4"
+                               data-snr8="./videos/deepjscc_8db.mp4"
+                               data-snr10="./videos/deepjscc_10db.mp4">
+                            <source src="./videos/deepjscc_8db.mp4" type="video/mp4">
                             您的浏览器不支持视频播放
                         </video>
                     </div>
@@ -560,8 +566,13 @@
                         <h3 class="panel-title"><i class="fas fa-film"></i> RTVST</h3>
                     </div>
                     <div class="display-area" id="da3">
-                        <video class="video-player" muted loop data-snr4="./rtvst-12db.mp4" data-snr8="./rtvst-12db.mp4" data-snr12="./rtvst-12db.mp4">
-                            <source src="./rtvst-12db.mp4" type="video/mp4">
+                        <video class="video-player" muted loop
+                               data-snr2="./videos/RTVST_2db.mp4"
+                               data-snr4="./videos/RTVST_4db.mp4"
+                               data-snr6="./videos/RTVST_6db.mp4"
+                               data-snr8="./videos/RTVST_8db.mp4"
+                               data-snr10="./videos/RTVST_10db.mp4">
+                            <source src="./videos/RTVST_8db.mp4" type="video/mp4">
                             您的浏览器不支持视频播放
                         </video>
                     </div>
